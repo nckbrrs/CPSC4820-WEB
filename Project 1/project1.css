@@ -1,0 +1,20 @@
+html {
+  background-color: #a38068;
+}
+
+#intro {
+  text-align: center;
+  left: 50%;
+  top: 50%;
+}
+
+h1 {
+  font-family: sans-serif;
+  color: #FFFFFF;
+}
+
+img {
+  border-radius: 5px;
+  width: 600px;
+  height: auto;
+}
