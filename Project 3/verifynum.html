@@ -6,10 +6,22 @@
     <title>Nick's Phone Number Verification Project</title>
   </head>
   <body>
-    <div id="userInput">
-      Enter any phone number:<br>
+    <div>
+      <h1>Verify any phone number using numverify</h1>
+    </div>
+    <div>
+      <h4>Enter any phone number and click Submit:</h4>
       <input type="number" id="inputField">
       <button id="submitButton">Submit</button>
+    </div>
+    <div>
+      <h4 id="numEntered">&nbsp;</h4>
+      <h5 id="numValidity">&nbsp;</h5>
+      <h5 id="countryName">&nbsp;</h5>
+      <h5 id="lineType">&nbsp;</h5>
+    </div>
+    <div>
+      <iframe id="countryMap"></iframe>
     </div>
     <script src="verifynum.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
