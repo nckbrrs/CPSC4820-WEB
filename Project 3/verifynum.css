@@ -7,7 +7,7 @@ html {
 
 #countryMap {
   visibility: hidden;
-  width: 75%;
+  width: 50%;
   height: 450px;
   style: "border:0";
 }
