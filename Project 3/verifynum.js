@@ -64,6 +64,7 @@ var verifyNumber = function() {
           countryMapElement.style.visibility = 'visible';
         } else {
           countryNameElement.innerHTML = "Country Name: UNAVAILABLE";
+          countryMapElement.style.visibility = 'hidden';
         }
 
         if (lineType != null) {
