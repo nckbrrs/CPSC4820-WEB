@@ -79,5 +79,4 @@ var verifyNumber = function() {
     });
 }
 
-/* initialize input field and submit button when page is loaded */
 window.addEventListener('load', onLoad);
