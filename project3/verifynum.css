@@ -1,0 +1,13 @@
+html {
+  display: block;
+  margin: auto;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+#countryMap {
+  visibility: hidden;
+  width: 75%;
+  height: 450px;
+  style: "border:0";
+}
