@@ -1,4 +1,6 @@
 <?php
+
+/*
 require "UserStore.php";
 
 function validate() {
@@ -38,7 +40,7 @@ if(isset($_POST['comingBack'])){
 		}
   }
 }
-
+*/
 ?>
 
 
