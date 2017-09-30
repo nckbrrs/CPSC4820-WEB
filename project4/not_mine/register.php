@@ -7,7 +7,7 @@ require "UserStore.php";
 function validate(){
 	if( !isset($_POST['username']) || !isset($_POST['password']) ||
 		!isset($_POST['email']) || !isset($_POST['name'])){
-		return "All fields are required.";		
+		return "All fields are required.";
 	}
 
 
@@ -61,7 +61,7 @@ function addUser($userObj){
 
 //this is a variable that we write out to javascript later
 //javascript will see it and decide whether to render an error box
-//the string "false" here will print as 
+//the string "false" here will print as
 // <script type="text/javascript">var errorMessage = false;</script>
 //which will make a global variable in javascript and set its value to the Boolean false
 $errorMessage = "false";
