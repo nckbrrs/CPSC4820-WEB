@@ -4,7 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript">var errorMessage = <?php /*php executes this blob of code */echo $errorMessage; ?></script>
 <style type="text/css">
-	.error{
+  html {
+    display: block;
+    margin: auto;
+    text-align: center;
+    font-family: sans-serif;
+  }
+  .error{
 		border: 1px solid;
 		color: red;
 	}
@@ -19,6 +25,6 @@
 		<input type="hidden" name="comingBack" value="1">
 		<button id="submit" type="submit" name="submit">Submit</button>
 	</form>
-	<a href="create.php">Login</a>
+	<a href="register.php">Register</a>
 </section>
 <script type="text/javascript" src="register.js"></script>
