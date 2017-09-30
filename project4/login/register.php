@@ -141,6 +141,6 @@ if(isset($_POST['comingBack'])){
 		<input type="hidden" name="comingBack" value="1">
 		<button id="submit" type="submit" name="submit">Submit</button>
 	</form>
-	<a href="create.php">Register</a>
+	<a href="login.php">Login</a>
 </section>
 <script type="text/javascript" src="register.js"></script>
