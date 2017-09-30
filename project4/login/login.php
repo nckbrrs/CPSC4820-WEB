@@ -1,3 +1,47 @@
+<?php
+require "UserStore.php";
+
+function validate() {
+  // only thing we need to validate is that both fields are occupied
+  if( !isset($_POST['username']) || !isset($_POST['password'])) {
+    return "All fields are required.";
+  }
+
+  // open database
+  $store = new UserStore("/data/users.json");
+
+  // see if username exists in database
+  $userObj = getUser($_POST['username']);
+  if (!userObj) {
+    return "No account with that username exists.";
+  } else {
+    $hash = hash("sha256",$_POST['password'].$userObj['salt']);
+    if ($hash == $userObj['password']) {
+      return "Wow good job."
+    } else {
+      return "Invalid password.";
+    }
+  }
+
+  return true;
+}
+
+if(isset($_POST['comingBack'])){
+  $valid = validate();
+
+  if (isbool($valid) && $valid) {
+    // create a session for user
+    // redirect to /numverify/phoneNumber.php
+  } else {
+    if (is_string($valid)){
+			$errorMessage = $valid;
+		}
+  }
+}
+
+?>
+
+
 <!DOCTYPE html>
 <title>Login</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">

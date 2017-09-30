@@ -10,7 +10,6 @@ function validate(){
 		return "All fields are required.";
 	}
 
-
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 	$email = $_POST['email'];
