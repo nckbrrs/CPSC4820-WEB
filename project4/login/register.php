@@ -127,17 +127,12 @@ if(isset($_POST['comingBack'])){
 		border: 1px solid;
 		color: red;
 	}
-	#form_div {
-		width: 400px;
-		text-align: left;
-	}
 </style>
 <h1>Register</h1>
 <p id="instructions">fill out the form to register</p>
 <div id="error" class="errorMessage" style="visibility: hidden;"></div>
 <section>
-	<div id="form_div">
-		<form id="form" method="post" action="register.php">
+	<form id="form" method="post" action="register.php">
 			<label>Desired Username: <input type="text" name="username" id="username"></label><br>
 			<label>Desired Password: <input type="password" name="password" id="password"></label><br>
 			<label>Confirm Password: <input type="password" id="confirm"></label><br>
@@ -145,8 +140,7 @@ if(isset($_POST['comingBack'])){
 			<label>Name: <input type="text" name="name" id="name"></label><br>
 			<input type="hidden" name="comingBack" value="1">
 			<button id="submit" type="submit" name="submit">Submit</button>
-		</form>
-	</div>
+	</form>
 	<a href="login.php">Login</a>
 </section>
 <script type="text/javascript" src="register.js"></script>
