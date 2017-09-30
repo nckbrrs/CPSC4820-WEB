@@ -113,6 +113,7 @@ if(isset($_POST['comingBack'])){
 <!DOCTYPE html>
 <title>Register</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript">var errorMessage = <?php /*php executes this blob of code */echo $errorMessage; ?></script>
@@ -120,6 +121,12 @@ if(isset($_POST['comingBack'])){
 	.error{
 		border: 1px solid;
 		color: red;
+	}
+	html {
+	  display: block;
+	  margin: auto;
+	  text-align: center;
+	  font-family: sans-serif;
 	}
 </style>
 <h1>Register</h1>
