@@ -26,9 +26,8 @@ function authenticate() {
     if (!userObj) {
       return "No account with that username exists.";
     } else {
-      return true;/*
       $hash = hash("sha256", $_POST['password'].$userObj['salt']);
-      if ($hash == $userObj['password'])
+      /*if ($hash == $userObj['password'])
         return true;
       } else {
         return "Invalid password.";
