@@ -40,7 +40,6 @@ if(isset($_POST['comingBack'])){
   if (is_bool($valid) && $valid) {
     echo "valid";
     $authenticated = authenticate();
-    echo "after authenticate() call";
 
     if (is_bool($authenticated) && $authenticated) {
       echo "authentic";
