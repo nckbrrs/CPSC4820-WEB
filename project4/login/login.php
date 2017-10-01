@@ -1,53 +1,59 @@
 <?php
 
 require "UserStore.php";
-/*
+
 function validate() {
   // only thing we need to check is that both fields are occupied
   if( !isset($_POST['username']) || !isset($_POST['password'])) {
     return "All fields are required.";
   }
 
-  // open database
-  $store = new UserStore("/data/users.json");
-
-  // see if username exists in database
-  $userObj = getUser($_POST['username']);
-  if (!userObj) {
-    return "No account with that username exists.";
-  } else {
-    $hash = hash("sha256",$_POST['password'].$userObj['salt']);
-    if ($hash == $userObj['password']) {
-      return "Wow good job."
-    } else {
-      return "Invalid password.";
-    }
-  }
-
   return true;
 }
-*/
-//this is a variable that we write out to javascript later
-//javascript will see it and decide whether to render an error box
-//the string "false" here will print as
-// <script type="text/javascript">var errorMessage = false;</script>
-//which will make a global variable in javascript and set its value to the Boolean false
+
+function authenticate() {
+  try {
+    $store = new UserStore("/data/users/json");
+
+    $userObj = getUser($_POST['username']);
+    if (!userObj) {
+      return "No account with that username exists.";
+    } else {
+      $hash = hash("sha256", $_POST['password'].$userObj['salt']);
+      if ($hash == $userObj['password']) {
+        return true;
+      } else {
+        return "Invalid password.";
+      }
+    }
+  } catch (Exception $e) {
+    return "Exception: ".$e->getMessage();
+  }
+}
+
 $errorMessage = "false";
 
-/*
 if(isset($_POST['comingBack'])){
   $valid = validate();
 
-  if (isbool($valid) && $valid) {
-    // create a session for user
-    // redirect to /numverify/phoneNumber.php
+  if (is_bool($valid) && $valid) {
+    $authenticated = authenticate();
+
+    if (is_bool($authenticated) && $authenticated) {
+      // create a session for UserStore
+      // redirect to /numverify/phoneNumber.php
+      header("Location: success_login.html", true, 302);
+    } else {
+      $errorMessage = $authenticated;
+    }
+
   } else {
     if (is_string($valid)){
 			$errorMessage = $valid;
 		}
   }
 }
-*/
+
 ?>
 
 <!DOCTYPE html>
@@ -68,8 +74,9 @@ if(isset($_POST['comingBack'])){
 	}
 </style>
 <h1>Login</h1>
-<p id="instructions">fill out the form to login</p>
-<div id="error" class="errorMessage" style="visibility: hidden;"></div>
+<p id="instructions">Enter your username and password to login:</p>
+<div id="error" class="errorMessage" style="visibility: hidden; color: red;"></div>
+<br>
 <section>
 	<form id="form" method="post" action="login.php">
 		<label>Username: <input type="text" name="username" id="username"></label><br>

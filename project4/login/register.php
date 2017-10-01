@@ -129,8 +129,9 @@ if(isset($_POST['comingBack'])){
 	}
 </style>
 <h1>Register</h1>
-<p id="instructions">fill out the form to register</p>
-<div id="error" class="errorMessage" style="visibility: hidden;"></div>
+<p id="instructions">Fill out the form to register:</p>
+<div id="error" class="errorMessage" style="visibility: hidden; color: red;"></div>
+<br>
 <section>
 	<form id="form" method="post" action="register.php">
 		<label>Desired Username: <input type="text" name="username" id="username"></label><br>
