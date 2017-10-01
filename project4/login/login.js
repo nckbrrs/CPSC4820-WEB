@@ -13,6 +13,7 @@ var validate = () =>{
 	var username = document.getElementById("username").value;
 	var password = document.getElementById("password").value;
 
+	// only thing we need to check is that both fields are occupied
 	if(username === "" || password === "" ){
 		showError("All fields are required.");
 		return false;

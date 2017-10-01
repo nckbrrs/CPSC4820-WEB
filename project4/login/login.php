@@ -1,10 +1,10 @@
 <?php
 
-/*
+
 require "UserStore.php";
 
 function validate() {
-  // only thing we need to validate is that both fields are occupied
+  // only thing we need to check is that both fields are occupied
   if( !isset($_POST['username']) || !isset($_POST['password'])) {
     return "All fields are required.";
   }
@@ -40,7 +40,7 @@ if(isset($_POST['comingBack'])){
 		}
   }
 }
-*/
+
 ?>
 
 
