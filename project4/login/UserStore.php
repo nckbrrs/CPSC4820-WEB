@@ -66,9 +66,7 @@ class UserStore
 	//returns a COPY of a user object looked up by username
 	//or false if username didnt exist
 	public function getUser($username){
-		echo "in UserStore getUser(), calling this->userIndex\n<br>";
 		$index = $this->userIndex($username);
-		echo "after this->userIndex\n<br>";
 
 		if($index === false){
 			return false;

@@ -17,6 +17,7 @@ function authenticate() {
     $store = new UserStore("/data/users.json");
     echo "after new UserStore, before getUser()\n<br>";
 
+    echo "username is ".$_POST['username'];
     $userObj = getUser($_POST['username']);
     echo "after getUser()\n<br>";
 
