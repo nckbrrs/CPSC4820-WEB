@@ -6,7 +6,7 @@ var showError = (msg) =>{
 		return;
 	}
 	errorNode.innerText = msg;
-	errorNode.style = "";
+	errorNode.style = "color: red;";
 };
 
 var validate = () =>{
@@ -41,6 +41,9 @@ var onLoad = () => {
 
 	formNode.onsubmit = onSubmit;
 
+	console.log("in onLoad, after onSubmit");
+	console.log("onSubmit is " + formNode.onsubmit);
+	console.log("errorMessage is" + errorMessage);
 	if (errorMessage){
 		showError(errorMessage);
 	}

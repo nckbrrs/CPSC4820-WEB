@@ -75,7 +75,7 @@ if(isset($_POST['comingBack'])){
 </style>
 <h1>Login</h1>
 <p id="instructions">Enter your username and password to login:</p>
-<div id="error" class="errorMessage" style="visibility: hidden; color: red;"></div>
+<div id="error" class="errorMessage" style="visibility: hidden;"></div>
 <br>
 <section>
 	<form id="form" method="post" action="login.php">
