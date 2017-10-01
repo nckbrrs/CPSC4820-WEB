@@ -41,7 +41,6 @@ var onLoad = () => {
 
 	formNode.onsubmit = onSubmit;
 
-	console.log("errorMessage is " + errorMessage);
 	if (errorMessage){
 		showError(errorMessage);
 	}
