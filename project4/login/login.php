@@ -1,7 +1,7 @@
 <?php
 
 require "UserStore.php";
-
+/*
 function validate() {
   // only thing we need to check is that both fields are occupied
   if( !isset($_POST['username']) || !isset($_POST['password'])) {
@@ -26,7 +26,7 @@ function validate() {
 
   return true;
 }
-
+*/
 //this is a variable that we write out to javascript later
 //javascript will see it and decide whether to render an error box
 //the string "false" here will print as
@@ -34,7 +34,7 @@ function validate() {
 //which will make a global variable in javascript and set its value to the Boolean false
 $errorMessage = "false";
 
-
+/*
 if(isset($_POST['comingBack'])){
   $valid = validate();
 
@@ -47,7 +47,7 @@ if(isset($_POST['comingBack'])){
 		}
   }
 }
-
+*/
 ?>
 
 <!DOCTYPE html>
