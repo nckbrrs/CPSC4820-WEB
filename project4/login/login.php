@@ -13,12 +13,12 @@ function validate() {
 
 function authenticate() {
   try {
-    echo "before new UserStore";
+    echo "before new UserStore\n<br>";
     $store = new UserStore("/data/users.json");
-    echo "after new UserStore, before getUser()";
+    echo "after new UserStore, before getUser()\n<br>";
 
-    $userObj = getIndex($_POST['username']);
-    echo "after getUser()";
+    $userObj = getUser($_POST['username']);
+    echo "after getUser()\n<br>";
 
     if (!userObj) {
       echo "!userObj";
