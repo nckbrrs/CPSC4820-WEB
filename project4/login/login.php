@@ -12,21 +12,32 @@ function validate() {
 }
 
 function authenticate() {
+  echo "at beginning of authenticate";
   try {
+    echo "before new UserStore";
     $store = new UserStore("/data/users.json");
+    echo "after new UserStore";
 
+    echo "before getUser";
     $userObj = getUser($_POST['username']);
+    echo "after getUser";
+
     if (!userObj) {
+      echo "!userObj";
       return "No account with that username exists.";
     } else {
+      echo "getting hash";
       $hash = hash("sha256", $_POST['password'].$userObj['salt']);
-      if ($hash == $userObj['password']) {
+      if ($hash == $userObj['password'])
+        echo "hash matches userObj password";
         return true;
       } else {
+        echo "hash does not match userObj password";
         return "Invalid password.";
       }
     }
   } catch (Exception $e) {
+    echo "exception in try block";
     return "Exception: ".$e->getMessage();
   }
 }
