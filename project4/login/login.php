@@ -16,7 +16,7 @@ function validate() {
 
   return true;
 }
-
+/*
 function authenticate() {
   try {
     $store = new UserStore("/data/users.json");
@@ -37,9 +37,9 @@ function authenticate() {
     return "Exception: ".$e->getMessage();
   }
 }
-
+*/
 $errorMessage = "false";
-/*
+
 if(isset($_POST['comingBack'])){
   $valid = validate();
 
@@ -63,7 +63,7 @@ if(isset($_POST['comingBack'])){
 		}
   }
 }
-*/
+
 ?>
 
 <!DOCTYPE html>
