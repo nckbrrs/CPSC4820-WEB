@@ -72,7 +72,7 @@ if(isset($_POST['comingBack'])){
 <p id="instructions">fill out the form to login</p>
 <div id="error" class="errorMessage" style="visibility: hidden;"></div>
 <section>
-	<form id="form" method="post" action="register.php">
+	<form id="form" method="post" action="login.php">
 		<label>Username: <input type="text" name="username" id="username"></label><br>
 		<label>Password: <input type="password" name="password" id="password"></label><br>
 		<input type="hidden" name="comingBack" value="1">
@@ -80,4 +80,4 @@ if(isset($_POST['comingBack'])){
 	</form>
 	<a href="register.php">Register</a>
 </section>
-<script type="text/javascript" src="register.js"></script>
+<script type="text/javascript" src="login.js"></script>
