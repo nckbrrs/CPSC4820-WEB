@@ -2,12 +2,6 @@
 
 require "UserStore.php";
 
-function console_log( $data ){
-  echo '<script>';
-  echo 'console.log('. json_encode( $data ) .')';
-  echo '</script>';
-}
-
 function validate() {
   // only thing we need to check is that both fields are occupied
   if( !isset($_POST['username']) || !isset($_POST['password'])) {
@@ -19,21 +13,30 @@ function validate() {
 
 function authenticate() {
   try {
+    echo "before new UserStore";
     $store = new UserStore("/data/users.json");
+    echo "after new UserStore, before getUser()";
 
     $userObj = getUser($_POST['username']);
+    echo "after getUser()";
 
     if (!userObj) {
+      echo "!userObj";
       return "No account with that username exists.";
     } else {
+      echo "getUser successful";
       $hash = hash("sha256", $_POST['password'].$userObj['salt']);
+      echo "hash calculated";
       if ($hash == $userObj['password']) {
+        echo "hash matches pw, returning true";
         return true;
       } else {
+        echo "has does not match pw";
         return "Invalid password.";
       }
     }
   } catch (Exception $e) {
+    echo "exception";
     return "Exception: ".$e->getMessage();
   }
 }
