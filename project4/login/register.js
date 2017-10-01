@@ -9,7 +9,6 @@ var showError = (msg) =>{
 	}
 	errorNode.innerText = msg;
 	errorNode.style = "";
-	console.log("errorNode innerText will become " + errorNode.innerText);
 };
 
 //validates data before wasting ths user's and server's time

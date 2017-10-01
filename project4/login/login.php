@@ -13,7 +13,7 @@ function validate() {
 
 function authenticate() {
   try {
-    $store = new UserStore("/data/users/json");
+    $store = new UserStore("/data/users.json");
 
     $userObj = getUser($_POST['username']);
     if (!userObj) {
