@@ -1,5 +1,5 @@
 <?php
-
+/*
 require "UserStore.php";
 
 function console_log( $data ){
@@ -37,7 +37,7 @@ function authenticate() {
     return "Exception: ".$e->getMessage();
   }
 }
-
+*/
 $errorMessage = "false";
 /*
 if(isset($_POST['comingBack'])){
