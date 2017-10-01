@@ -39,7 +39,7 @@ function authenticate() {
 }
 
 $errorMessage = "false";
-
+/*
 if(isset($_POST['comingBack'])){
   $valid = validate();
 
@@ -63,7 +63,7 @@ if(isset($_POST['comingBack'])){
 		}
   }
 }
-
+*/
 ?>
 
 <!DOCTYPE html>
