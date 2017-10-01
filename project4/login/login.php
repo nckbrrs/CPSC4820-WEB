@@ -16,11 +16,11 @@ function validate() {
 
   return true;
 }
-/*
+
 function authenticate() {
   try {
     $store = new UserStore("/data/users.json");
-
+/*
     $userObj = getUser($_POST['username']);
 
     if (!userObj) {
@@ -32,12 +32,12 @@ function authenticate() {
       } else {
         return "Invalid password.";
       }
-    }
+    }*/
   } catch (Exception $e) {
     return "Exception: ".$e->getMessage();
   }
 }
-*/
+
 $errorMessage = "false";
 
 if(isset($_POST['comingBack'])){
