@@ -27,6 +27,13 @@ function validate() {
   return true;
 }
 
+//this is a variable that we write out to javascript later
+//javascript will see it and decide whether to render an error box
+//the string "false" here will print as
+// <script type="text/javascript">var errorMessage = false;</script>
+//which will make a global variable in javascript and set its value to the Boolean false
+$errorMessage = "false";
+
 if(isset($_POST['comingBack'])){
   $valid = validate();
 
