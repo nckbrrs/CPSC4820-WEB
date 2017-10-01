@@ -67,7 +67,7 @@ class UserStore
 	//or false if username didnt exist
 	public function getUser($username){
 		$index = $this->userIndex($username);
-		echo "hi";
+
 		if($index === false){
 			return false;
 		}
