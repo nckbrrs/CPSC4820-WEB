@@ -20,9 +20,9 @@ function validate() {
 function authenticate() {
   try {
     $store = new UserStore("/data/users.json");
-/*
-    $userObj = getUser($_POST['username']);
 
+    $userObj = getUser($_POST['username']);
+/*
     if (!userObj) {
       return "No account with that username exists.";
     } else {
