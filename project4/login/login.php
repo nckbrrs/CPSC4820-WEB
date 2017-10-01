@@ -1,5 +1,5 @@
 <?php
-/*
+
 require "UserStore.php";
 
 function console_log( $data ){
@@ -7,7 +7,7 @@ function console_log( $data ){
   echo 'console.log('. json_encode( $data ) .')';
   echo '</script>';
 }
-
+/*
 function validate() {
   // only thing we need to check is that both fields are occupied
   if( !isset($_POST['username']) || !isset($_POST['password'])) {
