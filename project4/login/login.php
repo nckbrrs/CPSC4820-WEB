@@ -32,8 +32,8 @@ function authenticate() {
         return true;
       } else {
         return "Invalid password.";
-      }
-    }*/
+      }*/
+    }
   } catch (Exception $e) {
     return "Exception: ".$e->getMessage();
   }
