@@ -18,7 +18,7 @@ function authenticate() {
     echo "after new UserStore, before getUser()\n<br>";
 
     echo "username is ".$_POST['username'];
-    $userObj = getUser($_POST['username']);
+    echo getUser($_POST['username']);
     echo "after getUser()\n<br>";
 
     if (!userObj) {
