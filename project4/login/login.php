@@ -13,30 +13,21 @@ function validate() {
 
 function authenticate() {
   try {
-    echo "before new UserStore\n<br>";
     $store = new UserStore("/data/users.json");
-    echo "after new UserStore, before getUser()\n<br>";
 
     $userObj = $store->getUser($_POST['username']);
-    echo "after getUser()\n<br>";
 
     if (!userObj) {
-      echo "!userObj";
       return "No account with that username exists.";
     } else {
-      echo "getUser successful";
       $hash = hash("sha256", $_POST['password'].$userObj['salt']);
-      echo "hash calculated";
       if ($hash == $userObj['password']) {
-        echo "hash matches pw, returning true";
         return true;
       } else {
-        echo "has does not match pw";
         return "Invalid password.";
       }
     }
   } catch (Exception $e) {
-    echo "exception";
     return "Exception: ".$e->getMessage();
   }
 }
