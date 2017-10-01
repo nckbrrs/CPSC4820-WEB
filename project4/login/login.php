@@ -45,6 +45,7 @@ if(isset($_POST['comingBack'])){
       // create a session for UserStore
       // redirect to /numverify/phoneNumber.php
       header("Location: success_login.html", true, 302);
+      return;
     } else {
       echo "valid, but authentic is not a bool or not true";
       if (is_string($authentic)) {
