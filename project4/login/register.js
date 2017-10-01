@@ -12,7 +12,7 @@ var showError = (msg) =>{
 };
 
 //validates data before wasting ths user's and server's time
-//this is NOT security, this is convience 
+//this is NOT security, this is convience
 //we will have to do the same checks on the server
 var validate = () =>{
 	var username = document.getElementById("username").value;
