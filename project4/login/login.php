@@ -2,6 +2,12 @@
 
 require "UserStore.php";
 
+function console_log( $data ){
+  echo '<script>';
+  echo 'console.log('. json_encode( $data ) .')';
+  echo '</script>';
+}
+
 function validate() {
   // only thing we need to check is that both fields are occupied
   if( !isset($_POST['username']) || !isset($_POST['password'])) {
@@ -38,27 +44,21 @@ if(isset($_POST['comingBack'])){
   $valid = validate();
 
   if (is_bool($valid) && $valid) {
-    echo "valid";
     $authenticated = authenticate();
 
     if (is_bool($authenticated) && $authenticated) {
-      echo "authentic";
       // create a session for UserStore
       // redirect to /numverify/phoneNumber.php
       header("Location: success_login.html", true, 302);
       return;
     } else {
-      echo "valid, but authentic is not a bool or not true";
       if (is_string($authentic)) {
-        echo "valid, and authentic is a string, and its error message is shown";
         $errorMessage = $authenticated;
       }
     }
 
   } else {
-    echo "valid is not a bool or not true";
     if (is_string($valid)){
-      echo "valid is a string, and its error message is shown";
 			$errorMessage = $valid;
 		}
   }
