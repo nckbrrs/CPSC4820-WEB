@@ -117,6 +117,12 @@ if(isset($_POST['comingBack'])){
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript">var errorMessage = <?php /*php executes this blob of code */echo $errorMessage; ?>;</script>
 <style type="text/css">
+	html {
+	display: block;
+	margin: auto;
+	text-align: center;
+	font-family: sans-serif;
+	}
 	.error{
 		border: 1px solid;
 		color: red;
