@@ -27,11 +27,11 @@ function authenticate() {
       return "No account with that username exists.";
     } else {
       $hash = hash("sha256", $_POST['password'].$userObj['salt']);
-      /*if ($hash == $userObj['password'])
+      if ($hash == $userObj['password']) {
         return true;
       } else {
         return "Invalid password.";
-      }*/
+      }
     }
   } catch (Exception $e) {
     return "Exception: ".$e->getMessage();
