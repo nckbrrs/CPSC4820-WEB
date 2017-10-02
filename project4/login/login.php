@@ -32,7 +32,7 @@ function authenticate() {
   }
 }
 
-$errorMessage = "false";
+$errorMessage = false;
 
 if(isset($_POST['comingBack'])){
   $valid = validate();
@@ -47,7 +47,7 @@ if(isset($_POST['comingBack'])){
       return;
     } else {
       if (is_string($authenticated)) {
-        $errorMessage = "\"."$authenticated."\"";
+        $errorMessage = "\"".$authenticated."\"";
       }
     }
 
