@@ -100,7 +100,7 @@ if(isset($_POST['comingBack'])){
 	}else{
 		//error in validation set an error message and fall through to render HTML
 		if(is_string($valid)){
-			$errorMessage = $valid;
+			$errorMessage = "\"".$valid."\"";
 		}
 	}
 }
@@ -112,7 +112,7 @@ if(isset($_POST['comingBack'])){
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript">var errorMessage = "<?php /*php executes this blob of code */echo $errorMessage; ?>";</script>
+<script type="text/javascript">var errorMessage = <?php /*php executes this blob of code */echo $errorMessage; ?>;</script>
 <style type="text/css">
 	html {
 		display: block;
@@ -127,7 +127,6 @@ if(isset($_POST['comingBack'])){
 </style>
 <h1>Register</h1>
 <p id="instructions">Fill out the form to register:</p>
-<div id="error" class="errorMessage" style="visibility: hidden;"></div>
 <br>
 <section>
 	<form id="form" method="post" action="register.php">
@@ -139,6 +138,9 @@ if(isset($_POST['comingBack'])){
 		<input type="hidden" name="comingBack" value="1">
 		<button id="submit" type="submit" name="submit">Submit</button>
 	</form>
+	<br>
+	<div id="error" class="errorMessage" style="visibility: hidden;"></div>
+	<br>
 	<a href="login.php">Login</a>
 </section>
 <script type="text/javascript" src="register.js"></script>

@@ -47,13 +47,13 @@ if(isset($_POST['comingBack'])){
       return;
     } else {
       if (is_string($authenticated)) {
-        $errorMessage = $authenticated;
+        $errorMessage = "\"."$authenticated."\"";
       }
     }
 
   } else {
     if (is_string($valid)){
-			$errorMessage = $valid;
+			$errorMessage = "\"".$valid."\"";
 		}
   }
 }
