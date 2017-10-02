@@ -50,7 +50,7 @@ if(isset($_POST['comingBack'])){
         $errorMessage = $authenticated;
       }
     }
-    
+
   } else {
     if (is_string($valid)){
 			$errorMessage = $valid;
@@ -79,7 +79,7 @@ if(isset($_POST['comingBack'])){
 </style>
 <h1>Login</h1>
 <p id="instructions">Enter your username and password to login:</p>
-<div id="error" class="errorMessage" style="visibility: hidden;"></div>
+<div id="error" class="errorMessage" style=""></div>
 <br>
 <section>
 	<form id="form" method="post" action="login.php">
