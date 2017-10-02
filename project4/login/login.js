@@ -1,6 +1,6 @@
 var showError = (msg) =>{
 	var errorNode = document.getElementById("error");
-	if(msg == "" || msg == false){
+	if(msg == "" || msg == "false"){
 		//hide error
 		errorNode.style = "visibility: hidden;";
 		return;
@@ -41,7 +41,7 @@ var onLoad = () => {
 
 	formNode.onsubmit = onSubmit;
 
-	if (errorMessage){
+	if (errorMessage != false){
 		showError(errorMessage);
 	}
 };
