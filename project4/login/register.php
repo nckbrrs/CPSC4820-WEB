@@ -91,7 +91,6 @@ if(isset($_POST['comingBack'])){
 		//if that didn't work set an error message and fall through to render HTML
 		if(!$result){
 			$errorMessage = "An error occured while saving your account.";
-			return;
 		}else{
 			//otherwise it worked, redirect to success and
 			//DONT render any more html, its a waste and can be a security hole.
@@ -102,7 +101,6 @@ if(isset($_POST['comingBack'])){
 		//error in validation set an error message and fall through to render HTML
 		if(is_string($valid)){
 			$errorMessage = $valid;
-			return;
 		}
 	}
 }
