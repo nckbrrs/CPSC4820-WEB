@@ -46,18 +46,14 @@ if(isset($_POST['comingBack'])){
       header("Location: success_login.html", true, 302);
       return;
     } else {
-      if (is_string($authentic)) {
+      if (is_string($authenticated)) {
         $errorMessage = $authenticated;
-        echo $errorMessage;
-        return;
       }
     }
 
   } else {
     if (is_string($valid)){
 			$errorMessage = $valid;
-      echo $errorMessage;
-      return;
 		}
   }
 }
