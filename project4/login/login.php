@@ -17,7 +17,7 @@ function authenticate() {
 
     $userObj = $store->getUser($_POST['username']);
 
-    if (!userObj) {
+    if (!$userObj) {
       return "No account with that username exists.";
     } else {
       $hash = hash("sha256", $_POST['password'].$userObj['salt']);
