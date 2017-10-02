@@ -43,7 +43,7 @@ if(isset($_POST['comingBack'])){
     if (is_bool($authenticated) && $authenticated) {
       // create a session for UserStore
       // redirect to /numverify/phoneNumber.php
-      header("Location: success_login.html", true, 302);
+      header("Location: login_success.html", true, 302);
       return;
     } else {
       if (is_string($authenticated)) {

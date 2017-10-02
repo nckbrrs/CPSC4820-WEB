@@ -94,7 +94,7 @@ if(isset($_POST['comingBack'])){
 		}else{
 			//otherwise it worked, redirect to success and
 			//DONT render any more html, its a waste and can be a security hole.
-			header("Location: success.html", true, 302);
+			header("Location: register_success.html", true, 302);
 			return;
 		}
 	}else{
