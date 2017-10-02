@@ -2,7 +2,7 @@
 //sets message inside the box
 var showError = (msg) =>{
 	var errorNode = document.getElementById("error");
-	if(msg == "" || msg == false){
+	if(msg == "" || msg == "false"){
 		//hide error
 		errorNode.style = "visibility: hidden;";
 		return;
@@ -36,7 +36,7 @@ var validate = () =>{
 		showError("Your username cannot be longer than 25 characters.");
 		return false;
 	}*/
-	
+
 	if(password.length > 100){
 		showError("Your password cannot be longer than 100 characters.");
 		return false;
