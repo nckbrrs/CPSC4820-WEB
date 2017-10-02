@@ -21,21 +21,22 @@ var validate = () =>{
 	var email = document.getElementById("email").value;
 	var name = document.getElementById("name").value;
 
-
 	if(username === "" || password === "" || confirm === "" || email === "" || name === "" ){
 		showError("All fields are required.");
 		return false;
 	}
-	/*
+
 	if(password !== confirm){
 		showError("The new password and confirm password fields must match.");
 		return false;
-	}*/
+	}
 
+/*
 	if(username.length > 25){
 		showError("Your username cannot be longer than 25 characters.");
 		return false;
-	}
+	}*/
+	
 	if(password.length > 100){
 		showError("Your password cannot be longer than 100 characters.");
 		return false;
