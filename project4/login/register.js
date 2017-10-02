@@ -74,7 +74,7 @@ var onLoad = () => {
 
 	formNode.onsubmit = onSubmit;
 
-	if (errorMessage){
+	if (errorMessage != "false"){
 		showError(errorMessage);
 	}
 };
