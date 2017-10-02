@@ -48,12 +48,14 @@ if(isset($_POST['comingBack'])){
     } else {
       if (is_string($authentic)) {
         $errorMessage = $authenticated;
+        echo $errorMessage;
       }
     }
 
   } else {
     if (is_string($valid)){
 			$errorMessage = $valid;
+      echo $errorMessage;
 		}
   }
 }
