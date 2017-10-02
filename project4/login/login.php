@@ -50,7 +50,7 @@ if(isset($_POST['comingBack'])){
         $errorMessage = $authenticated;
       }
     }
-
+    
   } else {
     if (is_string($valid)){
 			$errorMessage = $valid;
