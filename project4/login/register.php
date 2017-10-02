@@ -127,8 +127,8 @@ if(isset($_POST['comingBack'])){
 </style>
 <h1>Register</h1>
 <p id="instructions">Fill out the form to register:</p>
-<br>
 <div id="error" class="errorMessage" style="visibility: hidden;"></div>
+<br>
 <section>
 	<form id="form" method="post" action="register.php">
 		<label>Desired Username: <input type="text" name="username" id="username"></label><br>
@@ -139,6 +139,7 @@ if(isset($_POST['comingBack'])){
 		<input type="hidden" name="comingBack" value="1">
 		<button id="submit" type="submit" name="submit">Submit</button>
 	</form>
+	<br>
 	<a href="login.php">Login</a>
 </section>
 <script type="text/javascript" src="register.js"></script>
