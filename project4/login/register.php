@@ -7,7 +7,7 @@ require "UserStore.php";
 function validate(){
 	if( !isset($_POST['username']) || !isset($_POST['password']) ||
 		!isset($_POST['email']) || !isset($_POST['name'])){
-		return "All fields are required.";
+		return "All fields are required.2";
 	}
 
 
@@ -17,19 +17,19 @@ function validate(){
 	$name = $_POST['name'];
 
 	if(strlen($username) > 25){
-		return "Your username cannot be longer than 25 characters.";
+		return "Your username cannot be longer than 25 characters.2";
 	}
 
 	if(strlen($password) > 100){
-		return "Your password cannot be longer than 100 characters.";
+		return "Your password cannot be longer than 100 characters.2";
 	}
 
 	if(strlen($email) > 100){
-		return "Your email cannot be longer than 100 characters.";
+		return "Your email cannot be longer than 100 characters.2";
 	}
 
 	if(strlen($name) > 100){
-		return "Your name cannot be longer than 100 characters.";
+		return "Your name cannot be longer than 100 characters.2";
 	}
 	return true;
 }
@@ -91,7 +91,7 @@ if(isset($_POST['comingBack'])){
 
 		//if that didn't work set an error message and fall through to render HTML
 		if(!$result){
-			$errorMessage = "An error occured while saving your account.";
+			$errorMessage = "An error occured while saving your account.2";
 		}else{
 			//otherwise it worked, redirect to success and
 			//DONT render any more html, its a waste and can be a security hole.
