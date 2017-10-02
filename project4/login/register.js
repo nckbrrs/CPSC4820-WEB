@@ -26,10 +26,11 @@ var validate = () =>{
 		showError("All fields are required.");
 		return false;
 	}
+	/*
 	if(password !== confirm){
 		showError("The new password and confirm password fields must match.");
 		return false;
-	}
+	}*/
 
 	if(username.length > 25){
 		showError("Your username cannot be longer than 25 characters.");
