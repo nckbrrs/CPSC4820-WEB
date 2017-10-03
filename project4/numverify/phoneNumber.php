@@ -3,13 +3,13 @@ session_start();
 
 // if not logged in, redirect to login page
 if (!isset($_SESSION['username'])) {
-  header("Location: login/index.html");
+  header("Location: /project4/login/index.html", true, 302);
 }
 
 ?>
 
 <!DOCTYPE html>
-<title>numverify Phone Number Verification</title>
+<title>Numverify Phone Number Verification</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,16 +21,14 @@ if (!isset($_SESSION['username'])) {
     font-family: sans-serif;
   }
 </style>
-<h1>numverify</h1>
+<h1>Numverify Phone Number Verification</h1>
 <p id="instructions">Enter any phone number (including country code) and click Submit:</p>
 <div id="error" class="errorMessage" style="visibility:hidden;"></div>
 <br>
-<section>
-  <form id="form" method="get" action="verify.php">
-    <input type="tel" name="phoneNumber" id="phoneNumber"><br>
-    <button id="submit" type="submit" name="submit">Submit</button>
-  </form>
-</section>
+<div>
+  <input type="tel" id="inputField"><br>
+  <button id="submitButton">Submit</button>
+</di>
 <div>
   <h4 id="numEntered">&nbsp;</h4>
   <h5 id="numValidity">&nbsp;</h5>
