@@ -66,16 +66,16 @@ if(isset($_POST['comingBack'])){
       return;
     } else {
       // error in authentication; set an error msg and render HTML
-      if (is_string($authenticated)) {
+      //if (is_string($authenticated)) {
         $errorMessage = $authenticated;
-      }
+      //}
     }
 
   } else {
     // error in validation; set an error msg and render HTML
-    if (is_string($valid)){
+  //  if (is_string($valid)){
 			$errorMessage = $valid;
-		}
+		//}
   }
 }
 
