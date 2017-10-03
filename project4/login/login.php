@@ -3,7 +3,7 @@ session_start();
 
 // if already logged in, redirect to phoneNumber.php
 if (isset($_SESSION['username'])) {
-  header("Location: /numverify/phoneNumber.php");
+  header("Location: /project4/numverify/phoneNumber.php");
 }
 
 // pull in user store class
