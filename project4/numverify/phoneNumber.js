@@ -69,8 +69,8 @@ var verifyNumber = function() {
           lineTypeElement.innerHTML = "Line Type: " + lineType.toUpperCase();
         } else {
           lineTypeElement.innerHTML = "Line Type: UNAVAILABLE";
-        }*/
-      }
+        }
+      }*/
     })
     .catch(function (error) {
       console.log(error);
