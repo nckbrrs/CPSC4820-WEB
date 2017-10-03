@@ -60,7 +60,7 @@ if(isset($_POST['comingBack'])){
       // create a session for UserStore
       // redirect to /numverify/phoneNumber.php
       $_SESSION['username'] = $_POST['username'];
-      header("Location: numverify/phoneNumber.php", true, 302);
+      header("Location: /project4/numverify/phoneNumber.php", true, 302);
 
 
 
