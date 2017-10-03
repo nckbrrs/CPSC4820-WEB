@@ -46,8 +46,8 @@ var verifyNumber = function() {
         numEntered = response['data']['number'];
         numValidity = response['data']['valid'];
         countryName = response['data']['country_name'];
-        console.log("countryName is " + countryName);
         lineType = response['data']['line_type'];
+        console.log("my variables are " + numEntered + " " + numValidity + " " + countryName + " " + lineType);
         numEnteredElement.innerHTML = "You requested: " + numEntered;
 
         if (numValidity == true) {
