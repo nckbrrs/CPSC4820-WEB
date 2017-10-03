@@ -24,7 +24,6 @@ var onLoad = function() {
       submitButton.click();
     }
   })
-  console.log("end of onLoad\n");
 }
 
 var verifyNumber = function() {
