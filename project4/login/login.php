@@ -63,9 +63,6 @@ if(isset($_POST['comingBack'])){
       // redirect to /numverify/phoneNumber.php
       $_SESSION['username'] = $_POST['username'];
       header("Location: /numverify/phoneNumber.php", true, 302);
-
-
-
       return;
     } else {
       // error in authentication; set an error msg and render HTML
