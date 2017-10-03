@@ -19,7 +19,7 @@ var validate = () =>{
 		return false;
 	}
 
-	//we're here, no errors, hide error box
+	// we're here, no errors, hide error box
 	showError("false");
 
 	return true;
