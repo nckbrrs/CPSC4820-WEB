@@ -38,5 +38,5 @@ if (!isset($_SESSION['username'])) {
 <div>
   <iframe id="countryMap"></iframe>
 </div>
-<script src="numverify/phoneNumber.js"></script>
+<script src="/project4/numverify/phoneNumber.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
