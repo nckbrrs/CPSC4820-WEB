@@ -36,7 +36,6 @@ var verifyNumber = function() {
     })
     .then(function (response) {
       nonsuccessfulCall = (response['data']['success'] != null);
-      console.log("nonsuccessfulCall is " + nonsuccessfulCall);
       if (nonsuccessfulCall) {
         errorMsg = response['data']['error']['info'];
         numEnteredElement.innerHTML = "Error! " + errorMsg;
@@ -45,7 +44,6 @@ var verifyNumber = function() {
         numValidity = response['data']['valid'];
         countryName = response['data']['country_name'];
         lineType = response['data']['line_type'];
-        console.log("my variables are " + numEntered + numValidity + countryName + lineType);
         numEnteredElement.innerHTML = "You requested: " + numEntered;
 
         if (numValidity == true) {
