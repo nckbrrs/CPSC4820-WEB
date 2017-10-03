@@ -24,6 +24,7 @@ var onLoad = function() {
       submitButton.click();
     }
   })
+  console.log("end of onLoad\n");
 }
 
 var verifyNumber = function() {
@@ -35,6 +36,7 @@ var verifyNumber = function() {
       }
     })
     .then(function (response) {
+      console.log("got a response\n");
       nonsuccessfulCall = (response['data']['success'] != null);
       if (nonsuccessfulCall) {
         errorMsg = response['data']['error']['info'];
