@@ -1,11 +1,11 @@
 <?php
-//pull in user store class
+// pull in user store class
 require "UserStore.php";
 
-//validates post variables
-//returns true or an error message
+// validates post variables
+// returns true or an error message
 function validate(){
-	if( !isset($_POST['username']) || !isset($_POST['password']) ||
+	if(!isset($_POST['username']) || !isset($_POST['password']) ||
 		!isset($_POST['email']) || !isset($_POST['name'])){
 		return "All fields are required.";
 	}
@@ -36,50 +36,45 @@ function validate(){
 //takes a user object and attempts to write it to disk
 function addUser($userObj){
 	try {
-		//instantiate user store with path to json file on disk
-		//if file doesnt exist, this call will create it for us
+		// instantiate user store with path to json file on disk
+		// if file doesnt exist, this will create it for us
 		$store = new UserStore("/data/users.json");
 
-		//check to see if the user already exists
-		//if so return false
+		// check to see if the user already exists
+		// if so return false
 		if($store->userIndex($userObj['username']) !== false){
 			return false;
 		}
 
-		//add user to userStore
+		// add user to userStore
 		$store->setUser($userObj);
-		//write file to disk
+
+		// write file to disk
 		$store->save();
 	} catch (Exception $e) {
-		//if we encoutered any exceptions return false
+		// if we encountered any exceptions, return false
 		return false;
 	}
 
 	return true;
 }
 
-//this is a variable that we write out to javascript later
-//javascript will see it and decide whether to render an error box
-//the string "false" here will print as
-// <script type="text/javascript">var errorMessage = false;</script>
-//which will make a global variable in javascript and set its value to the Boolean false
-$errorMessage = "false";
-
-//if we have this post variable from the hidden input element then we know that
-//the form is being submitted and we should deal with the submission
-//otherwise we wouldn't do any more work and just render the HTML
+// if we have this post variable form the hidden input element, then we know
+// that the form is being submitted, and we should deal with the submission.
+// otherwise, we wouldn't do any more work and just render the HTML
 if(isset($_POST['comingBack'])){
-	//make sure POST vars are valid
+	// make sure POST variables are valid
 	$valid = validate();
 
-	//if we didn't get a string, but got a boolean true
+	// if we didn't get an error msg from validate
 	if(is_bool($valid) && $valid){
-		//generate a salt for our password hash
+		// generate a salt for our password hash
 		$salt = rand(0,100000);
-		//use this salt and the password to generate a unique sha256 fingerprint
+
+		// use this salt and the password to generate a unique sha256 fingerprint
 		$hash = hash("sha256",$_POST['password'].$salt);
 
-		//create a new user object to add to our user store and add it
+		// create a new user object and add it to our user store
 		$result = addUser(array(
 			'username' => $_POST['username'],
 			'password' => $hash,
@@ -88,22 +83,25 @@ if(isset($_POST['comingBack'])){
 			'name' => $_POST['name']
 		));
 
-		//if that didn't work set an error message and fall through to render HTML
+		// error in adding user; set an error msg and render HTML
 		if(!$result){
 			$errorMessage = "An error occured while saving your account.";
 		}else{
-			//otherwise it worked, redirect to success and
-			//DONT render any more html, its a waste and can be a security hole.
+			// redirect to success; don't render any more HTML
 			header("Location: register_success.html", true, 302);
 			return;
 		}
 	}else{
-		//error in validation set an error message and fall through to render HTML
+		// error in validation; set an error msg and render HTML
 		if(is_string($valid)){
 			$errorMessage = "\"".$valid."\"";
 		}
 	}
 }
+
+// to be written to javascript later
+// in order to decide whether to render an error
+$errorMessage = "false";
 
 ?>
 
@@ -112,17 +110,13 @@ if(isset($_POST['comingBack'])){
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript">var errorMessage = <?php /*php executes this blob of code */echo $errorMessage; ?>;</script>
+<script type="text/javascript">var errorMessage = <?php echo $errorMessage; ?>;</script>
 <style type="text/css">
 	html {
 		display: block;
 		margin: auto;
 		text-align: center;
 		font-family: sans-serif;
-	}
-	.error{
-		border: 1px solid;
-		color: red;
 	}
 </style>
 <h1>Register</h1>

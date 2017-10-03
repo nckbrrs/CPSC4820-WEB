@@ -20,7 +20,7 @@ var validate = () =>{
 	}
 
 	//we're here, no errors, hide error box
-	showError(false);
+	showError("false");
 
 	return true;
 };

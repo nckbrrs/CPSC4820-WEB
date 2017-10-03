@@ -8,7 +8,7 @@ var showError = (msg) =>{
 		return;
 	}
 	errorNode.innerText = msg;
-	errorNode.style = "color: red;";
+	errorNode.style = "border: 1px solid; color: red;";
 };
 
 //validates data before wasting ths user's and server's time
