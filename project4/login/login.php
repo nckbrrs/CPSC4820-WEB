@@ -67,14 +67,14 @@ if(isset($_POST['comingBack'])){
     } else {
       // error in authentication; set an error msg and render HTML
       if (is_string($authenticated)) {
-        $errorMessage = "\"".$authenticated."\"";
+        $errorMessage = $authenticated;
       }
     }
 
   } else {
     // error in validation; set an error msg and render HTML
     if (is_string($valid)){
-			$errorMessage = "\"".$valid."\"";
+			$errorMessage = $valid;
 		}
   }
 }
@@ -90,7 +90,7 @@ $errorMessage = "false";
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript">var errorMessage = <?php echo $errorMessage; ?>;</script>
+<script type="text/javascript">var errorMessage = "<?php echo $errorMessage; ?>";</script>
 <style type="text/css">
   html {
     display: block;
