@@ -56,6 +56,7 @@ if(isset($_POST['comingBack'])){
   if (is_bool($valid) && $valid) {
     // make sure username and password are correct
     $authenticated = authenticate();
+    echo $authenticated;
 
     // if we didn't get an error msg from authenticate
     if (is_bool($authenticated) && $authenticated) {
@@ -66,16 +67,16 @@ if(isset($_POST['comingBack'])){
       return;
     } else {
       // error in authentication; set an error msg and render HTML
-      //if (is_string($authenticated)) {
+      if (is_string($authenticated)) {
         $errorMessage = $authenticated;
-      //}
+      }
     }
 
   } else {
     // error in validation; set an error msg and render HTML
-  //  if (is_string($valid)){
+    if (is_string($valid)){
 			$errorMessage = $valid;
-		//}
+		}
   }
 }
 
