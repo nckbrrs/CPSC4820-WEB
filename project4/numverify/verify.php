@@ -12,3 +12,8 @@ $fgc = file_get_contents("http://apilayer.net/api/validate?access_key=f7280f3f9e
 echo "hi there";
 return "hi there";
  ?>
+
+ <!DOCTYPE html>
+ <title>Hi</title>
+ <h1>VERIFY</h1>
+ 
