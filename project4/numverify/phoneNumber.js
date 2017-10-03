@@ -37,6 +37,8 @@ var verifyNumber = function() {
     })
     .then(function (response) {
       console.log("got a response\n");
+      console.log(response);
+      /*
       nonsuccessfulCall = (response['data']['success'] != null);
       if (nonsuccessfulCall) {
         errorMsg = response['data']['error']['info'];
@@ -67,8 +69,10 @@ var verifyNumber = function() {
         } else {
           lineTypeElement.innerHTML = "Line Type: UNAVAILABLE";
         }
-      }
+      }*/
     })
+
+
     .catch(function (error) {
       console.log(error);
     });
