@@ -46,6 +46,7 @@ var verifyNumber = function() {
         numEntered = response['data']['number'];
         numValidity = response['data']['valid'];
         countryName = response['data']['country_name'];
+        console.log("countryName is " + countryName);
         lineType = response['data']['line_type'];
         numEnteredElement.innerHTML = "You requested: " + numEntered;
 
