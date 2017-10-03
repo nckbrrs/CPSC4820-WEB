@@ -20,6 +20,12 @@ if (!isset($_SESSION['username'])) {
     text-align: center;
     font-family: sans-serif;
   }
+  #countryMap {
+    visibility: hidden;
+    width: 75%;
+    height: 450px;
+    style: "border:0";
+  }
 </style>
 <h1>Numverify Phone Number Verification</h1>
 <p id="instructions">Enter any phone number (including country code) and click Submit:</p>
