@@ -1,6 +1,6 @@
 <?php
 
-sesssion_start();
+session_start();
 
 if (!isset($_SESSION['username'])) {
   header("Location: /project4/login/index.html", true, 302);
