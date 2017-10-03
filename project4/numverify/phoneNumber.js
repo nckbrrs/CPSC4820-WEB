@@ -38,7 +38,7 @@ var verifyNumber = function() {
       }
     })
     .then(function (response) {
-      console.log("response");
+      console.log(response);
       /*
       nonsuccessfulCall = (response['data']['success'] != null);
       if (nonsuccessfulCall) {
