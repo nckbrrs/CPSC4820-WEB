@@ -9,12 +9,11 @@ if (!isset($_SESSION['username'])) {
 $numverifyEndpoint = "http://apilayer.net/api/validate";
 $numverifyKey = "f7280f3f9e7e4bef446722c1923f2179";
 
-$fgc = file_get_contents("http://apilayer.net/api/validate?access_key=f7280f3f9e7e4bef446722c1923f2179&number=".$_GET['number']);
-echo $fgc;
+return file_get_contents($numverifyEndpoint."?access_key=".$numverifyKey."&number=".$_GET['number']);
 ?>
 
 <!DOCTYPE html>
-<title>Hi</title>
+<title>Verify</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,4 +25,4 @@ echo $fgc;
     font-family: sans-serif;
   }
 </style>
-<h1>Hi</h1>
+<h1>You shouldn't be here</h1>
