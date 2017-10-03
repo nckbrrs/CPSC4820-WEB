@@ -1,3 +1,6 @@
+var googleMapsEndpoint = 'https://www.google.com/maps/embed/v1/place';
+var googleMapsKey = 'AIzaSyD4lO2enIyK50vGbUHfM969s6Z4m_OfBUo';
+
 var inputFieldElement
 var submitButtonElement;
 var numEnteredElement;
@@ -49,7 +52,7 @@ var verifyNumber = function() {
         if (numValidity == true) {
           numValidityElement.innerHTML = "Validity: VALID";
         } else {
-          numValidityElement.innerHTML = "Validity: INVALID"
+          numValidityElement.innerHTML = "Validity: INVALID";
         }
 
         if (countryName.length != 0) {
