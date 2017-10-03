@@ -17,7 +17,7 @@ var onLoad = function() {
 
   submitButton.onclick = verifyNumber.bind(submitButtonElement, inputField.value)
   inputField.addEventListener('keydown', function(event) {
-    if ((event.keyCode < 48 || event.keyCode > 57) event.keyCode != 8) {
+    if ((event.keyCode < 48 || event.keyCode > 57) && event.keyCode != 8) {
       event.preventDefault();
     }
     if (event.keyCode == 13) {
