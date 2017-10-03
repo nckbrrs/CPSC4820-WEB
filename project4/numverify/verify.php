@@ -21,4 +21,5 @@ $numverifyKey = "f7280f3f9e7e4bef446722c1923f2179";
 // call numverify API and send its response back to phoneNumber.js
 $response = file_get_contents($numverifyEndpoint."?access_key=".$numverifyKey."&number=".$_GET['number']);
 echo $response;
+http_status_code(400);
 ?>
