@@ -33,7 +33,7 @@ if (!isset($_SESSION['username'])) {
 <div>
   <input type="tel" id="inputField"><br>
   <button id="submitButton">Submit</button>
-</di>
+</div>
 <div>
   <h4 id="numEntered">&nbsp;</h4>
   <h5 id="numValidity">&nbsp;</h5>
