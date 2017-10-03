@@ -72,7 +72,6 @@ if(isset($_POST['comingBack'])){
       // error in authentication; set an error msg and render HTML
       if (is_string($authenticated)) {
         $errorMessage = $authenticated;
-        echo $errorMessage;
       }
     }
 
@@ -80,7 +79,6 @@ if(isset($_POST['comingBack'])){
     // error in validation; set an error msg and render HTML
     if (is_string($valid)){
 			$errorMessage = $valid;
-      echo $errorMessage;
 		}
   }
 }

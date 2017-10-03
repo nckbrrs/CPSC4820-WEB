@@ -1,5 +1,4 @@
 var showError = (msg) =>{
-	console.log("got here with msg " + msg);
 	var errorNode = document.getElementById("error");
 	if(msg == "" || msg == "false"){
 		//hide error
