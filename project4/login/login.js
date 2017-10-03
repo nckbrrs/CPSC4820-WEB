@@ -1,10 +1,11 @@
 var showError = (msg) =>{
 	var errorNode = document.getElementById("error");
 	if(msg == "" || msg == "false"){
-		//hide error
+		// hide error
 		errorNode.style = "visibility: hidden;";
 		return;
 	}
+	// show error
 	errorNode.innerText = msg;
 	errorNode.style = "color: red;";
 };

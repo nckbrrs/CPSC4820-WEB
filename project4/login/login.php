@@ -25,7 +25,6 @@ function validate() {
   return true;
 }
 
-
 function authenticate() {
   try {
     // instantiate user store with path to json file on disk
@@ -74,7 +73,6 @@ if(isset($_POST['comingBack'])){
         $errorMessage = $authenticated;
       }
     }
-
   } else {
     // error in validation; set an error msg and render HTML
     if (is_string($valid)){
