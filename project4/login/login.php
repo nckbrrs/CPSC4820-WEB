@@ -1,11 +1,13 @@
 <?php
 session_start();
+
 /*
 // if already logged in, redirect to phoneNumber.php
 if (isset($_SESSION['username'])) {
   header("Location: /project4/numverify/phoneNumber.php");
 }
 */
+
 // pull in user store class
 require "UserStore.php";
 
@@ -60,7 +62,7 @@ if(isset($_POST['comingBack'])){
       // create a session for UserStore
       // redirect to /numverify/phoneNumber.php
       $_SESSION['username'] = $_POST['username'];
-      header("Location: /project4/numverify/phoneNumber.php", true, 302);
+      header("Location: /numverify/phoneNumber.php", true, 302);
 
 
 
