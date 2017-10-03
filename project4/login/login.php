@@ -11,6 +11,10 @@ if (isset($_SESSION['username'])) {
 // pull in user store class
 require "UserStore.php";
 
+// to be written to javascript later
+// in order to decide whether to render an error
+$errorMessage = "false";
+
 // validates post variables
 // returns true or an error message
 function validate() {
@@ -80,10 +84,6 @@ if(isset($_POST['comingBack'])){
 		}
   }
 }
-
-// to be written to javascript later
-// in order to decide whether to render an error
-$errorMessage = "false";
 
 ?>
 
