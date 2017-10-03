@@ -43,7 +43,6 @@ var verifyNumber = function() {
         errorMsg = response['data']['error']['info'];
         numEnteredElement.innerHTML = "Error! " + errorMsg;
       } else {
-        console.log(response);
         numEntered = response['data']['number'];
         numValidity = response['data']['valid'];
         countryName = response['data']['country_name'];

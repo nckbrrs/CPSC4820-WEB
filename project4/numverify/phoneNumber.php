@@ -32,7 +32,7 @@ if (!isset($_SESSION['username'])) {
 <br>
 <div>
   <input type="tel" id="inputField"><br>
-  <button id="submitButton">Submit</button>
+  <button id="submitButton" style="padding-top: 10px;">Submit</button>
 </di>
 <div>
   <h4 id="numEntered">&nbsp;</h4>
