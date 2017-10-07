@@ -1,2 +1,2 @@
 # CPSC4820-WEB
-CPSC 4820 at Clemson University / Web Programming / Baker / Fall 2017
+CPSC 4820 / Web Programming / Clemson University / Baker / Fall 2017
