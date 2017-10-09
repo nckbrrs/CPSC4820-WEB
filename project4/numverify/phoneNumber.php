@@ -24,13 +24,15 @@ if (!isset($_SESSION['username'])) {
     display:flex;
     width: 100%;
   }
+  #filler {
+    width:10%;
+  }
   #header {
-    width: 25%;
-    margin-left: 50%;
-    text-align:left;
+    width: 80%;
+    text-align:center;
   }
   #logout {
-    width:25%;
+    width:10%;
     text-align:right;
   }
   #countryMap {
@@ -41,10 +43,10 @@ if (!isset($_SESSION['username'])) {
   }
 </style>
 <div id="top">
+  <div id="filler">
   <h1 id="header">Numverify Phone Number Verification</h1>
   <a id="logout"href="/project4/login/logout.php">Logout</a>
 </div>
-<h1>Numverify Phone Number Verification</h1>
 <p id="instructions">Enter any phone number (including country code) and click Submit:</p>
 <div id="error" class="errorMessage" style="visibility:hidden;"></div>
 <br>
