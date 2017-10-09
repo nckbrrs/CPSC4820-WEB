@@ -43,7 +43,7 @@ if (!isset($_SESSION['username'])) {
   }
 </style>
 <div id="top">
-  <div id="filler">
+  <div id="filler"></div>
   <h1 id="header">Numverify Phone Number Verification</h1>
   <a id="logout"href="/project4/login/logout.php">Logout</a>
 </div>
