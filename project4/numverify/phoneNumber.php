@@ -20,6 +20,19 @@ if (!isset($_SESSION['username'])) {
     text-align: center;
     font-family: sans-serif;
   }
+  #top {
+    display:flex;
+    width: 100%;
+  }
+  #header {
+    width: 25%;
+    margin-left: 50%;
+    text-align:left;
+  }
+  #logout {
+    width:25%;
+    text-align:right;
+  }
   #countryMap {
     visibility: hidden;
     width: 75%;
@@ -27,6 +40,10 @@ if (!isset($_SESSION['username'])) {
     style: "border:0";
   }
 </style>
+<div id="top">
+  <h1 id="header">Numverify Phone Number Verification</h1>
+  <a id="logout"href="/project4/login/logout.php">Logout</a>
+</div>
 <h1>Numverify Phone Number Verification</h1>
 <p id="instructions">Enter any phone number (including country code) and click Submit:</p>
 <div id="error" class="errorMessage" style="visibility:hidden;"></div>
@@ -43,9 +60,6 @@ if (!isset($_SESSION['username'])) {
 </div>
 <div>
   <iframe id="countryMap" src="http://example.com"></iframe>
-</div>
-<div id="logout">
-  <a href="/project4/login/logout.php">Logout</a>
 </div>
 <script src="/project4/numverify/phoneNumber.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
