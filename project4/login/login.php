@@ -1,13 +1,6 @@
 <?php
 session_start();
 
-/*
-// if already logged in, redirect to phoneNumber.php
-if (isset($_SESSION['username'])) {
-  header("Location: /project4/numverify/phoneNumber.php");
-}
-*/
-
 // pull in user store class
 require "UserStore.php";
 
@@ -65,7 +58,7 @@ if(isset($_POST['comingBack'])){
       // create a session for UserStore
       // redirect to /numverify/phoneNumber.php
       $_SESSION['username'] = $_POST['username'];
-      header("Location: /numverify/phoneNumber.php", true, 302);
+      header("Location: /project4/numverify/phoneNumber.php", true, 302);
       return;
     } else {
       // error in authentication; set an error msg and render HTML
@@ -102,13 +95,13 @@ if(isset($_POST['comingBack'])){
 <div id="error" class="errorMessage" style="visibility:hidden;"></div>
 <br>
 <section>
-	<form id="form" method="post" action="login.php">
+	<form id="form" method="post" action="/project4/login/login.php">
 		<label>Username: <input type="text" name="username" id="username"></label><br>
 		<label>Password: <input type="password" name="password" id="password"></label><br>
 		<input type="hidden" name="comingBack" value="1">
 		<button id="submit" type="submit" name="submit">Submit</button>
 	</form>
   <br>
-	<a href="register.php">Register</a>
+	<a href="/project4/login/register.php">Register</a>
 </section>
-<script type="text/javascript" src="login.js"></script>
+<script type="text/javascript" src="/project4/login/login.js"></script>

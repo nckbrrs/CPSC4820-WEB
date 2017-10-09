@@ -4,7 +4,7 @@ session_start();
 
 // if not logged in, redirect to login page
 if (!isset($_SESSION['username'])) {
-  header("Location: /login/index.html", true, 302);
+  header("Location: /project4/login/index.html", true, 302);
 }
 
 // numverify variables

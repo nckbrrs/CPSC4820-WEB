@@ -88,7 +88,7 @@ if(isset($_POST['comingBack'])){
 			$errorMessage = "An error occured while saving your account.";
 		}else{
 			// redirect to success; don't render any more HTML
-			header("Location: success.html", true, 302);
+			header("Location: /project4/login/success.html", true, 302);
 			return;
 		}
 	}else{
@@ -124,7 +124,7 @@ $errorMessage = false;
 <div id="error" class="errorMessage" style="visibility: hidden;"></div>
 <br>
 <section>
-	<form id="form" method="post" action="register.php">
+	<form id="form" method="post" action="/project4/login/register.php">
 		<label>Desired Username: <input type="text" name="username" id="username"></label><br>
 		<label>Desired Password: <input type="password" name="password" id="password"></label><br>
 		<label>Confirm Password: <input type="password" id="confirm"></label><br>
@@ -134,6 +134,6 @@ $errorMessage = false;
 		<button id="submit" type="submit" name="submit">Submit</button>
 	</form>
 	<br>
-	<a href="login.php">Login</a>
+	<a href="/project4/login/login.php">Login</a>
 </section>
-<script type="text/javascript" src="register.js"></script>
+<script type="text/javascript" src="/project4/login/register.js"></script>

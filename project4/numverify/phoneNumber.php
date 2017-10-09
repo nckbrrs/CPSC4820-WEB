@@ -3,7 +3,7 @@ session_start();
 
 // if not logged in, redirect to login page
 if (!isset($_SESSION['username'])) {
-  header("Location: /login/index.html", true, 302);
+  header("Location: /project4/login/index.html", true, 302);
   return;
 }
 
@@ -44,5 +44,5 @@ if (!isset($_SESSION['username'])) {
 <div>
   <iframe id="countryMap" src="http://example.com"></iframe>
 </div>
-<script src="/numverify/phoneNumber.js"></script>
+<script src="/project4/numverify/phoneNumber.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
