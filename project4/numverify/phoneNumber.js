@@ -32,7 +32,7 @@ var onLoad = function() {
 var verifyNumber = function() {
   var numEntered, numValidity, countryName, lineType, nonsuccessfulCall, errorMsg;
 
-  axios.get('/numverify/verify.php', {
+  axios.get('/project4/numverify/verify.php', {
       params: {
         number: inputField.value
       }
