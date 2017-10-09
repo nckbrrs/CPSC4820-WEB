@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+// if already logged in, redirect to phoneNumber.php
+if (isset($_SESSION['username'])) {
+  header("Location: /project4/numverify/phoneNumber.php", true, 302);
+  return;
+}
+
 // pull in user store class
 require "UserStore.php";
 

@@ -2,6 +2,12 @@
 // pull in user store class
 require "UserStore.php";
 
+// if already logged in, redirect to phoneNumber.php
+if (isset($_SESSION['username'])) {
+  header("Location: /project4/numverify/phoneNumber.php", true, 302);
+  return;
+}
+
 // validates post variables
 // returns true or an error message
 function validate(){
@@ -88,7 +94,7 @@ if(isset($_POST['comingBack'])){
 			$errorMessage = "An error occured while saving your account.";
 		}else{
 			// redirect to success; don't render any more HTML
-			header("Location: /project4/login/success.html", true, 302);
+			header("Location: /project4/login/register_success.html", true, 302);
 			return;
 		}
 	}else{

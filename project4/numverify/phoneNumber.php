@@ -44,5 +44,8 @@ if (!isset($_SESSION['username'])) {
 <div>
   <iframe id="countryMap" src="http://example.com"></iframe>
 </div>
+<div id="logout">
+  <a href="/project4/login/logout.php">Logout</a>
+</div>
 <script src="/project4/numverify/phoneNumber.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
