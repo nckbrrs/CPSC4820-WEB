@@ -48,11 +48,11 @@ app.post('/students', function(req, res) {
       },
       function(err) {
         res.status(500).send(err);
-      }
+      });
     } else {
       res.status(400).send();
     }
-  })
+  });
 }
 
 // Listen on port 3000
