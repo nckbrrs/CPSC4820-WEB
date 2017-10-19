@@ -38,20 +38,25 @@ app.post('/students', function(req, res) {
   console.log('post /students');
   var studentObj = req.body;
   if (studentObj == null || studentObj['username'] == null || studentObj['name'] == null) {
+    console.log('bad request');
     res.status(400).send();
   } else {
     client.sismemberAsync('students', `${studentObj['username']}`).then(function(exists) {
       if (!exists) {
+        console.log('creating and adding new student');
         studentObj['_ref'] = `/students/${studentObj['username']}`;
         client.hmset(`student:${studentObj['username']}`, studentObj);
         client.sadd('students', `${studentObj['username']}`);
         client.execAsync().then(function(done) {
+          console.log('successful execAsync');
           res.status(200).json(studentObj);
         },
         function(err) {
+          console.log('error in execAsync');
           res.status(500).send(err);
         });
       } else {
+        console.log('student exists');
         res.status(400).send();
       }
     });
