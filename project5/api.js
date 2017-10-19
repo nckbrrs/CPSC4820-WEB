@@ -12,7 +12,7 @@ bluebird.promisifyAll(redis.Multi.prototype);
 // Express setup
 var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({extended:true}));
 
 // Redis setup
 var client = redis.createClient();
@@ -41,7 +41,7 @@ app.post('/students', function(req, res) {
   if (studentObj == null || studentObj['username'] == null || studentObj['name'] == null) {
     console.log('bad request');
     console.log('studentObj is ' + JSON.stringify(studentObj));
-    console.log('studentObj username is ' + studentObj['username']);
+    console.log('studentObj username is ' + studentObj.username);
     console.log('studentObj name is ' + studentObj['name']);
     res.status(400).send();
   } else {
