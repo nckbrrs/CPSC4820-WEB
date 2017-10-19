@@ -11,6 +11,7 @@ var app = express();
 
 app.get('/', function(req, res) {
   res.send('Hello World!');
+  console.log('Got a request to \'/\'');
 });
 
 app.listen(3000, function() {
