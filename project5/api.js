@@ -1,29 +1,61 @@
+// Dependencies
 var express = require('express');
 var redis = require('redis');
-/*var bluebird = require('bluebird');
+var bluebird = require('bluebird');
+var bodyParser = require('body-parser');
+var auth = require('basic-auth');
 
+// Bluebird setup
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
-*/
 
+// Express setup
 var app = express();
+app.use(bodyParser.json());
+
+// Redis setup
 var client = redis.createClient();
-
-
-client.on('connection', function() {
-  console.log('connected!');
+client.on('error', function(err) {
+  console.log('Error in redis client.on ' + err);
 });
 
-client.set("foo", "bar", redis.print);
-client.get("foo", function(err, reply) {
-  if (err) throw err;
-  console.log(reply.toString());
-});
+// Authentication
+var authenticate = function(req)  {
+  var credentials = auth(req);
+  if (!credentials || credentials.name !== 'teacher' || credentials.pass !== 't1g3rTester!@#') {
+    return false;
+  }
+  return true;
+}
 
+// Actual API stuff
 app.get('/', function(req, res) {
   res.send('Hello World!');
 });
 
+app.post('/students', function(req, res) {
+  var studentObj = req.body;
+  if (studentObj == null || studentObj['username'] == null || studentObj['name'] == null) {
+    res.status(400).send();
+  }
+  client.sismemberAsync('students', `${studentObj['username']}`).then(function(exists) {
+    if (!exists) {
+      studentObj['_ref'] = `/students/${studentObj['username']}`;
+      client.hmset(`student:${studentObj['username']}`, studentObj);
+      client.sadd('students', `${studentObj['username']}`);
+      client.execAsync().then(function(done) {
+        res.status(200).json(studentObj);
+      },
+      function(err) {
+        res.status(500).send(err);
+      }
+    } else {
+      res.status(400).send();
+    }
+  })
+}
+
+// Listen on port 3000
 app.listen(3000, function() {
   console.log('Example app listening on port 3000!');
 })
