@@ -53,7 +53,7 @@ app.post('/students', function(req, res) {
       res.status(400).send();
     }
   });
-}
+});
 
 // Listen on port 3000
 app.listen(3000, function() {
