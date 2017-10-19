@@ -9,6 +9,11 @@ bluebird.promisifyAll(redis.Multi.prototype);
 var app = express();
 var client = redis.createClient();
 
+
+client.on('connection', function() {
+  console.log('connected!');
+});
+
 app.get('/', function(req, res) {
   res.send('Hello World!');
 });
@@ -16,7 +21,3 @@ app.get('/', function(req, res) {
 app.listen(3000, function() {
   console.log('Example app listening on port 3000!');
 })
-
-client.on('connection', function() {
-  console.log('connected!');
-});
