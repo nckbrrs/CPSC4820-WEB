@@ -39,22 +39,23 @@ app.post('/students', function(req, res) {
   var studentObj = req.body;
   if (studentObj == null || studentObj['username'] == null || studentObj['name'] == null) {
     res.status(400).send();
+  } else {
+    client.sismemberAsync('students', `${studentObj['username']}`).then(function(exists) {
+      if (!exists) {
+        studentObj['_ref'] = `/students/${studentObj['username']}`;
+        client.hmset(`student:${studentObj['username']}`, studentObj);
+        client.sadd('students', `${studentObj['username']}`);
+        client.execAsync().then(function(done) {
+          res.status(200).json(studentObj);
+        },
+        function(err) {
+          res.status(500).send(err);
+        });
+      } else {
+        res.status(400).send();
+      }
+    });
   }
-  client.sismemberAsync('students', `${studentObj['username']}`).then(function(exists) {
-    if (!exists) {
-      studentObj['_ref'] = `/students/${studentObj['username']}`;
-      client.hmset(`student:${studentObj['username']}`, studentObj);
-      client.sadd('students', `${studentObj['username']}`);
-      client.execAsync().then(function(done) {
-        res.status(200).json(studentObj);
-      },
-      function(err) {
-        res.status(500).send(err);
-      });
-    } else {
-      res.status(400).send();
-    }
-  });
 });
 
 // Listen on port 3000
