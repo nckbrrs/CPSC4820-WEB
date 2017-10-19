@@ -12,7 +12,7 @@ bluebird.promisifyAll(redis.Multi.prototype);
 // Express setup
 var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended:false}));
 
 // Redis setup
 var client = redis.createClient();
