@@ -14,6 +14,12 @@ client.on('connection', function() {
   console.log('connected!');
 });
 
+client.set("foo", "bar", redis.print);
+client.get("foo", function(err, reply) {
+  if (err) throw err;
+  console.log(reply.toString());
+});
+
 app.get('/', function(req, res) {
   res.send('Hello World!');
 });
