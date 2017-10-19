@@ -50,8 +50,8 @@ app.post('/students', function(req, res) {
         console.log('creating and adding new student');
         studentObj['_ref'] = `/students/${studentObj['username']}`;
         client.multi()
-          .hmset(`student:${studentObj['username']}`, studentObj);
-          .sadd('students', `${studentObj['username']}`);
+          .hmset(`student:${studentObj['username']}`, studentObj)
+          .sadd('students', `${studentObj['username']}`)
           .execAsync().then(function(done) {
             console.log('successful execAsync');
             res.status(200).json(studentObj);
