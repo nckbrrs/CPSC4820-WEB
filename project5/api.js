@@ -39,7 +39,7 @@ app.post('/students', function(req, res) {
   var studentObj = req.body;
   if (studentObj == null || studentObj['username'] == null || studentObj['name'] == null) {
     console.log('bad request');
-    console.log('studentObj is ' + studentObj);
+    console.log('studentObj is ' + studentObj.toString());
     res.status(400).send();
   } else {
     client.sismemberAsync('students', `${studentObj['username']}`).then(function(exists) {
