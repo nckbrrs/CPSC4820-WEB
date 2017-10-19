@@ -36,7 +36,7 @@ app.get('/', function(req, res) {
 
 app.post('/students', function(req, res) {
   console.log('post /students');
-  var studentObj = req.body;
+  var studentObj = req.body.json();
   if (studentObj == null || studentObj['username'] == null || studentObj['name'] == null) {
     console.log('bad request');
     console.log('studentObj username is ' + studentObj['username']);
