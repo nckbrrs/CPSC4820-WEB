@@ -30,10 +30,12 @@ var authenticate = function(req)  {
 
 // Actual API stuff
 app.get('/', function(req, res) {
+  console.log('basic get');
   res.send('Hello World!');
 });
 
 app.post('/students', function(req, res) {
+  console.log('post /students');
   var studentObj = req.body;
   if (studentObj == null || studentObj['username'] == null || studentObj['name'] == null) {
     res.status(400).send();
