@@ -171,6 +171,7 @@ app.get('/students/:username', function(req, res) {
       client.hgetallAsync(`student:${username}`).then(function(studentObj) {
         console.log('--got student');
         res.status(200).json(studentObj);
+        return;
       });
     } else {
       // student does not exist
@@ -191,20 +192,19 @@ app.get('/students', function(req, res) {
   }
 
   var listToSend = [];
+  var currentUsername = null;
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
     for (i=0; i<studentsList.length; i++) {
-      var username = studentsList[i];
-      client.hgetallAsync(`student:${username}`).then(function(studentObj) {
-        console.log('studentObj is ', studentObj);
+      currentUsername = studentsList[i];
+      client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
         listToSend.push(studentObj);
-        console.log('listToSend is', JSON.stringify(listToSend));
       });
     }
     console.log('--sending ', listToSend);
-    res.status(200);
-    res.end();
+    res.status(200).json(listToSend);
+    return;
   });
 
 });
