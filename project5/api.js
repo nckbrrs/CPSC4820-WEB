@@ -199,7 +199,7 @@ app.get('/students', function(req, res) {
         listToSend.push(studentObj);
       });
     }
-    console.log('--sending ', studentsList);
+    console.log('--sending ', listToSend);
     res.status(200);
     res.end();
   });
