@@ -194,6 +194,7 @@ app.get('/students', function(req, res) {
   var listToSend = [];
   var currentUsername = null;
   var done = false;
+
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
@@ -206,9 +207,10 @@ app.get('/students', function(req, res) {
         done = true;
         console.log('done');
       }
+      console.log('list to send is ', JSON.stringify(listToSend));
     }
     if (done) {
-      console.log('--sending ', listToSend);
+      console.log('--sending ', JSON.stringify(listToSend));
       res.status(200).json(listToSend);
       return;
     }
