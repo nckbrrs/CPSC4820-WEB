@@ -58,7 +58,7 @@ app.post('/students', function(req, res) {
   else {
     // check if username already exists in redist "students" set
     client.sismemberAsync('students', `${studentObj['username']}`).then(function(exists) {
-      //if (!exists) {
+      if (!exists) {
         console.log('--creating and adding new student');
         // add _ref field to student object, with value of '/students/USERNAME'
         studentObj['_ref'] = `/students/${studentObj['username']}`;
@@ -72,21 +72,20 @@ app.post('/students', function(req, res) {
           // execute the above redis commands atomically
           .execAsync().then(function(done) {
             console.log('--successful execAsync');
-            console.log('\n');
-            console.log(done);
             // send body containing a reference to newly created student
             res.status(200).json({_ref: `${studentObj['_ref']}`});
             return;
-          });/*
+          });
       } else {
         console.log('--student already exists');
         res.status(400);
         res.end();
         return;
-      }*/
+      }
     });
   }
 });
+
 /*
 app.delete('/students/:username', function(req, res) {
   if (!authenticate(req)) {
