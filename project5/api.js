@@ -204,6 +204,7 @@ app.get('/students', function(req, res) {
       });
       if (i==studentsList.length-1) {
         done = true;
+        console.log('done');
       }
     }
     if (done) {
