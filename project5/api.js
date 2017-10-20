@@ -193,6 +193,13 @@ app.get('/students', function(req, res) {
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
+    var listToSend = [];
+    for (i=0; i<studentsList.length; i++) {
+      client.hgetallAsync(`student:${studentsList[i]}`).then(function(studentObj) {
+        listToSend.push(studentObj);
+      });
+    }
+    console.log('--sending ', studentsList);
     res.status(200);
     res.end();
   });
