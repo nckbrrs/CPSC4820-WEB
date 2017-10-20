@@ -86,8 +86,8 @@ app.post('/students', function(req, res) {
         console.log('--student already exists');
         res.status(400);
         res.end();
-        return;*/
-      }
+        return;
+      }*/
     });
   }
 });
