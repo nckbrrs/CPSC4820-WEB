@@ -168,6 +168,7 @@ app.get('/students/:username', function(req, res) {
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
       // get student
+      console.log('--student exists');
       client.getAsync(`student:${username}`).then(function(studentObj) {
         console.log('--got student');
         res.status(200).json(studentObj);
