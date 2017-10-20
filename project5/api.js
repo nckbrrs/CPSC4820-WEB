@@ -47,9 +47,7 @@ app.post('/students', function(req, res) {
   var studentObj = req.body;
   // check for bad request (no body, no username field, or no name field)
   if (studentObj == null || studentObj['username'] == null || studentObj['name'] == null) {
-    console.log('--studentObj is null or no username or name');
-    console.log('--studentObj is:');
-    console.log(JSON.stringify(studentObj));
+    console.log('--bad request; studentObj is: ', JSON.stringify(studentObj));
     res.status(400);
     res.end();
     return;
@@ -58,6 +56,7 @@ app.post('/students', function(req, res) {
     // check if username already exists in redist "students" set
     client.sismemberAsync('students', `${studentObj['username']}`).then(function(exists) {
       if (!exists) {
+        // add new student
         console.log('--creating and adding new student');
         // add _ref field to student object, with value of '/students/USERNAME'
         studentObj['_ref'] = `/students/${studentObj['username']}`;
@@ -70,12 +69,13 @@ app.post('/students', function(req, res) {
           .sadd('students', `${studentObj['username']}`)
           // execute the above redis commands atomically
           .execAsync().then(function(retval) {
-            console.log('--successful execAsync');
+            console.log('--successful');
             // send body containing a reference to newly created student
             res.status(200).json({_ref: `${studentObj['_ref']}`});
             return;
           });
       } else {
+        // student already exists
         console.log('--student already exists');
         res.status(400);
         res.end();
@@ -105,10 +105,43 @@ app.delete('/students/:username', function(req, res) {
         return;
       });
     } else {
+      // student does not exist
       console.log('--student does not exist');
       res.status(404);
       res.end();
       return;
+    }
+  });
+});
+
+app.patch('/students/:username', function(req, res) {
+  console.log('received patch /students/:username request');
+  if (!authenticate(req)) {
+    res.status(401);
+    res.end();
+    return;
+  }
+
+  var username = req.params.username;
+  var newName = req.body['name'];;
+  // check for bad request (no body, or no name field, or has username field)
+  if (newName == null || req.body['username'] != null) {
+    console.log('--bad request; req.body is: ', JSON.stringify(req.body));
+    res.status(400);
+    res.end();
+    return;
+  }
+
+  // ensure that requested username actually exists in set
+  client.sismemberAsync('students', username).then(function(exists) {
+    if (exists) {
+      // modify student's name key
+      client.hmsetAsync(`student:${username}`, name, `${newName}`).then(function(retval) {
+        console.log('--student with username ', username, '\'s name changed to ', newName);
+        res.status(200);
+        res.send('student name changed');
+        return;
+      });
     }
   });
 });
