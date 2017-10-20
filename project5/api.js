@@ -206,6 +206,7 @@ app.get('/students', function(req, res) {
       }
     }
     if (print == true) {
+      console.log('pritn is true!!!!');
       console.log('--sending ', listToSend);
     }
     res.status(200);
