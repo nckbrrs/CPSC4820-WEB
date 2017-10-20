@@ -136,7 +136,7 @@ app.patch('/students/:username', function(req, res) {
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
       // modify student's name key
-      client.hmsetAsync(`student:${username}`, name, `${newName}`).then(function(retval) {
+      client.hmsetAsync(`student:${username}`, 'name', `${newName}`).then(function(retval) {
         console.log('--student with username ', username, '\'s name changed to ', newName);
         res.status(200);
         res.send('student name changed');
