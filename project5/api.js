@@ -72,7 +72,7 @@ app.post('/students', function(req, res) {
           .execAsync().then(function(done) {
             console.log('successful execAsync');
             // send body containing a reference to newly created student
-            res.status(200).json({_ref: `${studentObj['_ref']}`);
+            res.status(200).json({_ref: `${studentObj['_ref']}`});
             return;
           },
           function(err) {
