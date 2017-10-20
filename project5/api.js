@@ -72,6 +72,9 @@ app.post('/students', function(req, res) {
           // execute the above redis commands atomically
           .execAsync().then(function(done) {
             console.log('--successful execAsync');
+            console.log('\n');
+
+            console.log(done);
             // send body containing a reference to newly created student
             res.status(200).json({_ref: `${studentObj['_ref']}`});
             return;
