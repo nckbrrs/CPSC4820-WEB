@@ -190,10 +190,10 @@ app.get('/students', function(req, res) {
     return;
   }
 
+  var listToSend = [];
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
-    var listToSend = [];
     for (i=0; i<studentsList.length; i++) {
       var username = studentsList[i];
       client.hgetallAsync(`student:${username}`).then(function(studentObj) {
