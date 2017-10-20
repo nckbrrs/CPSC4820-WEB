@@ -193,6 +193,7 @@ app.get('/students', function(req, res) {
 
   var listToSend = [];
   var currentUsername = null;
+  var done = false;
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
@@ -200,12 +201,16 @@ app.get('/students', function(req, res) {
       currentUsername = studentsList[i];
       client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
         listToSend.push(studentObj);
-        console.log('listtoSend is ', JSON.stringify(listToSend));
       });
+      if (i==studentsList.length-1) {
+        done = true;
+      }
     }
-    console.log('--sending ', listToSend);
-    res.status(200).json(listToSend);
-    return;
+    if (done) {
+      console.log('--sending ', listToSend);
+      res.status(200).json(listToSend);
+      return;
+    }
   });
 
 });
