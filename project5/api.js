@@ -200,6 +200,7 @@ app.get('/students', function(req, res) {
       currentUsername = studentsList[i];
       client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
         listToSend.push(studentObj);
+        console.log('listtoSend is ', JSON.stringify(listToSend));
       });
     }
     console.log('--sending ', listToSend);
