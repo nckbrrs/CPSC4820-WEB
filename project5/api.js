@@ -194,21 +194,15 @@ app.get('/students', function(req, res) {
     console.log('--got students');
     console.log('--', studentsList);
     var listToSend = [];
-    var print = false;
     for (i=0; i<studentsList.length; i++) {
       var username = studentsList[i];
       client.hgetallAsync(`student:${username}`).then(function(studentObj) {
         console.log('studentObj is ', studentObj);
         listToSend.push(studentObj);
+        console.log('listToSend is' + listToSend);
       });
-      if (i==2) {
-        print = true;
-      }
     }
-    if (print == true) {
-      console.log('pritn is true!!!!');
-      console.log('--sending ', listToSend);
-    }
+    console.log('--sending ', listToSend);
     res.status(200);
     res.end();
   });
