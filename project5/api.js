@@ -169,7 +169,7 @@ app.get('/students/:username', function(req, res) {
     if (exists) {
       // get student
       console.log('--student exists');
-      client.getAsync(`student:${username}`).then(function(studentObj) {
+      client.hgetallAsync(`student:${username}`).then(function(studentObj) {
         console.log('--got student');
         res.status(200).json(studentObj);
       });
