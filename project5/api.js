@@ -37,8 +37,7 @@ app.get('/', function(req, res) {
 
 app.post('/students', function(req, res) {
   if (!authenticate(req)) {
-    res.status(401);
-    res.end();
+    res.status(401).send("not authenticated");
     return;
   }
 
