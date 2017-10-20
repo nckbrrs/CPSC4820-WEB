@@ -110,7 +110,7 @@ app.delete('/students/:username', function(req, res) {
       res.end();
       return;
     }
-  }
+  });
 });
 
 // Listen on port 3000
