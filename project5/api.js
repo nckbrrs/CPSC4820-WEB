@@ -168,7 +168,6 @@ app.get('/students/:username', function(req, res) {
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
       // get student
-      console.log('--student exists');
       client.hgetallAsync(`student:${username}`).then(function(studentObj) {
         console.log('--got student');
         res.status(200).json(studentObj);
@@ -181,6 +180,23 @@ app.get('/students/:username', function(req, res) {
       return;
     }
   });
+});
+
+app.get('/students', function(req, res) {
+  console.log('received get /students request');
+  if (!authenticate(req)) {
+    res.status(401);
+    res.end();
+    return;
+  }
+
+  client.smembersAsync('students').then(function(studentsList) {
+    console.log('--got students');
+    console.log('--', studentsList);
+    res.status(200);
+    res.end();
+  });
+
 });
 
 // Listen on port 3000
