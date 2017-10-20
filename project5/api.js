@@ -195,7 +195,8 @@ app.get('/students', function(req, res) {
     console.log('--', studentsList);
     var listToSend = [];
     for (i=0; i<studentsList.length; i++) {
-      client.hgetallAsync(`student:${studentsList[i]}`).then(function(studentObj) {
+      var username = studentsList[i];
+      client.hgetallAsync(`student:${username}`).then(function(studentObj) {
         listToSend.push(studentObj);
       });
     }
