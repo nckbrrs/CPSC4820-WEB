@@ -69,7 +69,7 @@ app.post('/students', function(req, res) {
           // add USERNAME to the 'students' set
           .sadd('students', `${studentObj['username']}`)
           // execute the above redis commands atomically
-          .execAsync().then(function(done) {
+          .execAsync().then(function(retval) {
             console.log('--successful execAsync');
             // send body containing a reference to newly created student
             res.status(200).json({_ref: `${studentObj['_ref']}`});
@@ -98,7 +98,7 @@ app.delete('/students/:username', function(req, res) {
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
       // remove username from 'students' set
-      client.sremAsync('students', username).then(function(res) {
+      client.sremAsync('students', username).then(function(retval) {
         console.log('--student deleted');
         res.status(200);
         res.send('student deleted');
