@@ -193,29 +193,30 @@ app.get('/students', function(req, res) {
 
   var listToSend = [];
   var currentUsername = null;
-  var done = false;
 
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
-    for (i=0; i<studentsList.length; i++) {
-      currentUsername = studentsList[i];
-      client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
-        listToSend.push(studentObj);
-      });
-      if (i==studentsList.length-1) {
-        done = true;
-        console.log('done');
-      }
-      console.log('list to send is ', JSON.stringify(listToSend));
-    }
-    if (done) {
+    var readyToSend = new Promise(function(resolve, reject) {
+      var i=0;
+      do {
+        currentUsername = studentsList[i];
+        client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
+          listToSend.push(studentObj);
+        });
+        i = i+1;
+        if (i==studentsList.length) {
+          resolve();
+        }
+      } while (i<studentsList.length);
+    });
+
+    readyToSend.then(function() {
       console.log('--sending ', JSON.stringify(listToSend));
       res.status(200).json(listToSend);
       return;
-    }
+    });
   });
-
 });
 
 // Listen on port 3000
