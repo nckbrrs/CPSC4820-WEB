@@ -93,17 +93,20 @@ app.delete('/students/:username', function(req, res) {
     return;
   }
 
-  username = req.params.username;
+  var username = req.params.username;
   // ensure that requested username actually exists in set
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
       // remove username from 'students' set
-      client.sremAsync('students', username).then(function(retval) {
-        console.log('--student deleted');
-        res.status(200);
-        res.send('student deleted');
-        return;
-      });
+      client.multi()
+        .del(`student:${username}`)
+        .srem('students', username)
+        .execAsync().then(function(retval) {
+          console.log('--student deleted');
+          res.status(200);
+          res.send('student deleted');
+          return;
+        });
     } else {
       // student does not exist
       console.log('--student does not exist');
@@ -132,7 +135,7 @@ app.patch('/students/:username', function(req, res) {
     return;
   }
 
-  // ensure that requested username actually exists in set
+  // ensure that requested student actually exists in set
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
       // modify student's name key
@@ -142,6 +145,35 @@ app.patch('/students/:username', function(req, res) {
         res.send('student name changed');
         return;
       });
+    } else {
+      // student does not exist
+      console.log('--student does not exist');
+      res.status(404);
+      res.end();
+      return;
+    }
+  });
+});
+
+app.get('/students/:username', function(req, res) {
+  console.log('received get /students/:username request');
+  if (!authenticate(req)) {
+    res.status(401);
+    res.end();
+    return;
+  }
+
+  var username = req.params.username;
+  // ensure that requested student actually exists in set
+  client.sismemberAsync('students', username).then(function(exists) {
+    if (exists) {
+      // get student
+    } else {
+      // student does not exist
+      console.log('--student does not exist');
+      res.status(404);
+      res.end();
+      return;
     }
   });
 });
