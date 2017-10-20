@@ -201,11 +201,11 @@ app.get('/students', function(req, res) {
         console.log('studentObj is ', studentObj);
         listToSend.push(studentObj);
       });
-      if (i== (studentsList.length-1)) {
+      if (i==2) {
         print = true;
       }
     }
-    if (print) {
+    if (print == true) {
       console.log('--sending ', listToSend);
     }
     res.status(200);
