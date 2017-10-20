@@ -37,15 +37,14 @@ app.get('/', function(req, res) {
 
 // Actual API stuff
 app.post('/students', function(req, res) {
+  console.log('received post /students request');
   if (!authenticate(req)) {
     res.status(401);
     res.end();
     return;
   }
 
-  console.log('received post /students request');
   var studentObj = req.body;
-
   // check for bad request (no body, no username field, or no name field)
   if (studentObj == null || studentObj['username'] == null || studentObj['name'] == null) {
     console.log('--studentObj is null or no username or name');
@@ -86,8 +85,8 @@ app.post('/students', function(req, res) {
   }
 });
 
-/*
 app.delete('/students/:username', function(req, res) {
+  console.log('received delete /students/:username request');
   if (!authenticate(req)) {
     res.status(401);
     res.end();
@@ -95,11 +94,16 @@ app.delete('/students/:username', function(req, res) {
   }
 
   username = req.params.username;
+  // ensure that requested username actually exists in set
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
+      // remove username from 'students' set
       client.sremAsync('students', username).then(function(res) {
-
-      })
+        console.log('--student deleted');
+        res.status(200);
+        res.send('student deleted');
+        return;
+      });
     } else {
       console.log('--student does not exist');
       res.status(404);
@@ -108,7 +112,7 @@ app.delete('/students/:username', function(req, res) {
     }
   }
 });
-*/
+
 // Listen on port 3000
 app.listen(3000, function() {
   console.log('Example app listening on port 3000!');
