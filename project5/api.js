@@ -194,8 +194,11 @@ app.get('/students', function(req, res) {
 
   client.smembersAsync('students').then(function(students) {
     var gottenStudents = [];
-    for (var student of students) {
-      gottenStudents.push(client.hgetallAsync(`student:${student}`));
+    var currentUsername = null;
+
+    for (var i = 0; i<students.length; i++) {
+      currentUsername = students[i];
+      gottenStudents.push(client.hgetallAsync(`student:${currentUsername}`));
     }
     Promise.all(gottenStudents).then(function(listToSend) {
       res.status(200).json(listToSend);
