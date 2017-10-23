@@ -198,25 +198,19 @@ app.get('/students', function(req, res) {
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
-    var i = 0;
-
-    currentUsername = studentsList[i];
-    var pushed = new Promise(function(resolve, reject) {
-      client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
-        listToSend.push(studentObj);
+    for (var username in studentsList) {
+      client.hgetAllAsync(`student:${username}`).then(function(studentObj) {
+        var pushed = new Promise(function(resolve) {
+          if (listToSend.push(studentObj) == studentsList.length) {
+            resolve();
+          }
+        }).then(function() {
+          console.log('--out of for loop, sending ', JSON.stringify(listToSend));
+          res.status(200).json(allStudents);
+          return;
+        });
       });
-    }).then(function() {
-      console.log("resolved");
-      i = i+1;
-    });
-
-/*
-    if (listToSend.length == studentsList.length) {
-      console.log('--out of for loop, sending ', JSON.stringify(listToSend));
-      res.status(200).json(allStudents);
-      return;
-    }*/
-
+    }
   });
 });
 
