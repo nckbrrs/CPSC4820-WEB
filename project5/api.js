@@ -203,6 +203,7 @@ app.get('/students', function(req, res) {
         currentUsername = studentsList[i];
         client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
           listToSend.push(studentObj);
+          console.log('--in for loop, listToSend is ', JSON.stringify(listToSend));
         });
         if (i==studentsList.length-1) {
           console.log("--resolving...");
