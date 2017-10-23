@@ -192,6 +192,18 @@ app.get('/students', function(req, res) {
     return;
   }
 
+  client.smembersAsync('students').then(function(students) {
+    var gottenStudents = [];
+    for (student in students) {
+      gottenStudents.push(client.hgetallAsync(`student:${student}`));
+    }
+    Promise.all(gottenStudents).then(function(listToSend) {
+      res.status(200).json(listToSend);
+    });
+  });
+/*
+
+
   client.smembersAsync('students').then(
     (users) => {
       let allStudents = [];
@@ -202,7 +214,7 @@ app.get('/students', function(req, res) {
       );
     },
     (err) => { res.status(500).send(); }
-  );
+  );*/
 
   /*
   client.smembersAsync('students').then(function(studentsList) {
