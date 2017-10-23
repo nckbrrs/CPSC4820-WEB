@@ -198,33 +198,16 @@ app.get('/students', function(req, res) {
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
-    var i = 0;
-    if ((i<studentsList.length) && (listToSend.length != studentsList.length)) {
-      currentUsername = studentsList[i];
-      client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
-        listToSend.push(studentObj);
-        i = i+1;
-        console.log('--in for loop, listToSend is ', JSON.stringify(listToSend));
-      });
-    } else {
+
+    for (var student in studentsList) {
+      listToSend.push(client.hgetallAsync(`student:${currentUsername}`));
+    }
+    
+    Promise.all(listToSend).then(function() {
       console.log('--out of for loop, sending ', JSON.stringify(listToSend));
       res.status(200).json(listToSend);
       return;
     }
-/*
-    for (i=0; i<studentsList.length; i++) {
-      currentUsername = studentsList[i];
-      client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
-        listToSend.push(studentObj);
-        console.log('--in for loop, listToSend is ', JSON.stringify(listToSend));
-      });
-    }
-    if (listToSend.length == studentsList.length) {
-
-    }
-    console.log('--out of for loop, sending ', JSON.stringify(listToSend));
-    res.status(200).json(listToSend);
-    return;*/
   });
 });
 
