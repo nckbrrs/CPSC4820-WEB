@@ -351,7 +351,7 @@ app.delete('/grades/:gradeid', function(req, res) {
     if (exists) {
       client.multi()
         // delete grade:ID hash object
-        .del(`grade:${gradeid}`)
+        .del(`grade:${gradeId}`)
         // remove ID from 'grades' set
         .srem('grades', gradeId)
         // execute the above commands atomically
