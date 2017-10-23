@@ -406,7 +406,7 @@ app.get('/grades', function(req, res) {
       currentGradeId = grades[i];
       console.log('--currentGradeId', currentGradeId);
       gottenGrades.push(client.hgetallAsync(`grades:${currentGradeId}`));
-      console.log('--listToSend is now', JSON.stringify(listToSend));
+      console.log('--listToSend is now', JSON.stringify(gottenGrades));
     }
     Promise.all(gottenGrades).then(function(listToSend) {
       if (req.query.username) {
