@@ -203,9 +203,9 @@ app.get('/students', function(req, res) {
       listToSend.push(client.hgetallAsync(`student:${currentUsername}`));
     }
 
-    Promise.all(listToSend).then(function() {
+    Promise.all(listToSend).then(function(allStudents) {
       console.log('--out of for loop, sending ', JSON.stringify(listToSend));
-      res.status(200).json(listToSend);
+      res.status(200).json(allStudents);
       return;
     });
   });
