@@ -274,25 +274,9 @@ app.get('/grades/:gradeid').then(function(req, res) {
     return;
   }
 
-  var gradeId = req.params.gradeid;
-  // ensure that requested grade actually exists in set
-  client.sismemberAsync('grades', gradeId).then(function(exists) {
-    if (exists) {
-      // get grade
-      client.hgetallAsync(`grade:${gradeId}`).then(function(gradeObj) {
-        console.log('--got grade');
-        res.status(200).json(gradeObj);
-        return;
-      });
-    } else {
-      // grade does not exist
-      console.log('--grade does not exist');
-      res.status(404).
-      res.end();
-      return;
-    }
-  })
+
 });
+
 
 // Listen on port 3000
 app.listen(3000, function() {
