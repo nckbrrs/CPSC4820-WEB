@@ -139,6 +139,7 @@ app.patch('/students/:username', function(req, res) {
   for (var field in fields) {
     if (req.body[field[fields]] != null) {
       newStudentObj[field[fields]] = req.body[field[fields]];
+      console.log(JSON.stringify(newStudentObj));
     }
   }
 
