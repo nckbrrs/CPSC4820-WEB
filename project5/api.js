@@ -327,15 +327,19 @@ app.patch('/grades/:gradeid', function(req, res) {
   console.log('--req.body is ', JSON.stringify(req.body));
 
   if (req.body['max'] != null) {
+    console.log('--max not null');
     newVals['max'] = req.body['max'];
   }
   if (req.body['grade'] != null) {
+    console.log('--grade not null');
     newVals['grade'] = req.body['grade'];
   }
   if (req.body['type'] != null) {
+    console.log('--type not null');
     newVals['type'] = req.body['type'];
   }
   if (req.body['username'] != null) {
+    console.log('--username not null');
     newVals['username'] = req.body['username'];
   }
 
