@@ -199,7 +199,7 @@ app.get('/students', function(req, res) {
     console.log('--got students');
     console.log('--', studentsList);
     var i = 0;
-    if (listToSend.length != studentsList.length) {
+    if ((i<studentsList.length) && (listToSend.length != studentsList.length)) {
       currentUsername = studentsList[i];
       client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
         listToSend.push(studentObj);
