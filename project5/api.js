@@ -312,10 +312,10 @@ app.patch('/grades/:gradeid', function(req, res) {
   var gradeId = req.params.gradeid;
   var reqBody = req.body;
   var newVals = {
-    'newMax': null,
-    'newGrade': null,
-    'newType': null,
-    'newUsername': null
+    'max': null,
+    'grade': null,
+    'type': null,
+    'username': null
   };
 
   if (req.body == null ||
@@ -330,16 +330,16 @@ app.patch('/grades/:gradeid', function(req, res) {
   }
 
   if (req.body['max'] != null) {
-    newVals['newMax'] = req.body['max'];
+    newVals['max'] = req.body['max'];
   }
   if (req.body['grade'] != null) {
-    newVals['newGrade'] = req.body['grade'];
+    newVals['grade'] = req.body['grade'];
   }
   if (req.body['type'] != null) {
-    newVals['newType'] = req.body['type'];
+    newVals['type'] = req.body['type'];
   }
   if (req.body['username'] != null) {
-    newVals['newUsername'] = req.body['username'];
+    newVals['username'] = req.body['username'];
   }
 
   client.sismemberAsync('grades', gradeId).then(function(exists) {
@@ -347,7 +347,7 @@ app.patch('/grades/:gradeid', function(req, res) {
       for (var newVal in newVals) {
         if (newVal != null) {
           client.hmsetAsync(`grade:${gradeId}`, `${newVal}`, `${newVals[newVal]}`).then(function(retval) {
-            console.log('--grade with id ', gradeId, `\'s ${newVal} changed to `, newVal);
+            console.log('--grade with id ', gradeId, `\'s ${newVal} changed to `, newVals[newVal]);
           });
         }
       }
