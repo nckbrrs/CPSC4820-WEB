@@ -1,26 +1,26 @@
-// Dependencies
+/* Dependencies */
 var express = require('express');
 var redis = require('redis');
 var bluebird = require('bluebird');
 var bodyParser = require('body-parser');
 var auth = require('basic-auth');
 
-// Bluebird setup
+/* Bluebird setup */
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
-// Express setup
+/* Express setup */
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-// Redis setup
+/* Redis setup */
 var client = redis.createClient();
 client.on('error', function(err) {
   console.log('Error in redis client.on ' + err);
 });
 
-// Authentication method
+/* Authentication method */
 var authenticate = function(req)  {
   var credentials = auth(req);
   if (!credentials || credentials.name !== 'teacher' || credentials.pass !== 't1g3rTester!@#') {
@@ -29,23 +29,20 @@ var authenticate = function(req)  {
   return true;
 }
 
-// Basic GET request for testing purposes
-app.get('/', function(req, res) {
-  console.log('received get / request');
-  res.send('Hello World!');
-});
-
-// Actual API stuff
+/* POST /students
+ - accepts JSON request body with username and name fields
+ - creates new hashmap called student:USERNAME containing fields and keys
+ - adds username to 'students' set
+ - if successful, return 200 status code with body containing reference to newly created item
+*/
 app.post('/students', function(req, res) {
-  console.log('received post /students request');
   if (!authenticate(req)) {
-    res.status(401);
-    res.end();
+    res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
-  var studentObj = req.body;
   // check for bad request (no body, no username field, or no name field)
+  var studentObj = req.body;
   if (studentObj == null ||
       studentObj['username'] == null ||
       studentObj['name'] == null) {
@@ -404,23 +401,19 @@ app.get('/grades', function(req, res) {
 
     for (var i = 0; i < grades.length; i++) {
       currentGradeId = grades[i];
-      console.log('--currentGradeId', currentGradeId);
       gottenGrades.push(client.hgetallAsync(`grade:${currentGradeId}`));
     }
     Promise.all(gottenGrades).then(function(listToSend) {
       if (req.query.username) {
-        console.log('--filtering by username');
         listToSend = listToSend.filter(function(grade) {
           return grade.username === req.query.username;
         });
       }
       if (req.query.type) {
-        console.log('--filtering by type');
         listToSend = listToSend.filter(function(grade) {
           return grade.type === req.query.type;
         });
       }
-      console.log('--listToSend is', JSON.stringify(listToSend));
       res.status(200).json(listToSend);
       return;
     });
