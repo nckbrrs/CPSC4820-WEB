@@ -311,12 +311,7 @@ app.patch('/grades/:gradeid', function(req, res) {
 
   var gradeId = req.params.gradeid;
   var reqBody = req.body;
-  var newVals = {
-    'max': null,
-    'grade': null,
-    'type': null,
-    'username': null
-  };
+  var newVals = {};
 
   if (req.body == null ||
       (req.body['max'] == null &&
@@ -328,6 +323,8 @@ app.patch('/grades/:gradeid', function(req, res) {
     res.end();
     return;
   }
+
+  console.log('--req.body is ', JSON.stringify(req.body));
 
   if (req.body['max'] != null) {
     newVals['max'] = req.body['max'];
