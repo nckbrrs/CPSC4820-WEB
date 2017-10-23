@@ -183,8 +183,6 @@ app.get('/students/:username', function(req, res) {
   });
 });
 
-
-
 // STILL WORKING ON THIS ONE--IT DOESN'T WORK RIGHT NOW
 app.get('/students', function(req, res) {
   console.log('received get /students request');
@@ -201,19 +199,16 @@ app.get('/students', function(req, res) {
     console.log('--got students');
     console.log('--', studentsList);
     var readyToSend = new Promise(function(resolve, reject) {
-      var i=0;
-      do {
+      for (i=0; i<studentsList.length; i++){
         currentUsername = studentsList[i];
         client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
           listToSend.push(studentObj);
         });
-        i = i+1;
-        if (i==studentsList.length) {
+        if (i==studentsList.length-1) {
           resolve();
         }
-      } while (i<studentsList.length);
+      }
     });
-
     readyToSend.then(function() {
       console.log('--sending ', JSON.stringify(listToSend));
       res.status(200).json(listToSend);
