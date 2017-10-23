@@ -205,7 +205,8 @@ app.get('/students', function(req, res) {
           listToSend.push(studentObj);
         });
         if (i==studentsList.length-1) {
-          console.log("resolving...");
+          console.log("--resolving...");
+          console.log('--listToSend is ', JSON.stringify(listToSend));
           resolve();
         }
       }
