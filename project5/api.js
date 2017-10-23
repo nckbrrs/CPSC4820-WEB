@@ -32,7 +32,7 @@ var authenticate = function(req)  {
 /* Listen on port 3000 */
 app.listen(3000, function() {
   console.log('Server listening on port 3000!');
-})
+});
 
 /* POST /students
  - accepts JSON request body with username and name fields
