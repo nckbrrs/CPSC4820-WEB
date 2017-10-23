@@ -200,7 +200,9 @@ app.get('/students', function(req, res) {
         (error) => { res.status(500).send(error); }
       );
     },
-    (error) => { res.status(500).send(); }
+    function(error) {
+      res.status(500).send();
+    }
   );
 
   /*
