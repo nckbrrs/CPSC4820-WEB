@@ -200,15 +200,15 @@ app.get('/students', function(req, res) {
     console.log('--', studentsList);
     var i = 0;
 
-    while (listToSend.length != studentsList.length) {
       currentUsername = studentsList[i];
-      client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
-        listToSend.push(studentObj);
+      var pushed = new Promise(function(resolve, reject) {
+        client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
+          listToSend.push(studentObj);
+        });
+      }).then(function() {
         i = i+1;
       });
-      console.log('listToSend.length is ', listToSend.length);
-      console.log('studentsList.length is ', studentsList.length);
-    }
+    
 
     if (listToSend.length == studentsList.length) {
       console.log('--out of for loop, sending ', JSON.stringify(listToSend));
