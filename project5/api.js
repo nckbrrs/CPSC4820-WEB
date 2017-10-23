@@ -198,20 +198,14 @@ app.get('/students', function(req, res) {
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
-    for (var username in studentsList) {
-      client.hgetallAsync(`student:${username}`).then(function(studentObj) {
-        var pushed = new Promise(function(resolve) {
-          if (listToSend.push(studentObj) == studentsList.length) {
-            console.log('about to resolve, listToSend is ', JSON.stringify(listToSend));
-            resolve();
-          }
-        }).then(function() {
-          console.log('--out of for loop, sending ', JSON.stringify(listToSend));
-          res.status(200).json(listToSend);
-          return;
-        });
-      });
+    for (var students in studentList) {
+      listToSend.push(clieng.hgetallAsync(`student:${student}`));
     }
+    Promise.all(listToSend).then(function(good) {
+      res.status(200).json(good);
+    }, function(err) {
+      res.status(500).send();
+    });
   });
 });
 
