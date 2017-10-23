@@ -406,19 +406,21 @@ app.get('/grades', function(req, res) {
       currentGradeId = grades[i];
       console.log('--currentGradeId', currentGradeId);
       gottenGrades.push(client.hgetallAsync(`grades:${currentGradeId}`));
-      console.log('--listToSend is now', JSON.stringify(gottenGrades));
     }
     Promise.all(gottenGrades).then(function(listToSend) {
       if (req.query.username) {
+        console.log('--filtering by username');
         listToSend = listToSend.filter(function(grade) {
           return grade.username === req.query.username;
         });
       }
       if (req.query.type) {
+        console.log('--filtering by type');
         listToSend = listToSend.filter(function(grade) {
           return grade.type === req.query.type;
         });
       }
+      console.log('--listToSend is', JSON.stringify(listToSend));
       res.status(200).json(listToSend);
       return;
     });
