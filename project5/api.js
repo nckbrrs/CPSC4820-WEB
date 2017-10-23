@@ -202,6 +202,7 @@ app.get('/students', function(req, res) {
       client.hgetallAsync(`student:${username}`).then(function(studentObj) {
         var pushed = new Promise(function(resolve) {
           if (listToSend.push(studentObj) == studentsList.length) {
+            console.log('about to resolve, listToSend is ', JSON.stringify(listToSend));
             resolve();
           }
         }).then(function() {
