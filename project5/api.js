@@ -127,7 +127,6 @@ app.patch('/students/:username', function(req, res) {
 
   var username = req.params.username;
   var newStudentObj = {};
-  var fields = ['name'];
 
   // check for bad request (no body, or no name field, or has username field)
   if (req.body['name'] == null || req.body['username'] != null) {
@@ -136,12 +135,7 @@ app.patch('/students/:username', function(req, res) {
   }
 
   // set fields of new student object to equal those in the request
-  for (var field in fields) {
-    if (req.body[field[fields]] != null) {
-      newStudentObj[field[fields]] = req.body[field[fields]];
-      console.log(JSON.stringify(newStudentObj));
-    }
-  }
+  newStudentObj['name'] = req.body['name'];
 
   // ensure that requested username already exists
   client.sismemberAsync('students', username).then(function(exists) {
