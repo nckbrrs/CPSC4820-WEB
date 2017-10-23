@@ -238,32 +238,29 @@ app.post('/grades', function(req, res) {
       if (grades.length == 0) {
         newGradeId = 0;
         console.log('newGradeId: ', newGradeId);
-        return;
       } else {
         newGradeId = (grades[grades.length-1]) + 1;
         console.log('newGradeId: ', newGradeId);
-        return;
       }
-    });
 
+      // add '_ref' field to grade object
+      console.log('--creating and adding new grade');
+      gradeObj['_ref'] = `/grades/${newGradeId}`;
 
-    // add '_ref' field to grade object
-    console.log('--creating and adding new grade');
-    gradeObj['_ref'] = `/grades/${newGradeId}`;
-
-    // multi() used to execute several redis commands atomically
-    client.multi()
-      // create a new hashmap for the newly created grade called 'grade:ID',
-      // with the fields and keys located in the gradeObj object
-      .hmset(`grade:${newGradeId}`, gradeObj)
-      // add ID to the 'grades' set
-      .sadd('grades', `${newGradeId}`)
-      // execute the above redis commands atomically
-      .execAsync().then(function(retval) {
-        console.log('--successful');
-        // send body containing a reference to the newly created grade
-        res.status(200).json({_ref: `${gradeObj['_ref']}`});
-        return;
+      // multi() used to execute several redis commands atomically
+      client.multi()
+        // create a new hashmap for the newly created grade called 'grade:ID',
+        // with the fields and keys located in the gradeObj object
+        .hmset(`grade:${newGradeId}`, gradeObj)
+        // add ID to the 'grades' set
+        .sadd('grades', `${newGradeId}`)
+        // execute the above redis commands atomically
+        .execAsync().then(function(retval) {
+          console.log('--successful');
+          // send body containing a reference to the newly created grade
+          res.status(200).json({_ref: `${gradeObj['_ref']}`});
+          return;
+        });
       });
     }
 });
