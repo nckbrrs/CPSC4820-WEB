@@ -315,7 +315,7 @@ app.patch('/grades/:gradeid', function(req, res) {
     'newMax': null,
     'newGrade': null,
     'newType': null,
-    'newUsername': null;
+    'newUsername': null
   };
 
   if (req.body == null ||
