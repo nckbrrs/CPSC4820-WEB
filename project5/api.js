@@ -235,14 +235,17 @@ app.post('/grades', function(req, res) {
     // set newGradeId to be one higher than most recently created grade's id
     var newGradeId = null;
     client.smembersAsync('grades').then(function(grades) {
-      if (grades.length == 0) {
+      if (grades.length == ) {
         newGradeId = 0;
+        console.log('newGradeId: ', newGradeId);
         return;
       } else {
         newGradeId = (grades[grades.length-1]) + 1;
+        console.log('newGradeId: ', newGradeId);
         return;
       }
     });
+
 
     // add '_ref' field to grade object
     console.log('--creating and adding new grade');
