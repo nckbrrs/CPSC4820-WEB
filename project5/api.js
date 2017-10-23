@@ -130,7 +130,7 @@ app.patch('/students/:username', function(req, res) {
   var fields = ['name'];
 
   // check for bad request (no body, or no name field, or has username field)
-  if (newName == null || req.body['username'] != null) {
+  if (req.body['name'] == null || req.body['username'] != null) {
     res.status(400).send('Bad request!');
     return;
   }
@@ -352,7 +352,7 @@ app.delete('/grades/:gradeid', function(req, res) {
   var gradeId = req.params.gradeid;
 
   // ensure that requested grade already exists
-  client.sismemberAsync('grades', gradeid).then(function(exists) {
+  client.sismemberAsync('grades', gradeId).then(function(exists) {
     if (exists) {
       client.multi()
         // delete grade:ID hash object
