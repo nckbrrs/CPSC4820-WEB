@@ -267,7 +267,7 @@ app.post('/grades', function(req, res) {
 });
 
 app.get('/grades/:gradeid', function(req, res) {
-  console.log('received post /grades request');
+  console.log('received get /grades/:gradeid request');
   if (!authenticate(req)) {
     res.status(401);
     res.end();
@@ -293,6 +293,77 @@ app.get('/grades/:gradeid', function(req, res) {
     }
   })
 });
+
+app.patch('/grades/:gradeid', function(req, res) {
+  // modify grade
+  //return 404 if gradeid doesn't exist
+  //return 400 if request body is missing or no keys exist in hash
+  //expect hashed array of values to change
+  // should only accept changes for max, grade, type, and username
+  // if change(s) successful, return a 200 with no body
+
+  console.log('received patch /grades/:gradeid request');
+  if (!authenticate(req)) {
+    res.status(401);
+    res.end();
+    return;
+  }
+
+  var gradeId = req.params.gradeid;
+  var reqBody = req.body;
+  var newVals = {
+    'newMax' = null;
+    'newGrade' = null;
+    'newType' = null;
+    'newUsername' = null;
+  };
+
+  if (req.body == null ||
+      (req.body['max'] == null &&
+      req.body['grade'] == null &&
+      req.body['type'] == null &&
+      req.body['username'] == null)) {
+    console.log('--bad request; req.body is: ', JSON.stringify(req.body));
+    res.status(400);
+    res.end();
+    return;
+  }
+
+  if (req.body['max'] != null) {
+    newVals['newMax'] = req.body['max'];
+  }
+  if (req.body['grade'] != null) {
+    newVals['newGrade'] = req.body['grade'];
+  }
+  if (req.body['type'] != null) {
+    newVals['newType'] = req.body['type'];
+  }
+  if (req.body['username'] != null) {
+    newVals['newUsername'] = req.body['username'];
+  }
+
+  client.sismemberAsync('grades', gradeId).then(function(exists) {
+    if (exists) {
+      for (var newVal in newVals) {
+        if (newVal != null) {
+          client.hmsetAsync(`grade:${gradeId}`, `${newVal}`, `${newVals[newVal]}`).then(function(retval) {
+            console.log('--grade with id ', gradeId, `\'s ${newVal} changed to `, newVal);
+          }
+        }
+      }
+      res.status(200);
+      res.send('grade vals changed');
+      return;
+    } else {
+      // grade does not exist
+      console.log('--grade does not exist');
+      res.status(404);
+      res.end();
+      return;
+    }
+  });
+});
+
 
 // Listen on port 3000
 app.listen(3000, function() {
