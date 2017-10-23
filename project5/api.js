@@ -203,6 +203,8 @@ app.get('/students', function(req, res) {
       client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
         listToSend.push(studentObj);
       });
+      console.log('listToSend.length is ', listToSend.length);
+      console.log('studentsList.length is ', studentsList.length);
     }
 
     if (listToSend.length == studentsList.length) {
@@ -210,7 +212,7 @@ app.get('/students', function(req, res) {
       res.status(200).json(allStudents);
       return;
     }
-    
+
   });
 });
 
