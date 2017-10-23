@@ -287,7 +287,7 @@ app.get('/grades/:gradeid', function(req, res) {
     } else {
       // grade does not exist
       console.log('--grade does not exist');
-      res.status(404).
+      res.status(404);
       res.end();
       return;
     }
