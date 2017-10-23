@@ -198,25 +198,16 @@ app.get('/students', function(req, res) {
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
-    var readyToSend = new Promise(function(resolve, reject) {
-      for (i=0; i<studentsList.length; i++) {
-        currentUsername = studentsList[i];
-        client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
-          listToSend.push(studentObj);
-          console.log('--in for loop, listToSend is ', JSON.stringify(listToSend));
-        });
-        if (i==studentsList.length-1) {
-          console.log("--resolving...");
-          console.log('--listToSend is ', JSON.stringify(listToSend));
-          resolve();
-        }
-      }
-    });
-    readyToSend.then(function() {
-      console.log('--sending ', JSON.stringify(listToSend));
-      res.status(200).json(listToSend);
-      return;
-    });
+    for (i=0; i<studentsList.length; i++) {
+      currentUsername = studentsList[i];
+      client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
+        listToSend.push(studentObj);
+        console.log('--in for loop, listToSend is ', JSON.stringify(listToSend));
+      });
+    }
+    console.log('--out of for loop, sending ', JSON.stringify(listToSend));
+    res.status(200).json(listToSend);
+    return;
   });
 });
 
