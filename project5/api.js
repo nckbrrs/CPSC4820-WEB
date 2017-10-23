@@ -266,7 +266,7 @@ app.post('/grades', function(req, res) {
     }
 });
 
-app.get('/grades/:gradeid').then(function(req, res) {
+app.get('/grades/:gradeid', function(req, res) {
   console.log('received post /grades request');
   if (!authenticate(req)) {
     res.status(401);
