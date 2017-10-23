@@ -29,98 +29,99 @@ var authenticate = function(req)  {
   return true;
 }
 
+/* Listen on port 3000 */
+app.listen(3000, function() {
+  console.log('Server listening on port 3000!');
+})
+
 /* POST /students
  - accepts JSON request body with username and name fields
- - creates new hashmap called student:USERNAME containing fields and keys
- - adds username to 'students' set
- - if successful, return 200 status code with body containing reference to newly created item
+ - creates new hashmap called student:USERNAME
+ - adds USERNAME to 'students' set
+ - if successful, return body containing reference to newly created item
 */
 app.post('/students', function(req, res) {
+  // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
-  // check for bad request (no body, no username field, or no name field)
   var studentObj = req.body;
-  if (studentObj == null ||
-      studentObj['username'] == null ||
-      studentObj['name'] == null) {
-    console.log('--bad request; studentObj is: ', JSON.stringify(studentObj));
-    res.status(400);
-    res.end();
+
+  // check for bad request (no body, no username field, or no name field)
+  if (studentObj == null || studentObj['username'] == null || studentObj['name'] == null) {
+    res.status(400).send('Bad request!');
     return;
   }
   else {
-    // check if username already exists in redist "students" set
+    // ensure that requested username does not already exist
     client.sismemberAsync('students', `${studentObj['username']}`).then(function(exists) {
       if (!exists) {
-        // add new student
-        console.log('--creating and adding new student');
-        // add _ref field to student object, with value of '/students/USERNAME'
+        // add _ref field to new student object
         studentObj['_ref'] = `/students/${studentObj['username']}`;
-        // multi() used to execute several redis commands atomically
+
         client.multi()
-          // create a new hashmap for the newly created student called 'student:USERNAME',
-          // with the fields and keys located in the studentObj object
+          // create new hash for newly created student called 'student:USERNAME'
           .hmset(`student:${studentObj['username']}`, studentObj)
-          // add USERNAME to the 'students' set
+          // add USERNAME to 'students' set
           .sadd('students', `${studentObj['username']}`)
-          // execute the above redis commands atomically
+          // execute the above commands atomically
           .execAsync().then(function(retval) {
-            console.log('--successful');
-            // send body containing a reference to newly created student
             res.status(200).json({_ref: `${studentObj['_ref']}`});
             return;
           });
       } else {
         // student already exists
-        console.log('--student already exists');
-        res.status(400);
-        res.end();
+        res.status(400).send('Student already exists!');
         return;
       }
     });
   }
 });
 
+/* DELETE /students/:username
+ - no request body
+ - deletes student:USERNAME hash object and removes USERNAME from 'students' set
+*/
 app.delete('/students/:username', function(req, res) {
-  console.log('received delete /students/:username request');
+  // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401);
-    res.end();
+    res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
   var username = req.params.username;
-  // ensure that requested username actually exists in set
+
+  // ensure that requested username already exists
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
-      // delete student:USERNAME hash object and remove username from 'students' set
       client.multi()
+        // delete student:USERNAME hash object
         .del(`student:${username}`)
+        // remove USERNAME from 'students' set
         .srem('students', username)
+        // execute the above commands atomically
         .execAsync().then(function(retval) {
-          console.log('--student deleted');
-          res.status(200);
-          res.send('student deleted');
+          res.status(200).send('Student deleted!');
           return;
         });
     } else {
       // student does not exist
-      console.log('--student does not exist');
-      res.status(404);
-      res.end();
+      res.status(404).send('Student does not exist!');
       return;
     }
   });
 });
 
+/* PATCH /students/:username
+- accepts JSON request body with name field
+- modifies students 'name' field
+*/
 app.patch('/students/:username', function(req, res) {
-  console.log('received patch /students/:username request');
+  // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401);
-    res.end();
+    res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
@@ -130,82 +131,84 @@ app.patch('/students/:username', function(req, res) {
 
   // check for bad request (no body, or no name field, or has username field)
   if (newName == null || req.body['username'] != null) {
-    console.log('--bad request; req.body is: ', JSON.stringify(req.body));
-    res.status(400);
-    res.end();
+    res.status(400).send('Bad request!');
     return;
   }
 
+  // set fields of new student object to equal those in the request
   for (var field in fields) {
     if (req.body[field[fields]] != null) {
       newStudentObj[field[fields]] = req.body[field[fields]];
     }
   }
 
-  // ensure that requested student actually exists in set
+  // ensure that requested username already exists
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
-      // modify student's name key
+      // make requested changes to student's values
       client.hmsetAsync(`student:${username}`, newStudentObj).then(function(retval) {
-        console.log('--student with username ', username, '\'s name changed to ', newName);
-        res.status(200);
-        res.send('student name changed');
+        res.status(200).send('Student name changed!');
         return;
       });
     } else {
       // student does not exist
-      console.log('--student does not exist');
-      res.status(404);
-      res.end();
+      res.status(404).send('Student does not exist!');
       return;
     }
   });
 });
 
+/* GET /students/:username
+- no request body
+- if successful, returns contents of student:USERNAME hash object
+*/
 app.get('/students/:username', function(req, res) {
-  console.log('received get /students/:username request');
+  // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401);
-    res.end();
+    res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
   var username = req.params.username;
-  // ensure that requested student actually exists in set
+
+  // ensure that requested username already exists
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
       // get student
       client.hgetallAsync(`student:${username}`).then(function(studentObj) {
-        console.log('--got student');
         res.status(200).json(studentObj);
         return;
       });
     } else {
       // student does not exist
-      console.log('--student does not exist');
-      res.status(404);
-      res.end();
+      res.status(404).send('Student does not exist!');
       return;
     }
   });
 });
 
+/* GET /students
+- no request body
+- if successful, returns array of contents of all student:USERNAME hash objects
+*/
 app.get('/students', function(req, res) {
-  console.log('received get /students request');
+  // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401);
-    res.end();
+    res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
+  // get list of all members of 'students' set
   client.smembersAsync('students').then(function(students) {
     var gottenStudents = [];
     var currentUsername = null;
 
+    // for each student in 'students', push a promise to gottenStudents
     for (var i = 0; i<students.length; i++) {
       currentUsername = students[i];
       gottenStudents.push(client.hgetallAsync(`student:${currentUsername}`));
     }
+    // when all students have been gotten, send JSON list of all of them to client
     Promise.all(gottenStudents).then(function(listToSend) {
       res.status(200).json(listToSend);
       return;
@@ -213,57 +216,47 @@ app.get('/students', function(req, res) {
   });
 });
 
-// GRADES
-
+/* POST /grades
+- accepts JSON request body with username, type, max, and grade fields
+- creates new hashmap called grade:ID
+- adds ID to 'grades' set
+- if successful, return body containing reference to newly created item
+*/
 app.post('/grades', function(req, res) {
-  console.log('received post /grades request');
+  // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401);
-    res.end();
+    res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
   var gradeObj = req.body;
+
   // check for bad request (no body, no username, no type, no max, or no grade)
-  if (gradeObj == null ||
-      gradeObj['username'] == null ||
-      gradeObj['type'] == null ||
-      gradeObj['max'] == null ||
-      gradeObj['grade'] == null) {
-    console.log('--bad request; gradeObj is: ', JSON.stringify(gradeObj));
-    res.status(400);
-    res.end();
+  if (gradeObj == null || gradeObj['username'] == null || gradeObj['type'] == null ||
+      gradeObj['max'] == null || gradeObj['grade'] == null) {
+    res.status(400).send('Bad request!');
     return;
-  }
-  else {
-    // look at current members in 'grades' set, and find most recent (highest) id
-    // set newGradeId to be one higher than most recently created grade's id
+  } else {
     var newGradeId = null;
+
+    // find most recent (i.e. highest) id in grades set, and set newGradeId
     client.smembersAsync('grades').then(function(grades) {
-      console.log(grades);
       if (grades.length == 0) {
         newGradeId = 0;
-        console.log('newGradeId: ', newGradeId);
       } else {
         newGradeId = parseInt(grades[grades.length-1]) + 1;
-        console.log('newGradeId: ', newGradeId);
       }
 
-      // add '_ref' field to grade object
-      console.log('--creating and adding new grade');
+      // add '_ref' field to new grade object
       gradeObj['_ref'] = `/grades/${newGradeId}`;
 
-      // multi() used to execute several redis commands atomically
       client.multi()
-        // create a new hashmap for the newly created grade called 'grade:ID',
-        // with the fields and keys located in the gradeObj object
+        // create a new hashmap for the newly created grade called 'grade:ID'
         .hmset(`grade:${newGradeId}`, gradeObj)
         // add ID to the 'grades' set
         .sadd('grades', `${newGradeId}`)
         // execute the above redis commands atomically
         .execAsync().then(function(retval) {
-          console.log('--successful');
-          // send body containing a reference to the newly created grade
           res.status(200).json({_ref: `${gradeObj['_ref']}`});
           return;
         });
@@ -271,46 +264,43 @@ app.post('/grades', function(req, res) {
     }
 });
 
+/* GET /grades/:gradeid
+- no request body
+- if successful, returns contents of student:USERNAME hash object
+*/
 app.get('/grades/:gradeid', function(req, res) {
-  console.log('received get /grades/:gradeid request');
+  // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401);
-    res.end();
+    res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
   var gradeId = req.params.gradeid;
-  // ensure that requested grade actually exists in set
+
+  // ensure that requested grade already exists
   client.sismemberAsync('grades', gradeId).then(function(exists) {
     if (exists) {
       // get grade
       client.hgetallAsync(`grade:${gradeId}`).then(function(gradeObj) {
-        console.log('--got grade');
         res.status(200).json(gradeObj);
         return;
       });
     } else {
       // grade does not exist
-      console.log('--grade does not exist');
-      res.status(404);
-      res.end();
+      res.status(404).send('Grade does not exist!');
       return;
     }
   })
 });
 
+/* PATCH /grades/:gradeid
+- accepts JSON request body with username, type, max, and/or grade field(s)
+- modifies grade's fields based on fields in request body
+*/
 app.patch('/grades/:gradeid', function(req, res) {
-  // modify grade
-  //return 404 if gradeid doesn't exist
-  //return 400 if request body is missing or no keys exist in hash
-  //expect hashed array of values to change
-  // should only accept changes for max, grade, type, and username
-  // if change(s) successful, return a 200 with no body
-
-  console.log('received patch /grades/:gradeid request');
+  // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401);
-    res.end();
+    res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
@@ -318,97 +308,100 @@ app.patch('/grades/:gradeid', function(req, res) {
   var newGradeObj = {};
   var fields = ['max', 'grade', 'type', 'username'];
 
-  if (req.body == null ||
-      (req.body['max'] == null &&
-      req.body['grade'] == null &&
-      req.body['type'] == null &&
-      req.body['username'] == null)) {
-    console.log('--bad request; req.body is: ', JSON.stringify(req.body));
-    res.status(400);
-    res.end();
+  // check for bad request (no body, or no keys exist in hash)
+  if (req.body == null || (req.body['max'] == null && req.body['grade'] == null &&
+                          req.body['type'] == null && req.body['username'] == null)) {
+    res.status(400).send('Bad request!');
     return;
   }
 
-  console.log('--req.body is ', JSON.stringify(req.body));
-
+  // set fields of new grade object to equal those in the request
   for (var field in fields) {
     if (req.body[fields[field]] != null) {
       newGradeObj[fields[field]] = req.body[fields[field]];
-      console.log(fields[field], 'not null');
     }
   }
 
+  // ensure that requested grade already exists
   client.sismemberAsync('grades', gradeId).then(function(exists) {
     if (exists) {
+      // make requested changes to grade's values
       client.hmsetAsync(`grade:${gradeId}`, newGradeObj).then(function(retval) {
-        console.log('--grade with id ', gradeId, `\'s vals changed to `, JSON.stringify(newGradeObj));
-        res.status(200);
-        res.send('grade vals changed');
+        res.status(200).send('Grade\'s values changed!');
         return;
       });
     } else {
       // grade does not exist
-      console.log('--grade does not exist');
-      res.status(404);
-      res.end();
+      res.status(404).send('Grade does not exist!');
       return;
     }
   });
 });
 
+/* DELETE /grades/:gradeid
+- no request body
+- deletes grade:ID hash object and removes ID from 'grades' set
+*/
 app.delete('/grades/:gradeid', function(req, res) {
-  console.log('received delete /grades/:gradeid request');
+  // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401);
-    res.end();
+    res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
   var gradeId = req.params.gradeid;
-  // ensure that requested gradeid actually exists in set
+
+  // ensure that requested grade already exists
   client.sismemberAsync('grades', gradeid).then(function(exists) {
     if (exists) {
       client.multi()
-        // delete grade:ID hash object and remove gradeid from 'grades' set
+        // delete grade:ID hash object
         .del(`grade:${gradeid}`)
+        // remove ID from 'grades' set
         .srem('grades', gradeId)
+        // execute the above commands atomically
         .execAsync().then(function(retval) {
-          console.log('--grade deleted');
-          res.status(200).send('grade deleted');
+          res.status(200).send('Grade deleted!');
           return;
         });
     } else {
       // grade does not exist
-      console.log('--grade does not exist');
-      res.status(404);
-      res.end();
+      res.status(404).send('Grade does not exist!');
       return;
     }
   });
 });
 
+/* GET /grades
+- no request body
+- if successful, returns array of contents of all requested grade:ID hash objects
+*/
 app.get('/grades', function(req, res) {
-  console.log('received get /grades request');
+  // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401);
-    res.end();
+    res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
+  // get list of all members of 'students' set
   client.smembersAsync('grades').then(function(grades) {
     var gottenGrades = [];
     var currentGradeId = null;
 
+    // for each student in 'grades', push a promise to gottenGrades
     for (var i = 0; i < grades.length; i++) {
       currentGradeId = grades[i];
       gottenGrades.push(client.hgetallAsync(`grade:${currentGradeId}`));
     }
+    // when all grades have been gotten, send JSON list of all of them to client
     Promise.all(gottenGrades).then(function(listToSend) {
+      // filter by username if requested
       if (req.query.username) {
         listToSend = listToSend.filter(function(grade) {
           return grade.username === req.query.username;
         });
       }
+      // filter by type if requested
       if (req.query.type) {
         listToSend = listToSend.filter(function(grade) {
           return grade.type === req.query.type;
@@ -420,21 +413,19 @@ app.get('/grades', function(req, res) {
   });
 });
 
+/* DELETE /db
+- blows away entire database of all data
+*/
 app.delete('/db', function(req, res) {
-  console.log('received delete /db request');
+  // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send();
+    res.status(401).send('You are not allowed to make this request!');
     return;
   }
 
+  // clear entire redis database
   client.flushallAsync().then(function() {
-    res.status(200).send();
+    res.status(200).send('Database deleted!');
     return;
   });
 });
-
-
-// Listen on port 3000
-app.listen(3000, function() {
-  console.log('Example app listening on port 3000!');
-})
