@@ -311,6 +311,7 @@ app.patch('/grades/:gradeid', function(req, res) {
 
   var gradeId = req.params.gradeid;
   var newGradeObj = {};
+  var fields = ['max', 'grade', 'type', 'username'];
 
   if (req.body == null ||
       (req.body['max'] == null &&
@@ -325,22 +326,26 @@ app.patch('/grades/:gradeid', function(req, res) {
 
   console.log('--req.body is ', JSON.stringify(req.body));
 
+  for (var field in fields) {
+    if (req.body[field] != null) {
+      newGradeObj[field] = req.body[field];
+      console.log(field, 'not null');
+    }
+  }
+/*
   if (req.body['max'] != null) {
     newGradeObj['max'] = req.body['max'];
   }
   if (req.body['grade'] != null) {
-    console.log('--grade not null');
     newGradeObj['grade'] = req.body['grade'];
   }
   if (req.body['type'] != null) {
-    console.log('--type not null');
     newGradeObj['type'] = req.body['type'];
   }
   if (req.body['username'] != null) {
-    console.log('--username not null');
     newGradeObj['username'] = req.body['username'];
   }
-
+*/
   client.sismemberAsync('grades', gradeId).then(function(exists) {
     if (exists) {
       client.hmsetAsync(`grade:${gradeId}`, newGradeObj).then(function(retval) {
