@@ -193,33 +193,14 @@ app.get('/students', function(req, res) {
   }
 
   client.smembersAsync('students').then(function(students) {
-      var gottenStudents = [];
-      for (var student of students) { gottenStudents.push(client.hgetallAsync(`student:${student}`)); }
-      Promise.all(gottenStudents).then(function(listToSend) {
-        res.status(200).json(listToSend);
-      }, function(error) {
-        res.status(500).send(error);
-      });
-    },
-    function(error) {
-      res.status(500).send();
+    var gottenStudents = [];
+    for (var student of students) {
+      gottenStudents.push(client.hgetallAsync(`student:${student}`));
     }
-  );
-
-  /*
-  client.smembersAsync('students').then(function(studentsList) {
-    console.log('--got students');
-    console.log('--', studentsList);
-    let listToSend = [];
-    for (var student in studentsList) {
-      listToSend.push(client.hgetallAsync(`student:${student}`));
-    }
-    Promise.all(listToSend).then(function(good) {
-      res.status(200).json(good);
-    }, function(err) {
-      res.status(500).send();
+    Promise.all(gottenStudents).then(function(listToSend) {
+      res.status(200).json(listToSend);
     });
-  });*/
+  });
 });
 
 // Listen on port 3000
