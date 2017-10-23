@@ -206,7 +206,7 @@ app.get('/students', function(req, res) {
           }
         }).then(function() {
           console.log('--out of for loop, sending ', JSON.stringify(listToSend));
-          res.status(200).json(allStudents);
+          res.status(200).json(listToSend);
           return;
         });
       });
