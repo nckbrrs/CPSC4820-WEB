@@ -348,7 +348,7 @@ app.patch('/grades/:gradeid', function(req, res) {
         if (newVal != null) {
           client.hmsetAsync(`grade:${gradeId}`, `${newVal}`, `${newVals[newVal]}`).then(function(retval) {
             console.log('--grade with id ', gradeId, `\'s ${newVal} changed to `, newVal);
-          }
+          });
         }
       }
       res.status(200);
