@@ -206,9 +206,10 @@ app.get('/students', function(req, res) {
           listToSend.push(studentObj);
         });
       }).then(function() {
+        console.log("resolved");
         i = i+1;
       });
-    
+
 
     if (listToSend.length == studentsList.length) {
       console.log('--out of for loop, sending ', JSON.stringify(listToSend));
