@@ -99,14 +99,13 @@ app.delete('/students/:username', function(req, res) {
   // ensure that requested username actually exists in set
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
-      // remove username from 'students' set
+      // remove username from 'students' set and delete hash object
       client.multi()
         .del(`student:${username}`)
         .srem('students', username)
         .execAsync().then(function(retval) {
           console.log('--student deleted');
-          res.status(200);
-          res.send('student deleted');
+          res.status(200).send('student deleted');
           return;
         });
     } else {
@@ -128,7 +127,9 @@ app.patch('/students/:username', function(req, res) {
   }
 
   var username = req.params.username;
-  var newName = req.body['name'];;
+  var newStudentObj = {};
+  var fields = ['name'];
+
   // check for bad request (no body, or no name field, or has username field)
   if (newName == null || req.body['username'] != null) {
     console.log('--bad request; req.body is: ', JSON.stringify(req.body));
@@ -137,11 +138,17 @@ app.patch('/students/:username', function(req, res) {
     return;
   }
 
+  for (var field in fields) {
+    if (req.body[field[fields]] != null) {
+      newStudentObj[field[fields]] = req.body[field[fields]];
+    }
+  }
+
   // ensure that requested student actually exists in set
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
       // modify student's name key
-      client.hmsetAsync(`student:${username}`, 'name', `${newName}`).then(function(retval) {
+      client.hmsetAsync(`student:${username}`, newStudentObj).then(function(retval) {
         console.log('--student with username ', username, '\'s name changed to ', newName);
         res.status(200);
         res.send('student name changed');

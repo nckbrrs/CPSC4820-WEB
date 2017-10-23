@@ -99,7 +99,7 @@ app.delete('/students/:username', function(req, res) {
   // ensure that requested username actually exists in set
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
-      // remove username from 'students' set
+      // delete student:USERNAME hash object and remove username from 'students' set
       client.multi()
         .del(`student:${username}`)
         .srem('students', username)
@@ -128,7 +128,9 @@ app.patch('/students/:username', function(req, res) {
   }
 
   var username = req.params.username;
-  var newName = req.body['name'];;
+  var newStudentObj = {};
+  var fields = ['name'];
+
   // check for bad request (no body, or no name field, or has username field)
   if (newName == null || req.body['username'] != null) {
     console.log('--bad request; req.body is: ', JSON.stringify(req.body));
@@ -137,11 +139,17 @@ app.patch('/students/:username', function(req, res) {
     return;
   }
 
+  for (var field in fields) {
+    if (req.body[field[fields]] != null) {
+      newStudentObj[field[fields]] = req.body[field[fields]];
+    }
+  }
+
   // ensure that requested student actually exists in set
   client.sismemberAsync('students', username).then(function(exists) {
     if (exists) {
       // modify student's name key
-      client.hmsetAsync(`student:${username}`, 'name', `${newName}`).then(function(retval) {
+      client.hmsetAsync(`student:${username}`, newStudentObj).then(function(retval) {
         console.log('--student with username ', username, '\'s name changed to ', newName);
         res.status(200);
         res.send('student name changed');
@@ -332,7 +340,7 @@ app.patch('/grades/:gradeid', function(req, res) {
       console.log(fields[field], 'not null');
     }
   }
-  
+
   client.sismemberAsync('grades', gradeId).then(function(exists) {
     if (exists) {
       client.hmsetAsync(`grade:${gradeId}`, newGradeObj).then(function(retval) {
@@ -348,6 +356,83 @@ app.patch('/grades/:gradeid', function(req, res) {
       res.end();
       return;
     }
+  });
+});
+
+app.delete('/grades/:gradeid', function(req, res) {
+  console.log('received delete /grades/:gradeid request');
+  if (!authenticate(req)) {
+    res.status(401);
+    res.end();
+    return;
+  }
+
+  var gradeId = req.params.gradeid;
+  // ensure that requested gradeid actually exists in set
+  client.sismemberAsync('grades', gradeid).then(function(exists) {
+    if (exists) {
+      client.multi()
+        // delete grade:ID hash object and remove gradeid from 'grades' set
+        .del(`grade:${gradeid}`)
+        .srem('grades', gradeId)
+        .execAsync().then(function(retval) {
+          console.log('--grade deleted');
+          res.status(200).send('grade deleted');
+          return;
+        });
+    } else {
+      // grade does not exist
+      console.log('--grade does not exist');
+      res.status(404);
+      res.end();
+      return;
+    }
+  });
+});
+
+app.get('/grades', function(req, res) {
+  console.log('received get /grades request');
+  if (!authenticate(req)) {
+    res.status(401);
+    res.end();
+    return;
+  }
+
+  client.smembersAsync('grades').then(function(grades) {
+    var gottenGrades = [];
+    var currentGradeId = null;
+
+    for (var i = 0; i < grades.length; i++) {
+      currentGradeId = grades[i];
+      gottenGrades.push(client.hgetallAsync(`grades:${currentGradeId}`));
+    }
+    Promise.all(gottenGrades).then(function(listToSend) {
+      if (req.query.username) {
+        listToSend = listToSend.filter(function(grade) {
+          return grade.username === req.query.username;
+        });
+      }
+      if (req.query.type) {
+        listToSend = listToSend.filter(function(grade) {
+          return grade.type === req.query.type;
+        });
+      }
+      res.status(200).json(listToSend);
+      return;
+    });
+  });
+});
+
+app.delete('/db', function(req, res) {
+  console.log('received delete /db request');
+  if (!authenticate(req)) {
+    res.status(401).send();
+    return;
+  }
+
+  client.flushallAsync().then(function() {
+    res.status(200).send();
+    return;
   });
 });
 
