@@ -240,7 +240,7 @@ app.post('/grades', function(req, res) {
         newGradeId = 0;
         console.log('newGradeId: ', newGradeId);
       } else {
-        newGradeId = (grades[grades.length-1]) + 1;
+        newGradeId = parseInt(grades[grades.length-1]) + 1;
         console.log('newGradeId: ', newGradeId);
       }
 
