@@ -198,7 +198,7 @@ app.get('/students', function(req, res) {
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
-    for (var students in studentsList) {
+    for (var student in studentsList) {
       listToSend.push(client.hgetallAsync(`student:${student}`));
     }
     Promise.all(listToSend).then(function(good) {
