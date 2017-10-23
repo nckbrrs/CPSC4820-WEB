@@ -346,6 +346,7 @@ app.patch('/grades/:gradeid', function(req, res) {
   client.sismemberAsync('grades', gradeId).then(function(exists) {
     if (exists) {
       for (var newVal in newVals) {
+        console.log('--', newVal, ' is ', newVals[newVal], '\n');
         if (newVal != null) {
           client.hmsetAsync(`grade:${gradeId}`, `${newVal}`, `${newVals[newVal]}`).then(function(retval) {
             console.log('--grade with id ', gradeId, `\'s ${newVal} changed to `, newVals[newVal]);
