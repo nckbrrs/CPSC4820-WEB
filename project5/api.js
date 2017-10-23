@@ -46,7 +46,9 @@ app.post('/students', function(req, res) {
 
   var studentObj = req.body;
   // check for bad request (no body, no username field, or no name field)
-  if (studentObj == null || studentObj['username'] == null || studentObj['name'] == null) {
+  if (studentObj == null ||
+      studentObj['username'] == null ||
+      studentObj['name'] == null) {
     console.log('--bad request; studentObj is: ', JSON.stringify(studentObj));
     res.status(400);
     res.end();
@@ -183,7 +185,6 @@ app.get('/students/:username', function(req, res) {
   });
 });
 
-// STILL WORKING ON THIS ONE--IT DOESN'T WORK RIGHT NOW
 app.get('/students', function(req, res) {
   console.log('received get /students request');
   if (!authenticate(req)) {
@@ -202,8 +203,66 @@ app.get('/students', function(req, res) {
     }
     Promise.all(gottenStudents).then(function(listToSend) {
       res.status(200).json(listToSend);
+      return;
     });
   });
+});
+
+// GRADES
+
+app.post('/grades', function(req, res) {
+  console.log('received post /grades request');
+  if (!authenticate(req)) {
+    res.status(401);
+    res.end();
+    return;
+  }
+
+  var gradeObj = req.body;
+  // check for bad request (no body, no username, no type, no max, or no grade)
+  if (gradeObj == null ||
+      gradeObj['username'] == null ||
+      gradeObj['type'] == null ||
+      gradeObj['max'] == null ||
+      gradeObj['grade'] == null) {
+    console.log('--bad request; gradeObj is: ', JSON.stringify(gradeObj));
+    res.status(400);
+    res.end();
+    return;
+  }
+  else {
+    // look at current members in 'grades' set, and find most recent (highest) id
+    // set newGradeId to be one higher than most recently created grade's id
+    var newGradeId = null;
+    client.smembersAsync('grades').then(function(grades) {
+      if (grades.length == 0) {
+        newGradeId = 0;
+        return;
+      } else {
+        newGradeId = (grades[grades.length-1]) + 1;
+        return;
+      }
+    });
+
+    // add '_ref' field to grade object
+    console.log('--creating and adding new grade');
+    gradeObj['_ref'] = `/grades/${newGradeId}`;
+
+    // multi() used to execute several redis commands atomically
+    client.multi()
+      // create a new hashmap for the newly created grade called 'grade:ID',
+      // with the fields and keys located in the gradeObj object
+      .hmset(`grade:${newGradeId}`, gradeObj)
+      // add ID to the 'grades' set
+      .sadd('grades', `${newGradeId}`)
+      // execute the above redis commands atomically
+      .execAsync().then(function(retval) {
+        console.log('--successful');
+        // send body containing a reference to the newly created grade
+        res.status(200).json({_ref: `${gradeObj['_ref']}`});
+        return;
+      });
+    }
 });
 
 // Listen on port 3000
