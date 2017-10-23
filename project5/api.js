@@ -204,8 +204,8 @@ app.get('/students', function(req, res) {
       currentUsername = studentsList[i];
       client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
         listToSend.push(studentObj);
+        i = i+1;
       });
-      i = i+1;
       console.log('listToSend.length is ', listToSend.length);
       console.log('studentsList.length is ', studentsList.length);
     }
