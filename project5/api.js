@@ -404,7 +404,9 @@ app.get('/grades', function(req, res) {
 
     for (var i = 0; i < grades.length; i++) {
       currentGradeId = grades[i];
+      console.log('--currentGradeId', currentGradeId);
       gottenGrades.push(client.hgetallAsync(`grades:${currentGradeId}`));
+      console.log('--listToSend is now', JSON.stringify(listToSend));
     }
     Promise.all(gottenGrades).then(function(listToSend) {
       if (req.query.username) {
