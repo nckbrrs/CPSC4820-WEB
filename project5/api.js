@@ -192,7 +192,19 @@ app.get('/students', function(req, res) {
     return;
   }
 
+  client.smembersAsync('students').then(
+    (users) => {
+      let allStudents = [];
+      for (var user of users) { allStudents.push(client.hgetallAsync(`student:${user}`)); }
+      Promise.all(allStudents).then(
+        (values) => { res.status(200).json(values); },
+        (err) => { res.status(500).send(err); }
+      );
+    },
+    (err) => { res.status(500).send(); }
+  );
 
+  /*
   client.smembersAsync('students').then(function(studentsList) {
     console.log('--got students');
     console.log('--', studentsList);
@@ -205,7 +217,7 @@ app.get('/students', function(req, res) {
     }, function(err) {
       res.status(500).send();
     });
-  });
+  });*/
 });
 
 // Listen on port 3000
