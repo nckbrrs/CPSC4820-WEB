@@ -192,33 +192,17 @@ app.get('/students', function(req, res) {
     return;
   }
 
-  client.smembersAsync('students').then(function(students) {
-    let gottenStudents = [];
-    for (student in students) {
-      gottenStudents.push(client.hgetallAsync(`student:${student}`));
-    }
-    Promise.all(gottenStudents).then(function(listToSend) {
-      res.status(200).json(listToSend);
-    }, function(error) {
-      res.status(500).send(error);
-    });
-  }, function(error) {
-    res.status(500).send();
-  });
-/*
-
-
   client.smembersAsync('students').then(
-    (users) => {
-      let allStudents = [];
-      for (var user of users) { allStudents.push(client.hgetallAsync(`student:${user}`)); }
-      Promise.all(allStudents).then(
-        (values) => { res.status(200).json(values); },
-        (err) => { res.status(500).send(err); }
+    (students) => {
+      let gottenStudents = [];
+      for (var student of students) { gottenStudents.push(client.hgetallAsync(`student:${student}`)); }
+      Promise.all(gottenStudents).then(
+        (listToSend) => { res.status(200).json(listToSend); },
+        (error) => { res.status(500).send(error); }
       );
     },
-    (err) => { res.status(500).send(); }
-  );*/
+    (error) => { res.status(500).send(); }
+  );
 
   /*
   client.smembersAsync('students').then(function(studentsList) {
