@@ -192,8 +192,7 @@ app.get('/students', function(req, res) {
     return;
   }
 
-  client.smembersAsync('students').then(
-    (students) => {
+  client.smembersAsync('students').then(function(students) {
       let gottenStudents = [];
       for (var student of students) { gottenStudents.push(client.hgetallAsync(`student:${student}`)); }
       Promise.all(gottenStudents).then(
