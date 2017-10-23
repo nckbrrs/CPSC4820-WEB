@@ -199,7 +199,7 @@ app.get('/students', function(req, res) {
     console.log('--got students');
     console.log('--', studentsList);
     for (var students in studentsList) {
-      listToSend.push(clieng.hgetallAsync(`student:${student}`));
+      listToSend.push(client.hgetallAsync(`student:${student}`));
     }
     Promise.all(listToSend).then(function(good) {
       res.status(200).json(good);
