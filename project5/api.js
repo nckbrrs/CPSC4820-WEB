@@ -329,7 +329,7 @@ app.patch('/grades/:gradeid', function(req, res) {
   for (var field in fields) {
     console.log(field);
     if (req.body[fields[field]] != null) {
-      newGradeObj[fields[field]] = req.body[fields[field];
+      newGradeObj[fields[field]] = req.body[fields[field]];
       console.log(fields[field], 'not null');
     }
   }
