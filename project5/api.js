@@ -343,13 +343,12 @@ app.patch('/grades/:gradeid', function(req, res) {
 
   client.sismemberAsync('grades', gradeId).then(function(exists) {
     if (exists) {
-        client.hmsetAsync(`grade:${gradeId}`, newGradeObj).then(function(retval) {
-          console.log('--grade with id ', gradeId, `\'s vals changed to `, JSON.stringify(newGradeObj));
-        });
-      }
-      res.status(200);
-      res.send('grade vals changed');
-      return;
+      client.hmsetAsync(`grade:${gradeId}`, newGradeObj).then(function(retval) {
+        console.log('--grade with id ', gradeId, `\'s vals changed to `, JSON.stringify(newGradeObj));
+        res.status(200);
+        res.send('grade vals changed');
+        return;
+      });
     } else {
       // grade does not exist
       console.log('--grade does not exist');
