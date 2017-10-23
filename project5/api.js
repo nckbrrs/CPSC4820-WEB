@@ -312,9 +312,9 @@ app.patch('/grades/:gradeid', function(req, res) {
   var gradeId = req.params.gradeid;
   var reqBody = req.body;
   var newVals = {
-    'newMax': null;
-    'newGrade': null;
-    'newType': null;
+    'newMax': null,
+    'newGrade': null,
+    'newType': null,
     'newUsername': null;
   };
 
