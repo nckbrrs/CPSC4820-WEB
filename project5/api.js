@@ -200,14 +200,17 @@ app.get('/students', function(req, res) {
     console.log('--', studentsList);
 
     for (var student in studentsList) {
-      listToSend.push(client.hgetallAsync(`student:${currentUsername}`));
+      client.hgetallAsync(`student:${currentUsername}`).then(function(studentObj) {
+        listToSend.push(studentObj);
+      });
     }
 
-    Promise.all(listToSend).then(function(allStudents) {
+    if (listToSend.length == studentsList.length) {
       console.log('--out of for loop, sending ', JSON.stringify(listToSend));
       res.status(200).json(allStudents);
       return;
-    });
+    }
+    
   });
 });
 
