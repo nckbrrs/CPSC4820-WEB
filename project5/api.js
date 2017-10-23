@@ -235,7 +235,7 @@ app.post('/grades', function(req, res) {
     // set newGradeId to be one higher than most recently created grade's id
     var newGradeId = null;
     client.smembersAsync('grades').then(function(grades) {
-      if (grades.length == ) {
+      if (grades.length == 0) {
         newGradeId = 0;
         console.log('newGradeId: ', newGradeId);
         return;
