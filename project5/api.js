@@ -193,13 +193,17 @@ app.get('/students', function(req, res) {
   }
 
   client.smembersAsync('students').then(function(students) {
-    var gottenStudents = [];
+    let gottenStudents = [];
     for (student in students) {
       gottenStudents.push(client.hgetallAsync(`student:${student}`));
     }
     Promise.all(gottenStudents).then(function(listToSend) {
       res.status(200).json(listToSend);
+    }, function(error) {
+      res.status(500).send(error);
     });
+  }, function(error) {
+    res.status(500).send();
   });
 /*
 
