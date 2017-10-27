@@ -27,6 +27,8 @@ app.patch('/counter/:counterName', (req,res) => {
                 }
                 res.status(200).end();
         }).catch(function(err){
+                console.log("counterName is ", req.params.counterName);
+                console.log("req.body is " , req.body);
                 //show some error to the client
                 res.status(500).json({error: err});
         });
