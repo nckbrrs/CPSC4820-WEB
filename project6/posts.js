@@ -20,6 +20,7 @@ const PostTitle = ({ record }) => {
   return <span>Post {record ? `"${record.title}"` : ''}</span>;
 };
 
+/*
 export const PostEdit = (props) => (
   <Edit title={<PostTitle />} {...props}>
     <SimpleForm>
@@ -32,6 +33,7 @@ export const PostEdit = (props) => (
     </SimpleForm>
   </Edit>
 );
+*/
 
 export const PostCreate = (props) => (
   <Create {...props}>
