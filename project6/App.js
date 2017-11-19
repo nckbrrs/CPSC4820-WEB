@@ -1,6 +1,6 @@
 import React from 'react';
 import {jsonServerRestClient, Admin, Resource} from 'admin-on-rest';
-import {PostList} from './posts';
+import {PostList, PostEdit, PostCreate} from './posts';
 import {UserList} from './users';
 
 const App = () => (
