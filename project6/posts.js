@@ -31,7 +31,7 @@ export const PostEdit = (props) => (
   </Edit>
 );
 
-export const postCreate = (props) => (
+export const PostCreate = (props) => (
   <Create {...props}>
     <SimpleForm>
       <ReferenceInput label="user" source="userId" reference="users">
