@@ -25,7 +25,6 @@ export const PostList = (props) => (
       }
     />
   </List>
-  */
 );
 
 const PostTitle = ({ record }) => {
