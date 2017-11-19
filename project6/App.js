@@ -4,7 +4,7 @@ import {PostList} from './posts';
 
 const App = () => (
   <Admin restClient={jsonServerRestClient('http://jsonplaceholder.typicode.com')}>
-    <Resrouce name="posts" list={PostList} />
+    <Resoruce name="posts" list={PostList} />
   </Admin>
 );
 
