@@ -1,19 +1,31 @@
 import React from 'react';
-import { List, Edit, Create, Datagrid, ReferenceField, TextField, EditButton, DeleteButton, DisabledInput, LongTextInput, ReferenceInput, SelectInput, SimpleForm, TextInput, Filter} from 'admin-on-rest';
+import { Responsive, List, SimpleList, Edit, Create, Datagrid, ReferenceField, TextField, EditButton, DeleteButton, DisabledInput, LongTextInput, ReferenceInput, SelectInput, SimpleForm, TextInput, Filter} from 'admin-on-rest';
 
 export const PostList = (props) => (
   <List {...props} filters={<PostFilter />}>
-    <Datagrid>
-      <TextField source="id" />
-      <ReferenceField label="User" source="userId" reference="users">
-        <TextField source="name" />
-      </ReferenceField>
-      <TextField source="title" />
-      <TextField source="body" />
-      <EditButton />
-      <DeleteButton />
-    </Datagrid>
+    <Responsive
+      small={
+        <SimpleList
+          primaryText={record => record.title}
+          secondaryText={record => `${record.views} views`}
+          tertiaryText={record => new Date(record.published_at).toLocaleDateString()}
+        />
+      }
+      medium={
+        <Datagrid>
+          <TextField source="id" />
+          <ReferenceField label="User" source="userId" reference="users">
+            <TextField source="name" />
+          </ReferenceField>
+          <TextField source="title" />
+          <TextField source="body" />
+          <EditButton />
+          <DeleteButton />
+        </Datagrid>
+      }
+    />
   </List>
+  */
 );
 
 const PostTitle = ({ record }) => {
