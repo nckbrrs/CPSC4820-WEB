@@ -54,9 +54,3 @@ const PostFilter = (props) => (
     </ReferenceInput>
   </Filter>
 );
-
-export const PostList = (props) => (
-  <List {...props} filters={<PostFilter />}>
-    // ...
-  </List>
-)
