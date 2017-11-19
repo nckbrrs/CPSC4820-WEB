@@ -11,6 +11,7 @@ export const PostList = (props) => (
       <TextField source="title" />
       <TextField source="body" />
       <EditButton />
+      <DeleteButton />
     </Datagrid>
   </List>
 );
