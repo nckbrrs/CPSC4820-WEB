@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Edit, Create, Datagrid, TextField, EditButton, DeleteButton, DisabledInput, SimpleForm, TextInput, Filter} from 'admin-on-rest';
+import { List, Edit, Create, Datagrid, TextField, EditButton, DeleteButton, DisabledInput, SimpleForm, TextInput, Filter } from 'admin-on-rest';
 
 export const GradeList = (props) => (
   <List {...props} filters={<GradeFilter />}>

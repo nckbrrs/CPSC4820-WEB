@@ -48,7 +48,6 @@ app.listen(3001, function() {
  - if successful, return body containing reference to newly created item
 */
 app.post('/students', function(req, res) {
-  console.log('POST /students\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).json({"Status": "You are not allowed to make this request!"});
@@ -88,12 +87,11 @@ app.post('/students', function(req, res) {
   }
 });
 
-/* DELETE /students/:id
- - no request body
- - deletes student:id hash object and removes student['id'] from 'students' set
+/* GET /students/:id
+- no request body
+- if successful, returns contents of student:id hash object
 */
-app.delete('/students/:id', function(req, res) {
-  console.log('DELETE /students/:id\n');
+app.get('/students/:id', function(req, res) {
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -105,16 +103,11 @@ app.delete('/students/:id', function(req, res) {
   // ensure that requested id already exists
   client.sismemberAsync('students', id).then(function(exists) {
     if (exists) {
-      client.multi()
-        // delete student:student['id'] hash object
-        .del(`student:${id}`)
-        // remove student['id]'] from 'students' set
-        .srem('students', id)
-        // execute the above commands atomically
-        .execAsync().then(function(retval) {
-          res.status(200).json({"Status": "Student deleted!"});
-          return;
-        });
+      // get student
+      client.hgetallAsync(`student:${id}`).then(function(studentObj) {
+        res.status(200).json(studentObj);
+        return;
+      });
     } else {
       // student does not exist
       res.status(404).send('Student does not exist!');
@@ -129,7 +122,6 @@ app.delete('/students/:id', function(req, res) {
 - if successful, returns contents of student:id hash object
 */
 app.put('/students/:id', function(req, res) {
-  console.log('PUT /students/:id\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -166,42 +158,11 @@ app.put('/students/:id', function(req, res) {
   });
 });
 
-/* GET /students/:id
-- no request body
-- if successful, returns contents of student:id hash object
-*/
-app.get('/students/:id', function(req, res) {
-  console.log('GET /students/:id\n');
-  // ensure that client is authorized to make request
-  if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
-    return;
-  }
-
-  var id = req.params.id;
-
-  // ensure that requested id already exists
-  client.sismemberAsync('students', id).then(function(exists) {
-    if (exists) {
-      // get student
-      client.hgetallAsync(`student:${id}`).then(function(studentObj) {
-        res.status(200).json(studentObj);
-        return;
-      });
-    } else {
-      // student does not exist
-      res.status(404).send('Student does not exist!');
-      return;
-    }
-  });
-});
-
 /* GET /students
 - no request body
 - if successful, returns array of contents of all student:id hash objects
 */
 app.get('/students', function(req, res) {
-  console.log('GET /students\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -210,9 +171,9 @@ app.get('/students', function(req, res) {
 
   // get list of all members of 'students' set
   client.smembersAsync('students').then(function(students) {
-    let gottenStudents = [];
-    let currentId = null;
-    let totalStudents = students.length
+    var gottenStudents = [];
+    var currentId = null;
+    var totalStudents = students.length
 
     // for each student in 'students', push a promise to gottenStudents
     for (var i = 0; i<students.length; i++) {
@@ -238,7 +199,7 @@ app.get('/students', function(req, res) {
       if (req.query._sort) {
         // if sort query is a valid attribute of grade obj, sort by that attribute
         // otherwise, simply do not sort
-        let sortBy = req.query._sort;
+        var sortBy = req.query._sort;
         if (sortBy == 'id' || sortBy == 'name') {
           // if order query exists and is 'asc', sort in ascending order
           // otherwise, sort descending
@@ -279,11 +240,46 @@ app.get('/students', function(req, res) {
         listToSend = listToSend.slice(_start, _end);
       }
 
+      // set headers and send final list of students
       res.set('Access-Control-Expose-Headers', 'X-Total-Count');
       res.set('X-Total-Count', totalStudents);
       res.status(200).json(listToSend);
       return;
     });
+  });
+});
+
+/* DELETE /students/:id
+ - no request body
+ - deletes student:id hash object and removes student['id'] from 'students' set
+*/
+app.delete('/students/:id', function(req, res) {
+  // ensure that client is authorized to make request
+  if (!authenticate(req)) {
+    res.status(401).send('You are not allowed to make this request!');
+    return;
+  }
+
+  var id = req.params.id;
+
+  // ensure that requested id already exists
+  client.sismemberAsync('students', id).then(function(exists) {
+    if (exists) {
+      client.multi()
+        // delete student:student['id'] hash object
+        .del(`student:${id}`)
+        // remove student['id]'] from 'students' set
+        .srem('students', id)
+        // execute the above commands atomically
+        .execAsync().then(function(retval) {
+          res.status(200).json({"Status": "Student deleted!"});
+          return;
+        });
+    } else {
+      // student does not exist
+      res.status(404).send('Student does not exist!');
+      return;
+    }
   });
 });
 
@@ -294,7 +290,6 @@ app.get('/students', function(req, res) {
 - if successful, return body containing reference to newly created item
 */
 app.post('/grades', function(req, res) {
-  console.log('POST /grades\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -342,7 +337,6 @@ app.post('/grades', function(req, res) {
 - if successful, returns contents of grades:id hash object
 */
 app.get('/grades/:gradeid', function(req, res) {
-  console.log('GET /grades/', req.params.gradeid);
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -416,41 +410,6 @@ app.put('/grades/:gradeid', function(req, res) {
   });
 });
 
-/* DELETE /grades/:gradeid
-- no request body
-- deletes grade:ID hash object and removes ID from 'grades' set
-*/
-app.delete('/grades/:gradeid', function(req, res) {
-  console.log('DELETE /grades/:gradeid\n');
-  // ensure that client is authorized to make request
-  if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
-    return;
-  }
-
-  var gradeId = req.params.gradeid;
-
-  // ensure that requested grade already exists
-  client.sismemberAsync('grades', gradeId).then(function(exists) {
-    if (exists) {
-      client.multi()
-        // delete grade:ID hash object
-        .del(`grade:${gradeId}`)
-        // remove ID from 'grades' set
-        .srem('grades', gradeId)
-        // execute the above commands atomically
-        .execAsync().then(function(retval) {
-          res.status(200).json({"Status": "Grade deleted!"});
-          return;
-        });
-    } else {
-      // grade does not exist
-      res.status(404).send('Grade does not exist!');
-      return;
-    }
-  });
-});
-
 /* GET /grades
 - no request body
 - if successful, returns array of contents of all requested grade:ID hash objects
@@ -465,9 +424,9 @@ app.get('/grades', function(req, res) {
 
   // get list of all members of 'students' set
   client.smembersAsync('grades').then(function(grades) {
-    let gottenGrades = [];
-    let currentGradeId = null;
-    let totalGrades = grades.length
+    var gottenGrades = [];
+    var currentGradeId = null;
+    var totalGrades = grades.length
 
     // for each student in 'grades', push a promise to gottenGrades
     for (var i = 0; i < grades.length; i++) {
@@ -488,13 +447,13 @@ app.get('/grades', function(req, res) {
           return grade.type === req.query.type;
         });
       }
-      // filter by type if requested
+      // filter by max if requested
       if (req.query.max) {
         listToSend = listToSend.filter(function(grade) {
           return grade.max === req.query.max;
         });
       }
-      // filter by type if requested
+      // filter by grade if requested
       if (req.query.grade) {
         listToSend = listToSend.filter(function(grade) {
           return grade.grade === req.query.grade;
@@ -504,7 +463,7 @@ app.get('/grades', function(req, res) {
       if (req.query._sort) {
         // if sort query is a valid attribute of grade obj, sort by that attribute
         // otherwise, simply do not sort
-        let sortBy = req.query._sort;
+        var sortBy = req.query._sort;
         if (sortBy == 'studentId' || sortBy == 'type' || sortBy == 'max' || sortBy == 'grade') {
           // if order query exists and is 'asc', sort in ascending order
           // otherwise, sort descending
@@ -545,6 +504,7 @@ app.get('/grades', function(req, res) {
         listToSend = listToSend.slice(_start, _end);
       }
 
+      // set headers and send final list of grades
       res.set('Access-Control-Expose-Headers', 'X-Total-Count');
       res.set('X-Total-Count', totalGrades);
       res.status(200).json(listToSend);
@@ -553,11 +513,45 @@ app.get('/grades', function(req, res) {
   });
 });
 
+/* DELETE /grades/:gradeid
+- no request body
+- deletes grade:ID hash object and removes ID from 'grades' set
+*/
+app.delete('/grades/:gradeid', function(req, res) {
+  console.log('DELETE /grades/:gradeid\n');
+  // ensure that client is authorized to make request
+  if (!authenticate(req)) {
+    res.status(401).send('You are not allowed to make this request!');
+    return;
+  }
+
+  var gradeId = req.params.gradeid;
+
+  // ensure that requested grade already exists
+  client.sismemberAsync('grades', gradeId).then(function(exists) {
+    if (exists) {
+      client.multi()
+        // delete grade:ID hash object
+        .del(`grade:${gradeId}`)
+        // remove ID from 'grades' set
+        .srem('grades', gradeId)
+        // execute the above commands atomically
+        .execAsync().then(function(retval) {
+          res.status(200).json({"Status": "Grade deleted!"});
+          return;
+        });
+    } else {
+      // grade does not exist
+      res.status(404).send('Grade does not exist!');
+      return;
+    }
+  });
+});
+
 /* DELETE /db
 - blows away entire database of all data
 */
 app.delete('/db', function(req, res) {
-  console.log('DELETE /db\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
