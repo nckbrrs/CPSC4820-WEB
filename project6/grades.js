@@ -1,8 +1,8 @@
 import React from 'react';
-import { Responsive, List, SimpleList, Edit, Create, Datagrid, TextField, EditButton, DeleteButton, DisabledInput, ReferenceInput, SelectInput, SimpleForm, TextInput, Filter} from 'admin-on-rest';
+import { Responsive, List, SimpleList, Edit, Create, Datagrid, TextField, EditButton, DeleteButton, DisabledInput, ReferenceInput, SelectInput, SimpleForm, TextInput, Filter, ReferenceField} from 'admin-on-rest';
 
 export const GradesList = (props) => (
-  <List {...props} filters={<GradeFilter />}>
+  <List {...props} /*filters={<GradeFilter />}*/>
     <Responsive
       small={
         <SimpleList
@@ -17,7 +17,7 @@ export const GradesList = (props) => (
           <TextField source="type" />
           <TextField source="grade" />
           <TextField source="max" />
-          <ReferenceField  label="user" source="id" reference="students">
+          <ReferenceField label="user" source="id" reference="students">
             <TextField source="id" />
           </ReferenceField>
           <EditButton />
