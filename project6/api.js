@@ -406,12 +406,12 @@ app.get('/grades', function(req, res) {
 
   // get list of all members of 'students' set
   client.smembersAsync('grades').then(function(grades) {
-    var gottenGrades = [];
-    var currentGradeId = null;
+    let gottenGrades = [];
+    let currentGradeId = null;
 
     // for each student in 'grades', push a promise to gottenGrades
     for (var i = 0; i < grades.length; i++) {
-      currentGradeId = grades[i];
+      currentGradeId = grades[i]['id'];
       gottenGrades.push(client.hgetallAsync(`grade:${currentGradeId}`));
     }
     // when all grades have been gotten, send JSON list of all of them to client
