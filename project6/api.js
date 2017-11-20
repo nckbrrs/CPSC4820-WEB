@@ -202,13 +202,11 @@ app.get('/students', function(req, res) {
           // otherwise, sort descending
           if (req.query._order == 'ASC') {
             listToSend = listToSend.sort(function(a, b) {
-              console.log("a is ",  a[`${sortBy}`], " and b is ",  b[`${sortBy}`]);
-              return a[`${sortBy}`] - b[`${sortBy}`];
+              return (a[`${sortBy}`]).localeCompare(b[`${sortBy}`]);
             });
           } else {
             listToSend = listToSend.sort(function(a, b) {
-              console.log("a is ",  a[`${sortBy}`], " and b is ",  b[`${sortBy}`]);
-              return b[`${sortBy}`] - a[`${sortBy}`];
+              return (b[`${sortBy}`]).localeCompare(a[`${sortBy}`]);
             });
           }
         }
@@ -467,14 +465,12 @@ app.get('/grades', function(req, res) {
           if (req.query._order == 'ASC') {
             console.log("sorting ascending");
             listToSend = listToSend.sort(function(a, b) {
-              console.log("a is ",  a[`${sortBy}`], " and b is ",  b[`${sortBy}`]);
-              return a[`${sortBy}`] - b[`${sortBy}`];
+              return (a[`${sortBy}`]).localeCompare(b[`${sortBy}`]);
             });
           } else {
             console.log("sorting descending");
             listToSend = listToSend.sort(function(a, b) {
-              console.log("a is ",  a[`${sortBy}`], " and b is ",  b[`${sortBy}`]);
-              return b[`${sortBy}`] - a[`${sortBy}`];
+              return (b[`${sortBy}`]).localeCompare(a[`${sortBy}`]);
             });
           }
         }
