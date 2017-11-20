@@ -151,6 +151,7 @@ app.put('/students/:id', function(req, res) {
   client.sismemberAsync('students', id).then(function(exists) {
     if (exists) {
       // make requested changes to student's values
+      console.log(newStudentObj);
       client.hmsetAsync(`student:${id}`, newStudentObj).then(function(retval) {
         res.status(200).json(newStudentObj);
         return;
