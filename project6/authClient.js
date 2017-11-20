@@ -17,6 +17,7 @@ export default (type, params) => {
       }
     })
   }
+  
 /*
   // called when user clicks on logout button
   if (type === AUTH_LOGOUT) {
