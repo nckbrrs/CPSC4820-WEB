@@ -1,8 +1,8 @@
 import React from 'react';
-import { Responsive, List, SimpleList, Edit, Create, Datagrid, TextField, EditButton, DeleteButton, DisabledInput, SimpleForm, TextInput} from 'admin-on-rest';
+import { Filter, Responsive, List, SimpleList, Edit, Create, Datagrid, TextField, EditButton, DeleteButton, DisabledInput, SimpleForm, TextInput} from 'admin-on-rest';
 
 export const StudentList = (props) => (
-  <List {...props} filters={<GradeFilter />}>
+  <List {...props} filters={<StudentFilter />}>
     <Datagrid>
       <TextField source="id" />
       <TextField source="name" />
