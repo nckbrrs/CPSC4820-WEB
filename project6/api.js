@@ -422,6 +422,12 @@ app.get('/grades', function(req, res) {
     var currentGradeId = null;
     var totalGrades = grades.length
 
+    if (totalGrades === 0) {
+      res.set('Access-Control-Expose-Headers', 'X-Total-Count');
+      res.set('X-Total-Count', totalGrades);
+      res.status(200).json({});
+    }
+
     // for each student in 'grades', push a promise to gottenGrades
     for (var i = 0; i < grades.length; i++) {
       currentGradeId = grades[i];
