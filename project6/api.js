@@ -222,6 +222,19 @@ app.get('/students', function(req, res) {
     }
 
     Promise.all(gottenStudents).then(function(listToSend) {
+      // filter by studentId if requested
+      if (req.query.id) {
+        listToSend = listToSend.filter(function(student) {
+          return student.id === req.query.id;
+        });
+      }
+      // filter by type if requested
+      if (req.query.name) {
+        listToSend = listToSend.filter(function(student) {
+          return student.name === req.query.name;
+        });
+      }
+
       // sort by given attribute if requested
       if (req.query._sort) {
         // if sort query is a valid attribute of grade obj, sort by that attribute
@@ -474,6 +487,18 @@ app.get('/grades', function(req, res) {
       if (req.query.type) {
         listToSend = listToSend.filter(function(grade) {
           return grade.type === req.query.type;
+        });
+      }
+      // filter by type if requested
+      if (req.query.max) {
+        listToSend = listToSend.filter(function(grade) {
+          return grade.max === req.query.max;
+        });
+      }
+      // filter by type if requested
+      if (req.query.grade) {
+        listToSend = listToSend.filter(function(grade) {
+          return grade.grade === req.query.grade;
         });
       }
       // sort by given attribute if requested
