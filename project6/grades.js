@@ -5,7 +5,6 @@ export const GradeList = (props) => (
   <List {...props} /*filters={<GradeFilter />}*/>
     <SimpleList
       primaryText={record => record.id}
-      secondaryText={record => record.studentId}
     />
     /*<Datagrid>
       <TextField source="id" />
