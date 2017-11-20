@@ -26,5 +26,12 @@ export default (type, params) => {
   if (type === AUTH_CHECK) {
     return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
   }
+
+  // called when user clicks on logout button
+  if (type === AUTH_LOGOUT) {
+    localStorage.removeItem('token');
+    return Promise.resolve();
+  }
+
   return Promise.reject('Unknown method');
 };
