@@ -7,7 +7,7 @@ export const GradeList = (props) => (
       <TextField source="id" />
       <TextField source="type" />
       <TextField source="grade" />
-      <TextField source="max" />/
+      <TextField source="max" />
       <TextField source="studentId" />
       <EditButton />
       <DeleteButton />
