@@ -58,7 +58,7 @@ app.post('/students', function(req, res) {
 
   // check for bad request (no body, no id field, or no name field)
   if (studentObj == null || studentObj['id'] == null || studentObj['name'] == null) {
-    res.status(400).send('Bad request!');
+    res.status(400).json({"Status": "Bad request!"});
     return;
   }
   else {
@@ -77,7 +77,7 @@ app.post('/students', function(req, res) {
           });
       } else {
         // student already exists
-        res.status(400).send('Student already exists!');
+        res.status(400).json({"Status": "Student already exists!"});
         return;
       }
     });
@@ -107,7 +107,7 @@ app.get('/students/:id', function(req, res) {
       });
     } else {
       // student does not exist
-      res.status(404).send('Student does not exist!');
+      res.status(404).json({"Status": "Student does not exist!"});
       return;
     }
   });
@@ -130,7 +130,7 @@ app.put('/students/:id', function(req, res) {
 
   // check for bad request (no body, or no name field, or has id field)
   if (req.body['name'] == null) {
-    res.status(400).send('Bad request!');
+    res.status(400).json({"Status": "Bad request!"});
     return;
   }
 
@@ -149,7 +149,7 @@ app.put('/students/:id', function(req, res) {
       });
     } else {
       // student does not exist
-      res.status(404).send('Student does not exist!');
+      res.status(404).json({"Status": "Student does not exist!"});
       return;
     }
   });
@@ -274,7 +274,7 @@ app.delete('/students/:id', function(req, res) {
         });
     } else {
       // student does not exist
-      res.status(404).send('Student does not exist!');
+      res.status(404).json({"Status": "Student does not exist!"});
       return;
     }
   });
@@ -298,7 +298,7 @@ app.post('/grades', function(req, res) {
   // check for bad request (no body, no id, no type, no max, or no grade)
   if (gradeObj == null || gradeObj['studentId'] == null || gradeObj['type'] == null ||
       gradeObj['max'] == null || gradeObj['grade'] == null) {
-    res.status(400).send('Bad request!');
+    res.status(400).json({"Status": "Bad request!"});
     return;
   } else {
     var newGradeId = null;
@@ -351,7 +351,7 @@ app.get('/grades/:gradeid', function(req, res) {
       });
     } else {
       // grade does not exist
-      res.status(404).send('Grade does not exist!');
+      res.status(404).json({"Status": "Grade does not exist!"});
       return;
     }
   })
@@ -376,7 +376,7 @@ app.put('/grades/:gradeid', function(req, res) {
   // check for bad request (no body, or no keys exist in hash)
   if (req.body == null || (req.body['max'] == null && req.body['grade'] == null &&
                           req.body['type'] == null && req.body['studentId'] == null)) {
-    res.status(400).send('Bad request!');
+    res.status(400).json({"Status": "Bad request!"});
     return;
   }
 
@@ -399,7 +399,7 @@ app.put('/grades/:gradeid', function(req, res) {
       });
     } else {
       // grade does not exist
-      res.status(404).send('Grade does not exist!');
+      res.status(404).json({"Status": "Grade does not exist!"});
       return;
     }
   });
@@ -535,7 +535,7 @@ app.delete('/grades/:gradeid', function(req, res) {
         });
     } else {
       // grade does not exist
-      res.status(404).send('Grade does not exist!');
+      res.status(404).json({"Status": "Grade does not exist!"});
       return;
     }
   });
