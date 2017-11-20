@@ -362,6 +362,7 @@ app.put('/grades/:gradeid', function(req, res) {
 - deletes grade:ID hash object and removes ID from 'grades' set
 */
 app.delete('/grades/:gradeid', function(req, res) {
+  res.header("Access-Control-Allow-Methods", 'DELETE');
   console.log('DELETE /grades/:gradeid\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
@@ -381,7 +382,6 @@ app.delete('/grades/:gradeid', function(req, res) {
         .srem('grades', gradeId)
         // execute the above commands atomically
         .execAsync().then(function(retval) {
-          res.header("Access-Control-Allow-Methods", "DELETE");
           res.status(200).send('Grade deleted!');
           return;
         });
