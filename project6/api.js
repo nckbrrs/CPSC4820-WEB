@@ -446,6 +446,7 @@ app.get('/grades', function(req, res) {
           }
         }
       }
+      /*
       // paginate results
       if (req.query._start || req.query._end) {
         // if no _start query, default _start to 0
@@ -467,7 +468,7 @@ app.get('/grades', function(req, res) {
           }
         }
         listToSend = listToSend.slice(_start, _end);
-      }
+      } */
       res.set('Access-Control-Expose-Headers', 'X-Total-Count');
       res.set('X-Total-Count', client.scard('grades'));
       res.status(200).json(listToSend);
