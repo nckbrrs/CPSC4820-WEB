@@ -132,7 +132,7 @@ app.put('/students/:id', function(req, res) {
   }
 
   var id = req.params.id;
-  var newStudentObj = {};
+  var oldStudentObj = {}, newStudentObj = {};
 
   // check for bad request (no body, or no name field, or has id field)
   if (req.body['name'] == null || req.body['id'] != null) {
@@ -140,19 +140,26 @@ app.put('/students/:id', function(req, res) {
     return;
   }
 
+  client.hgetallAsync(`student:${id}`).then(function(studentObj) {
+    oldStudentObj = JSON.stringify(studentObj);
+    return;
+  });
+
   // set fields of new student object to equal those in the request, and leave the rest alone
+  newStudentObj['id'] = oldStudentObj['id'];
   newStudentObj['name'] = req.body['name'];
+  newStudentObj['_ref'] = oldStudentObj['_ref'];
 
   // ensure that requested id already exists
   client.sismemberAsync('students', id).then(function(exists) {
     if (exists) {
       // make requested changes to student's values
-      console.log(newStudentObj);
       client.hmsetAsync(`student:${id}`, newStudentObj).then(function(retval) {
-        client.hgetallAsync(`student:${id}`).then(function(studentObj) {
+        res.status(200).json(newStudentObj);
+        /*client.hgetallAsync(`student:${id}`).then(function(studentObj) {
           res.status(200).json(studentObj);
           return;
-        });
+        });*/
       });
     } else {
       // student does not exist
