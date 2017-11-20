@@ -10,6 +10,7 @@ export const GradeList = (props) => (
       <TextField source="max" />
       <TextField source="studentId" />
       <EditButton />
+      <DeleteButton />
     </Datagrid>
   </List>
 );
