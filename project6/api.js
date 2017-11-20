@@ -312,7 +312,7 @@ app.post('/grades', function(req, res) {
       }
 
       // add 'id' field to new grade object
-      gradeObj['id'] = newGradeId;
+      gradeObj['id'] = newGradeId.toString();
 
       client.multi()
         // create a new hashmap for the newly created grade called 'grade:ID'
