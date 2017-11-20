@@ -1,7 +1,7 @@
 import React from 'react';
 import { Responsive, List, SimpleList, Edit, Create, Datagrid, TextField, EditButton, DeleteButton, DisabledInput, ReferenceInput, SelectInput, SimpleForm, TextInput, Filter, ReferenceField} from 'admin-on-rest';
 
-export const GradesList = (props) => (
+export const GradeList = (props) => (
   <List {...props} /*filters={<GradeFilter />}*/>
     <Responsive
       small={
