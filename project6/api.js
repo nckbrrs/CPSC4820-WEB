@@ -212,8 +212,9 @@ app.get('/students', function(req, res) {
 
   // get list of all members of 'students' set
   client.smembersAsync('students').then(function(students) {
-    var gottenStudents = [];
-    var currentId = null;
+    let gottenStudents = [];
+    let currentId = null;
+    let totalStudents = students.length
 
     // for each student in 'students', push a promise to gottenStudents
     for (var i = 0; i<students.length; i++) {
@@ -242,7 +243,7 @@ app.get('/students', function(req, res) {
         }
       }
       res.set('Access-Control-Expose-Headers', 'X-Total-Count');
-      res.set('X-Total-Count', client.scard('students'));
+      res.set('X-Total-Count', totalStudents);
       res.status(200).json(listToSend);
       return;
     });
@@ -429,6 +430,7 @@ app.get('/grades', function(req, res) {
   client.smembersAsync('grades').then(function(grades) {
     let gottenGrades = [];
     let currentGradeId = null;
+    let totalGrades = grades.length
 
     // for each student in 'grades', push a promise to gottenGrades
     for (var i = 0; i < grades.length; i++) {
@@ -492,7 +494,7 @@ app.get('/grades', function(req, res) {
         listToSend = listToSend.slice(_start, _end);
       } */
       res.set('Access-Control-Expose-Headers', 'X-Total-Count');
-      res.set('X-Total-Count', listToSend.length);
+      res.set('X-Total-Count', totalGrades);
       res.status(200).json(listToSend);
       return;
     });
