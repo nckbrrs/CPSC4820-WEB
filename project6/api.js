@@ -147,12 +147,12 @@ app.put('/students/:id', function(req, res) {
         if ((index + 1) % 2 === 0) {
           newStudentObj[((index+1) / 2) - 1].value = value;
         } else {
-          newStudnetObj.push({field: value, value: null});
+          newStudentObj.push({field: value, value: null});
+          console.log(newStudentObj);
         }
       });
     }
   });
-  console.log(newStudentObj);
 /*  newStudentObj['name'] = req.body['name']; */
 /*
   // ensure that requested id already exists
