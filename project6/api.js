@@ -66,7 +66,7 @@ app.post('/students', function(req, res) {
     client.sismemberAsync('students', `${studentObj['id']}`).then(function(exists) {
       if (!exists) {
         // add _ref field to new student object
-        studentObj['_ref'] = `/students/${studentObj['id']}`;
+        //studentObj['_ref'] = `/students/${studentObj['id']}`;
 
         client.multi()
           // create new hash for newly created student called 'student:student['id']'
@@ -316,7 +316,7 @@ app.post('/grades', function(req, res) {
 
       // add '_ref' field to new grade object
       gradeObj['id'] = newGradeId;
-      gradeObj['_ref'] = `/grades/${newGradeId}`;
+      //gradeObj['_ref'] = `/grades/${newGradeId}`;
 
       client.multi()
         // create a new hashmap for the newly created grade called 'grade:ID'
