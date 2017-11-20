@@ -334,7 +334,7 @@ app.put('/grades/:gradeid', function(req, res) {
     if (exists) {
       // make requested changes to grade's values
       client.hmsetAsync(`grade:${gradeId}`, newGradeObj).then(function(retval) {
-        client.hgetallAsync(`student:${id}`).then(function(studentObj) {
+        client.hgetallAsync(`grade:${gradeId}`).then(function(gradeObj) {
           res.status(200).json(gradeObj);
           return;
         });
