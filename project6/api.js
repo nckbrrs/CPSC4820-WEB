@@ -141,10 +141,7 @@ app.put('/students/:id', function(req, res) {
   }
 
   // set fields of new student object to equal those in the request, and leave the rest alone
-  client.hgetallAsync(`student:${id}`).then(function(studentObj) {
-    newStudentObj = JSON.stringify(studentObj);
-    newStudentObj['name'] = req.body['name'];
-  });
+  newStudentObj['name'] = req.body['name'];
 
   // ensure that requested id already exists
   client.sismemberAsync('students', id).then(function(exists) {
@@ -152,7 +149,7 @@ app.put('/students/:id', function(req, res) {
       // make requested changes to student's values
       console.log(newStudentObj);
       client.hmsetAsync(`student:${id}`, newStudentObj).then(function(retval) {
-        res.status(200).json(newStudentObj);
+        res.status(200).json(JSON.Stringify(client.hgetall(`student:${id}`)));
         return;
       });
     } else {
