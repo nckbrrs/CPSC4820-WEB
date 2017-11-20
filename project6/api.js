@@ -164,7 +164,6 @@ app.put('/students/:id', function(req, res) {
       return;
     }
   });
-
 });
 
 /* GET /students/:id
@@ -222,13 +221,13 @@ app.get('/students', function(req, res) {
     }
 
     Promise.all(gottenStudents).then(function(listToSend) {
-      // filter by studentId if requested
+      // filter by id if requested
       if (req.query.id) {
         listToSend = listToSend.filter(function(student) {
           return student.id === req.query.id;
         });
       }
-      // filter by type if requested
+      // filter by name if requested
       if (req.query.name) {
         listToSend = listToSend.filter(function(student) {
           return student.name === req.query.name;
