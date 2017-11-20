@@ -22,10 +22,11 @@ export default (type, params) => {
     return Promise.resolve();
   }
 
+/*
   // called when user navigates to a new location
   if (type === AUTH_CHECK) {
     return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
-  }
+  }*/
 
   // called when user clicks on logout button
   if (type === AUTH_LOGOUT) {
