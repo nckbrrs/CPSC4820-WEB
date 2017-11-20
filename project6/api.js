@@ -51,7 +51,7 @@ app.post('/students', function(req, res) {
   console.log('POST /students\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
+    res.status(401).json({"Status": "You are not allowed to make this request!"});
     return;
   }
 
