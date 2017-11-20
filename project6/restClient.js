@@ -1,3 +1,5 @@
+import { stringify } from 'query-string';
+
 import {
   GET_LIST,
   GET_ONE,
@@ -9,9 +11,7 @@ import {
   fetchUtils,
 } from 'admin-on-rest';
 
-import {stringify} from 'query-string';
-
-const API_URL = 'MY.API.URL';
+const API_URL = '54.200.82.249:3000';
 
 /**
  * @param {String} type One of the constants appearing at the top of this file, e.g. 'UPDATE'
@@ -103,4 +103,16 @@ const convertHTTPResponseToREST = (response, type, resource, params) => {
       return { data: json };
     }
   }
+};
+
+/**
+ * @param {string} type Request type, e.g. GET_LIST
+ * @param {string} resource Resource name, e.g. "posts"
+ * @param {Object} payload Request parameters. Depends on the request type
+ * @returns {Promise} the Promise for a REST response
+ */
+export default (type, resource, params) => {
+  const { fetchJson } = fetchUtils;
+  const { url, options } = convertRESTRequestToHTTP(type, resource, params);
+  return fetchJson(url, options).then(response => convertHTTPResponseToREST(response, type, resource, params));
 };

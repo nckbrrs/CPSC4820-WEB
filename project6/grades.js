@@ -1,24 +1,25 @@
 import React from 'react';
-import { Responsive, List, SimpleList, Edit, Create, Datagrid, ReferenceField, TextField, EditButton, DeleteButton, DisabledInput, LongTextInput, ReferenceInput, SelectInput, SimpleForm, TextInput, Filter} from 'admin-on-rest';
+import { Responsive, List, SimpleList, Edit, Create, Datagrid, TextField, EditButton, DeleteButton, DisabledInput, ReferenceInput, SelectInput, SimpleForm, TextInput, Filter} from 'admin-on-rest';
 
-export const PostList = (props) => (
-  <List {...props} filters={<PostFilter />}>
+export const GradesList = (props) => (
+  <List {...props} filters={<GradeFilter />}>
     <Responsive
       small={
         <SimpleList
-          primaryText={record => record.title}
-          secondaryText={record => `${record.views} views`}
-          tertiaryText={record => new Date(record.published_at).toLocaleDateString()}
+          primaryText={record => record.id}
+          secondaryText={record => record.type}
+          tertiaryText={record => `${record.grade} / ${record.max}`}
         />
       }
       medium={
         <Datagrid>
           <TextField source="id" />
-          <ReferenceField label="User" source="userId" reference="users">
-            <TextField source="name" />
+          <TextField source="type" />
+          <TextField source="grade" />
+          <TextField source="max" />
+          <ReferenceField  label="user" source="id" reference="students">
+            <TextField source="id" />
           </ReferenceField>
-          <TextField source="title" />
-          <TextField source="body" />
           <EditButton />
           <DeleteButton />
         </Datagrid>
@@ -27,41 +28,37 @@ export const PostList = (props) => (
   </List>
 );
 
-const PostTitle = ({ record }) => {
-  return <span>Post {record ? `"${record.title}"` : ''}</span>;
-};
-
-export const PostEdit = (props) => (
-  <Edit title={<PostTitle />} {...props}>
+export const GradeEdit = (props) => (
+  <Edit {...props}>
     <SimpleForm>
-      <DisabledInput source="id" />
-      <ReferenceInput label="User" source="userId" reference="users">
-        <SelectInput optionText="name" />
-      </ReferenceInput>
-      <TextInput source="title" />
-      <LongTextInput source="body" />
+      <TextInput source="id" />
+      <TextInput source="type" />
+      <TextInput source="grade" />
+      <TextInput source="max" />
     </SimpleForm>
   </Edit>
 );
 
-
-export const PostCreate = (props) => (
+export const GradeCreate = (props) => (
   <Create {...props}>
     <SimpleForm>
-      <ReferenceInput label="user" source="userId" reference="users">
-        <SelectInput optionText="name" />
-      </ReferenceInput>
-      <TextInput source="title" />
-      <LongTextInput source="body" />
+      <TextInput source="id" />
+      <TextInput source="type" />
+      <TextInput source="grade" />
+      <TextInput source="max" />
     </SimpleForm>
-  </Create>
+  </Edit>
 );
 
-const PostFilter = (props) => (
+/* FILTER ID TYPE GRADE AND MAX
+const GradeFilter = (props) => (
   <Filter {...props}>
-    <TextInput label="Search" source="q" alwaysOn />
-    <ReferenceInput label="User" source="userId" reference="users" allowEmpty>
-      <SelectInput optionText="name" />
+    <ReferenceInput label="id" source="id" reference="grades" allowEmpty>
+      <SelectInput optionText="id" />
+    </ReferenceInput>
+    <ReferenceInput label="type" source="type" reference="grades" allowEmpty>
+      <SelectInput optionText="type" />
     </ReferenceInput>
   </Filter>
 );
+*/
