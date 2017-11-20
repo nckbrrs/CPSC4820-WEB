@@ -9,7 +9,7 @@ export const StudentList = (props) => (
       <EditButton />
       <DeleteButton />
     </Datagrid>
-  </list>
+  </List>
 );
 
 export const StudentEdit = (props) => (
