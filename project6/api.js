@@ -325,7 +325,7 @@ app.post('/grades', function(req, res) {
         .sadd('grades', `${newGradeId}`)
         // execute the above redis commands atomically
         .execAsync().then(function(retval) {
-          res.status(200).json({_ref: `${gradeObj['_ref']}`});
+          res.status(200).json(gradeObj);
           return;
         });
       });
