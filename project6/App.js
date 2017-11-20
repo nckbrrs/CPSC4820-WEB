@@ -1,6 +1,6 @@
 import React from 'react';
 import {jsonServerRestClient, Admin, Resource, Delete, fetchUtils} from 'admin-on-rest';
-//import {StudentList, StudentEdit, StudentCreate} from './students';
+import {StudentList, StudentEdit, StudentCreate} from './students';
 import {GradeList, GradeEdit, GradeCreate} from './grades';
 //import authClient from './authClient';
 //import myApiRestClient from './restClient';
