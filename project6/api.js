@@ -141,7 +141,7 @@ app.put('/students/:id', function(req, res) {
   }
 
   // set fields of new student object to equal those in the request, and leave the rest alone
-  client.hgetall(`student:${id}`).then(function(studentObj) {
+  client.hgetallAsync(`student:${id}`).then(function(studentObj) {
     if (Array.isArray(studentObj)) {
       studentObj.forEach(function(value, index) {
         if ((index + 1) % 2 === 0) {
