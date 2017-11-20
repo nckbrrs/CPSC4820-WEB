@@ -76,7 +76,7 @@ app.post('/students', function(req, res) {
           .sadd('students', `${studentObj['id']}`)
           // execute the above commands atomically
           .execAsync().then(function(retval) {
-            res.status(200).json({_ref: `${studentObj['_ref']}`});
+            res.status(200).json(studentObj);
             return;
           });
       } else {
