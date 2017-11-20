@@ -4,27 +4,19 @@ export default (type, params) => {
   // called when the user attempts to log in
   if (type === AUTH_LOGIN) {
     const {username, password} = params;
-    var token = btoa(username + ":" + password);
-    localStorage.setItem('token', token);
-
-    const request = new Request('http://54.200.82.249:3001', {
-      method: 'GET',
-      headers: new Headers({ 'Authorization' : `Basic ${token}`})
-    });
-    return fetch(request).then(reply => {
-      if (reply.status === 401 || reply.status === 403) {
-        throw new Error(reply.statusText);
-      }
-    })
+    if (username === 'teacher' && password === 't1g3rTester!@#') {
+      const token = btoa(username + ":" + password);
+      localStorage.setItem('token', token);
+      return Promise.resolve();
+    }
+    return Promise.reject();
   }
-  
-/*
+
   // called when user clicks on logout button
   if (type === AUTH_LOGOUT) {
     localStorage.removeItem('token');
     return Promise.resolve();
   }
-*/
 
   // called when the API returns an error
   if (type === AUTH_ERROR) {
