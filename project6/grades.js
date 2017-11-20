@@ -7,10 +7,8 @@ export const GradeList = (props) => (
       <TextField source="id" />
       <TextField source="type" />
       <TextField source="grade" />
-      <TextField source="max" />/*
-      <ReferenceField label="user" source="studentId" reference="students">
-        <TextField source="studentId" />
-      </ReferenceField>*/
+      <TextField source="max" />/
+      <TextField source="studentId" />
       <EditButton />
       <DeleteButton />
     </Datagrid>

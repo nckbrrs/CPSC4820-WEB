@@ -261,7 +261,7 @@ app.post('/grades', function(req, res) {
       }
 
       // add '_ref' field to new grade object
-      gradeObj['id'] = newGradeId;
+      gradeObj['id'] = newGradeId.toString();
       gradeObj['_ref'] = `/grades/${newGradeId}`;
 
       client.multi()
