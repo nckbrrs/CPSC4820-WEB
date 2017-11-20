@@ -18,10 +18,6 @@ app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "GET, DELETE, POST, PUT");
   res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-  /*
-  res.header("Access-Control-Allow-Methods", "OPTIONS, GET, PUT, POST, DELETE");
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");*/
   next();
 });
 
@@ -224,8 +220,27 @@ app.get('/students', function(req, res) {
       currentId = students[i];
       gottenStudents.push(client.hgetallAsync(`student:${currentId}`));
     }
-    // when all students have been gotten, send JSON list of all of them to client
+
     Promise.all(gottenStudents).then(function(listToSend) {
+      // sort by given attribute if requested
+      if (req.query._sort) {
+        // if sort query is a valid attribute of grade obj, sort by that attribute
+        // otherwise, simply do not sort
+        let sortBy = req.query._sort;
+        if (sortBy == 'id' || sortBy == 'name') {
+          // if order query exists and is 'asc', sort in ascending order
+          // otherwise, sort descending
+          if (req.query._order == 'ASC') {
+            listToSend = listToSend.sort(function(a, b) {
+              return a.sortBy - b.sortBy;
+            });
+          } else {
+            listToSend = listToSend.sort(function(a, b) {
+              return b.sortBy - a.sortBy;
+            });
+          }
+        }
+      }
       res.set('Access-Control-Expose-Headers', 'X-Total-Count');
       res.set('X-Total-Count', client.scard('students'));
       res.status(200).json(listToSend);
@@ -442,7 +457,7 @@ app.get('/grades', function(req, res) {
         if (sortBy == 'studentId' || sortBy == 'type' || sortBy == 'max' || sortBy == 'grade') {
           // if order query exists and is 'asc', sort in ascending order
           // otherwise, sort descending
-          if (req.query._order == 'asc') {
+          if (req.query._order == 'ASC') {
             listToSend = listToSend.sort(function(a, b) {
               return a.sortBy - b.sortBy;
             });

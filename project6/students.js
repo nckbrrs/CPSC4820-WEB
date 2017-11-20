@@ -7,7 +7,6 @@ export const StudentList = (props) => (
       <TextField source="id" />
       <TextField source="name" />
       <EditButton />
-      <DeleteButton />
     </Datagrid>
   </List>
 );
