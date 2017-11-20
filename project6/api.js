@@ -143,6 +143,7 @@ app.put('/students/:id', function(req, res) {
   // set fields of new student object to equal those in the request, and leave the rest alone
   client.hgetallAsync(`student:${id}`).then(function(studentObj) {
     newStudentObj = JSON.stringify(studentObj);
+    console.log(newStudentObj);
   });
   newStudentObj['name'] = req.body['name'];
 
