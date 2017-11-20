@@ -283,7 +283,7 @@ app.post('/grades', function(req, res) {
 - if successful, returns contents of grades:id hash object
 */
 app.get('/grades/:gradeid', function(req, res) {
-  console.log('GET /grades/:gradeid\n');
+  console.log('GET /grades/', req.params.gradeid);
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
