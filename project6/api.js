@@ -454,18 +454,21 @@ app.get('/grades', function(req, res) {
         });
       }
       // sort by given attribute if requested
-      if (req.query.sort) {
+      if (req.query._sort) {
+        console.log("sorting");
         // if sort query is a valid attribute of grade obj, sort by that attribute
         // otherwise, simply do not sort
-        var sortBy = req.query.sort;
+        var sortBy = req.query._sort;
         if (sortBy == 'studentId' || sortBy == 'type' || sortBy == 'max' || sortBy == 'grade') {
           // if order query exists and is 'asc', sort in ascending order
           // otherwise, sort descending
-          if (req.query.order == 'ASC') {
+          if (req.query._order == 'ASC') {
+            console.log("sorting ascending");
             listToSend = listToSend.sort(function(a, b) {
               return a.sortBy - b.sortBy;
             });
           } else {
+            console.log("sorting descending");
             listToSend = listToSend.sort(function(a, b) {
               return b.sortBy - a.sortBy;
             });
