@@ -17,7 +17,7 @@ const httpClient = (url, options = {}) => {
 const restClient = jsonServerRestClient('http://54.200.82.249:3001', httpClient);
 
 const App = () => (
-  <Admin /*authClient={authClient}*/ restClient={restClient}>
+  <Admin authClient={authClient} restClient={restClient}>
     <Resource name="students" list={StudentList} edit={StudentEdit} create={StudentCreate} remove={Delete}/>
     <Resource name="grades" list={GradeList} edit={GradeEdit} create={GradeCreate} remove={Delete}/>
   </Admin>
