@@ -141,7 +141,7 @@ app.put('/students/:id', function(req, res) {
   }
 
   // set fields of new student object to equal those in the request, and leave the rest alone
-  newStudentObj = client.hgetall(`student:${id}`);
+  newStudentObj = json(client.hgetall(`student:${id}`));
   newStudentObj['name'] = req.body['name'];
 
   // ensure that requested id already exists
