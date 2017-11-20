@@ -16,7 +16,6 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Methods", "DELETE");
   next();
 });
 
@@ -382,6 +381,7 @@ app.delete('/grades/:gradeid', function(req, res) {
         .srem('grades', gradeId)
         // execute the above commands atomically
         .execAsync().then(function(retval) {
+          res.header("Access-Control-Allow-Methods", "DELETE");
           res.status(200).send('Grade deleted!');
           return;
         });
