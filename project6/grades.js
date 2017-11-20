@@ -7,10 +7,10 @@ export const GradeList = (props) => (
       <TextField source="id" />
       <TextField source="type" />
       <TextField source="grade" />
-      <TextField source="max" />
-      <ReferenceField label="user" source="id" reference="students">
-        <TextField source="id" />
-      </ReferenceField>
+      <TextField source="max" />/*
+      <ReferenceField label="user" source="studentId" reference="students">
+        <TextField source="studentId" />
+      </ReferenceField>*/
       <EditButton />
       <DeleteButton />
     </Datagrid>
@@ -20,7 +20,7 @@ export const GradeList = (props) => (
 export const GradeEdit = (props) => (
   <Edit {...props}>
     <SimpleForm>
-      <TextInput source="id" />
+      <TextInput source="studentId" />
       <TextInput source="type" />
       <TextInput source="grade" />
       <TextInput source="max" />
@@ -31,7 +31,7 @@ export const GradeEdit = (props) => (
 export const GradeCreate = (props) => (
   <Create {...props}>
     <SimpleForm>
-      <TextInput source="id" />
+      <TextInput source="studentId" />
       <TextInput source="type" />
       <TextInput source="grade" />
       <TextInput source="max" />
