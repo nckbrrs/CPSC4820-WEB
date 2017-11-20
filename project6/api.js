@@ -149,8 +149,10 @@ app.put('/students/:id', function(req, res) {
       // make requested changes to student's values
       console.log(newStudentObj);
       client.hmsetAsync(`student:${id}`, newStudentObj).then(function(retval) {
-        res.status(200).json(client.hgetall(`student:${id}`));
-        return;
+        client.hgetallAsync(`student:${id}`).then(function(studentObj) {
+          res.status(200).json(studentObj);
+          return;
+        });
       });
     } else {
       // student does not exist
