@@ -1,5 +1,5 @@
 import React from 'react';
-import { Filter, Responsive, List, SimpleList, Edit, Create, Datagrid, TextField, EditButton, DeleteButton, DisabledInput, SimpleForm, TextInput} from 'admin-on-rest';
+import { Filter, List, Edit, Create, Datagrid, TextField, EditButton, DeleteButton, DisabledInput, SimpleForm, TextInput} from 'admin-on-rest';
 
 export const StudentList = (props) => (
   <List {...props} filters={<StudentFilter />}>
