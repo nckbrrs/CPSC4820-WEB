@@ -141,17 +141,16 @@ app.put('/students/:id', function(req, res) {
   }
 
   // set fields of new student object to equal those in the request, and leave the rest alone
-  client.hgetallAsync(`student:${id}`).then(function(studentObj) {
+  /*client.hgetallAsync(`student:${id}`).then(function(studentObj) {
     newStudentObj = JSON.stringify(studentObj);
-    console.log(newStudentObj);
-  });
+    newStudentObj['name' = req.body['name'];
+  });*/
   newStudentObj['name'] = req.body['name'];
 
   // ensure that requested id already exists
   client.sismemberAsync('students', id).then(function(exists) {
     if (exists) {
       // make requested changes to student's values
-      console.log(newStudentObj);
       client.hmsetAsync(`student:${id}`, newStudentObj).then(function(retval) {
         res.status(200).json(newStudentObj);
         return;
@@ -328,12 +327,12 @@ app.put('/grades/:gradeid', function(req, res) {
   // set fields of new grade object to equal those in the request
   client.hgetallAsync(`grade:${id}`).then(function(gradeObj) {
     newGradeObj = JSON.stringify(gradeObj);
-  });
-  for (var field in fields) {
-    if (req.body[fields[field]] != null) {
-      newGradeObj[fields[field]] = req.body[fields[field]];
+    for (var field in fields) {
+      if (req.body[fields[field]] != null) {
+        newGradeObj[fields[field]] = req.body[fields[field]];
+      }
     }
-  }
+  });
 
   // ensure that requested grade already exists
   client.sismemberAsync('grades', gradeId).then(function(exists) {
