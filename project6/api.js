@@ -308,7 +308,7 @@ app.post('/grades', function(req, res) {
       if (grades.length == 0) {
         newGradeId = 0;
       } else {
-        newGradeId = parseInt((grades[grades.length-1])['id']) + 1;
+        newGradeId = parseInt((grades[grades.length-1])) + 1;
       }
 
       // add 'id' field to new grade object
