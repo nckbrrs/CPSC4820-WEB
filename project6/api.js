@@ -202,11 +202,11 @@ app.get('/students', function(req, res) {
           // otherwise, sort descending
           if (req.query._order == 'ASC') {
             listToSend = listToSend.sort(function(a, b) {
-              return (a.sortBy).localeCompare(b.sortBy);
+              return (a[`${sortBy}`]).localeCompare(b[`${sortBy}`]);
             });
           } else {
             listToSend = listToSend.sort(function(a, b) {
-              return (b.sortBy).localeCompare(a.sortBy);
+              return (b[`${sortBy}`]).localeCompare(a[`${sortBy}`]);
             });
           }
         }
