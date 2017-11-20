@@ -210,6 +210,7 @@ app.get('/students', function(req, res) {
 
   // get list of all members of 'students' set
   client.smembersAsync('students').then(function(students) {
+    console.log('inside smembers\n');
     var gottenStudents = [];
     var currentId = null;
 
@@ -220,6 +221,7 @@ app.get('/students', function(req, res) {
     }
     // when all students have been gotten, send JSON list of all of them to client
     Promise.all(gottenStudents).then(function(listToSend) {
+      console.log('all students have been gotten, ready to send\n');
       res.set('Access-Control-Expose-Headers', 'X-Total-Count');
       res.set('X-Total-Count', client.scard('students'));
       res.status(200).json(listToSend);
