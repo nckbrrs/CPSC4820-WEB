@@ -248,9 +248,9 @@ app.get('/students', function(req, res) {
         // if no _start query, default _start to 0
         // otherwise, set _start to query value
         if (!req.query._start) {
-          let _start = 0;
+          var _start = 0;
         } else {
-          let _start = req.query._start;
+          var _start = req.query._start;
         }
 
         // if no _end query, check if _limit query exists
@@ -258,12 +258,12 @@ app.get('/students', function(req, res) {
         // if not, set _end to listToSend's length after filtering
         if (!req.query._end) {
           if (req.query._limit) {
-            let _end = _start + req.query._limit;
+            var _end = _start + req.query._limit;
           } else {
-            let _end = listToSend.length;
+            var _end = listToSend.length;
           }
         } else {
-          let _end = req.query._end;
+          var _end = req.query._end;
         }
         listToSend = listToSend.slice(_start, _end);
       }
@@ -502,9 +502,9 @@ app.get('/grades', function(req, res) {
         // if no _start query, default _start to 0
         // otherwise, set _start to query value
         if (!req.query._start) {
-          let _start = 0;
+          var _start = 0;
         } else {
-          let _start = req.query._start;
+          var _start = req.query._start;
         }
 
         // if no _end query, check if _limit query exists
@@ -512,12 +512,12 @@ app.get('/grades', function(req, res) {
         // if not, set _end to listToSend's length after filtering
         if (!req.query._end) {
           if (req.query._limit) {
-            let _end = _start + req.query._limit;
+            var _end = _start + req.query._limit;
           } else {
-            let _end = listToSend.length;
+            var _end = listToSend.length;
           }
         } else {
-          let _end = req.query._end;
+          var _end = req.query._end;
         }
         listToSend = listToSend.slice(_start, _end);
       }
