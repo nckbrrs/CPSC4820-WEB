@@ -47,7 +47,7 @@ export const GradeCreate = (props) => (
       <TextInput source="grade" />
       <TextInput source="max" />
     </SimpleForm>
-  </Edit>
+  </Create>
 );
 
 /* FILTER ID TYPE GRADE AND MAX
