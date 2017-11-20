@@ -2,7 +2,7 @@ import React from 'react';
 import {jsonServerRestClient, Admin, Resource, Delete} from 'admin-on-rest';
 import {StudentList, StudentEdit, StudentCreate} from './students';
 import {GradeList, GradeEdit, GradeCreate} from './grades';
-import authClient from './authClient';
+//import authClient from './authClient';
 //import myApiRestClient from './restClient';
 
 const App = () => (
