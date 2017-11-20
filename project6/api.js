@@ -47,6 +47,7 @@ app.listen(3001, function() {
  - if successful, return body containing reference to newly created item
 */
 app.post('/students', function(req, res) {
+  console.log('POST /students\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -91,6 +92,7 @@ app.post('/students', function(req, res) {
  - deletes student:id hash object and removes student['id'] from 'students' set
 */
 app.delete('/students/:id', function(req, res) {
+  console.log('DELETE /students/:id\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -126,6 +128,7 @@ app.delete('/students/:id', function(req, res) {
 - if successful, returns contents of student:id hash object
 */
 app.put('/students/:id', function(req, res) {
+  console.log('PUT /students/:id\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -168,6 +171,7 @@ app.put('/students/:id', function(req, res) {
 - if successful, returns contents of student:id hash object
 */
 app.get('/students/:id', function(req, res) {
+  console.log('GET /students/:id\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -197,6 +201,7 @@ app.get('/students/:id', function(req, res) {
 - if successful, returns array of contents of all student:id hash objects
 */
 app.get('/students', function(req, res) {
+  console.log('GET /students\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -230,6 +235,7 @@ app.get('/students', function(req, res) {
 - if successful, return body containing reference to newly created item
 */
 app.post('/grades', function(req, res) {
+  console.log('POST /grades\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -276,6 +282,7 @@ app.post('/grades', function(req, res) {
 - if successful, returns contents of grades:id hash object
 */
 app.get('/grades/:gradeid', function(req, res) {
+  console.log('GET /grades/:gradeid\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -306,6 +313,7 @@ app.get('/grades/:gradeid', function(req, res) {
 - if successful, returns contents of grade:id hash object
 */
 app.put('/grades/:gradeid', function(req, res) {
+  console.log('PUT /grades/:gradeid\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -353,6 +361,7 @@ app.put('/grades/:gradeid', function(req, res) {
 - deletes grade:ID hash object and removes ID from 'grades' set
 */
 app.delete('/grades/:gradeid', function(req, res) {
+  console.log('DELETE /grades/:gradeid\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -387,6 +396,7 @@ app.delete('/grades/:gradeid', function(req, res) {
 - if successful, returns array of contents of all requested grade:ID hash objects
 */
 app.get('/grades', function(req, res) {
+  console.log('GET /students\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -470,6 +480,7 @@ app.get('/grades', function(req, res) {
 - blows away entire database of all data
 */
 app.delete('/db', function(req, res) {
+  console.log('DELETE /db\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
