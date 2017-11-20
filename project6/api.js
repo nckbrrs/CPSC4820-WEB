@@ -403,7 +403,7 @@ app.delete('/grades/:gradeid', function(req, res) {
         .srem('grades', gradeId)
         // execute the above commands atomically
         .execAsync().then(function(retval) {
-          res.status(200).send('Grade deleted!');
+          res.status(200).json({"Status": "Student deleted!"});
           return;
         });
     } else {
