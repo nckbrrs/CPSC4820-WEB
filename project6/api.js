@@ -441,7 +441,7 @@ app.delete('/grades/:gradeid', function(req, res) {
         .srem('grades', gradeId)
         // execute the above commands atomically
         .execAsync().then(function(retval) {
-          res.status(200).json({"Status": "Student deleted!"});
+          res.status(200).json({"Status": "Grade deleted!"});
           return;
         });
     } else {
@@ -567,7 +567,7 @@ app.delete('/db', function(req, res) {
 
   // clear entire redis database
   client.flushallAsync().then(function() {
-    res.status(200).send('Database deleted!');
+    res.status(200).json({"Status": "Database deleted!"});
     return;
   });
 });
