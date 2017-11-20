@@ -411,7 +411,7 @@ app.get('/grades', function(req, res) {
 
     // for each student in 'grades', push a promise to gottenGrades
     for (var i = 0; i < grades.length; i++) {
-      currentGradeId = grades[i]['id'];
+      currentGradeId = grades[i];
       gottenGrades.push(client.hgetallAsync(`grade:${currentGradeId}`));
     }
     // when all grades have been gotten, send JSON list of all of them to client
@@ -471,7 +471,7 @@ app.get('/grades', function(req, res) {
         listToSend = listToSend.slice(_start, _end);
       } */
       res.set('Access-Control-Expose-Headers', 'X-Total-Count');
-      res.set('X-Total-Count', client.scard('grades'));
+      res.set('X-Total-Count', listToSend.length);
       res.status(200).json(listToSend);
       return;
     });
