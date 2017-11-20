@@ -323,11 +323,11 @@ app.put('/grades/:gradeid', function(req, res) {
 
   var gradeId = req.params.gradeid;
   var newGradeObj = {};
-  var fields = ['max', 'grade', 'type', 'id'];
+  var fields = ['max', 'grade', 'type', 'studentId'];
 
   // check for bad request (no body, or no keys exist in hash)
   if (req.body == null || (req.body['max'] == null && req.body['grade'] == null &&
-                          req.body['type'] == null && req.body['id'] == null)) {
+                          req.body['type'] == null && req.body['studentId'] == null)) {
     res.status(400).send('Bad request!');
     return;
   }
@@ -416,10 +416,10 @@ app.get('/grades', function(req, res) {
     }
     // when all grades have been gotten, send JSON list of all of them to client
     Promise.all(gottenGrades).then(function(listToSend) {
-      // filter by id if requested
-      if (req.query.id) {
+      // filter by studentId if requested
+      if (req.query.studentId) {
         listToSend = listToSend.filter(function(grade) {
-          return grade.id === req.query.id;
+          return grade.studentId === req.query.studentId;
         });
       }
       // filter by type if requested
@@ -433,7 +433,7 @@ app.get('/grades', function(req, res) {
         // if sort query is a valid attribute of grade obj, sort by that attribute
         // otherwise, simply do not sort
         let sortBy = req.query._sort;
-        if (sortBy == 'id' || sortBy == 'type' || sortBy == 'max' || sortBy == 'grade') {
+        if (sortBy == 'studentId' || sortBy == 'type' || sortBy == 'max' || sortBy == 'grade') {
           // if order query exists and is 'asc', sort in ascending order
           // otherwise, sort descending
           if (req.query._order == 'asc') {
