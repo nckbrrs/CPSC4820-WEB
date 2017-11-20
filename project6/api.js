@@ -141,7 +141,7 @@ app.put('/students/:id', function(req, res) {
   var newStudentObj = {};
 
   // check for bad request (no body, or no name field, or has id field)
-  if (req.body['name'] == null || req.body['id'] != null) {
+  if (req.body['name'] == null) {
     res.status(400).send('Bad request!');
     return;
   }
