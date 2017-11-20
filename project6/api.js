@@ -229,7 +229,7 @@ app.get('/students', function(req, res) {
 });
 
 /* POST /grades
-- accepts JSON request body with id, type, max, and grade fields
+- accepts JSON request body with studentId, type, max, and grade fields
 - creates new hashmap called grade:ID
 - adds ID to 'grades' set
 - if successful, return body containing reference to newly created item
@@ -245,7 +245,7 @@ app.post('/grades', function(req, res) {
   var gradeObj = req.body;
 
   // check for bad request (no body, no id, no type, no max, or no grade)
-  if (gradeObj == null || gradeObj['id'] == null || gradeObj['type'] == null ||
+  if (gradeObj == null || gradeObj['studentId'] == null || gradeObj['type'] == null ||
       gradeObj['max'] == null || gradeObj['grade'] == null) {
     res.status(400).send('Bad request!');
     return;
@@ -261,6 +261,7 @@ app.post('/grades', function(req, res) {
       }
 
       // add '_ref' field to new grade object
+      gradeObj['id'] = newGradeId;
       gradeObj['_ref'] = `/grades/${newGradeId}`;
 
       client.multi()
