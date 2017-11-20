@@ -3,22 +3,12 @@ import { Responsive, List, SimpleList, Edit, Create, Datagrid, TextField, EditBu
 
 export const StudentList = (props) => (
   <List {...props}>
-    <Responsive
-      small={
-        <SimpleList
-          primaryText={record => record.id}
-          secondaryText={record => record.name}
-        />
-      }
-      medium={
-        <Datagrid>
-          <TextField source="id" />
-          <TextField source="name" />
-          <EditButton />
-          <DeleteButton />
-        </Datagrid>
-      }
-    />
+    <Datagrid>
+      <TextField source="id" />
+      <TextField source="name" />
+      <EditButton />
+      <DeleteButton />
+    </Datagrid>
   </List>
 );
 

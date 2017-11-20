@@ -3,28 +3,17 @@ import { Responsive, List, SimpleList, Edit, Create, Datagrid, TextField, EditBu
 
 export const GradeList = (props) => (
   <List {...props} /*filters={<GradeFilter />}*/>
-    <Responsive
-      small={
-        <SimpleList
-          primaryText={record => record.id}
-          secondaryText={record => record.type}
-          tertiaryText={record => `${record.grade} / ${record.max}`}
-        />
-      }
-      medium={
-        <Datagrid>
-          <TextField source="id" />
-          <TextField source="type" />
-          <TextField source="grade" />
-          <TextField source="max" />
-          <ReferenceField label="user" source="id" reference="students">
-            <TextField source="id" />
-          </ReferenceField>
-          <EditButton />
-          <DeleteButton />
-        </Datagrid>
-      }
-    />
+    <Datagrid>
+      <TextField source="id" />
+      <TextField source="type" />
+      <TextField source="grade" />
+      <TextField source="max" />
+      <ReferenceField label="user" source="id" reference="students">
+        <TextField source="id" />
+      </ReferenceField>
+      <EditButton />
+      <DeleteButton />
+    </Datagrid>
   </List>
 );
 

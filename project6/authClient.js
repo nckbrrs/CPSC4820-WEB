@@ -17,12 +17,13 @@ export default (type, params) => {
       }
     })
   }
-
+/*
   // called when user clicks on logout button
   if (type === AUTH_LOGOUT) {
     localStorage.removeItem('token');
     return Promise.resolve();
   }
+*/
 
   // called when the API returns an error
   if (type === AUTH_ERROR) {
