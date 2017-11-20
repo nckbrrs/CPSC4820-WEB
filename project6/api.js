@@ -113,7 +113,7 @@ app.delete('/students/:id', function(req, res) {
         .srem('students', id)
         // execute the above commands atomically
         .execAsync().then(function(retval) {
-          res.status(200).send('Student deleted!');
+          res.status(200).json({"Status": "Student deleted!"});
           return;
         });
     } else {
