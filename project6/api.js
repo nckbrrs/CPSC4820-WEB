@@ -29,11 +29,10 @@ client.on('error', function(err) {
 
 /* Authentication method */
 var authenticate = function(req)  {
-  /*
   var credentials = auth(req);
   if (!credentials || credentials.name !== 'teacher' || credentials.pass !== 't1g3rTester!@#') {
     return false;
-  }*/
+  }
   return true;
 }
 
