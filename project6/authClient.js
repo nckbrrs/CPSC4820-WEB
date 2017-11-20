@@ -12,6 +12,12 @@ export default (type, params) => {
     return Promise.reject();
   }
 
+  // called when user clicks on logout button
+  if (type === AUTH_LOGOUT) {
+    localStorage.removeItem('token');
+    return Promise.resolve();
+  }
+
   // called when the API returns an error
   if (type === AUTH_ERROR) {
     const {status} = params;
@@ -22,16 +28,9 @@ export default (type, params) => {
     return Promise.resolve();
   }
 
-/*
   // called when user navigates to a new location
   if (type === AUTH_CHECK) {
     return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
-  }*/
-
-  // called when user clicks on logout button
-  if (type === AUTH_LOGOUT) {
-    localStorage.removeItem('token');
-    return Promise.resolve();
   }
 
   return Promise.reject('Unknown method');
