@@ -132,7 +132,7 @@ app.put('/students/:id', function(req, res) {
   }
 
   var id = req.params.id;
-  var newStudentObj = [];
+  var newStudentObj = {};
 
   // check for bad request (no body, or no name field, or has id field)
   if (req.body['name'] == null || req.body['id'] != null) {
@@ -142,17 +142,10 @@ app.put('/students/:id', function(req, res) {
 
   // set fields of new student object to equal those in the request, and leave the rest alone
   client.hgetallAsync(`student:${id}`).then(function(studentObj) {
-    if (Array.isArray(studentObj)) {
-      studentObj.forEach(function(value, index) {
-        if ((index + 1) % 2 === 0) {
-          newStudentObj[((index+1) / 2) - 1].value = value;
-        } else {
-          newStudentObj.push({field: value, value: null});
-          console.log(newStudentObj);
-        }
-      });
-    }
+    newStudentObj = JSON.stringify(studentObj);
+    console.log(newStudentObj);
   });
+
 /*  newStudentObj['name'] = req.body['name']; */
 /*
   // ensure that requested id already exists
