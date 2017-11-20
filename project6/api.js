@@ -367,7 +367,6 @@ app.get('/grades/:gradeid', function(req, res) {
 - if successful, returns contents of grade:id hash object
 */
 app.put('/grades/:gradeid', function(req, res) {
-  console.log('PUT /grades/:gradeid\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -415,7 +414,6 @@ app.put('/grades/:gradeid', function(req, res) {
 - if successful, returns array of contents of all requested grade:ID hash objects
 */
 app.get('/grades', function(req, res) {
-  console.log('GET /grades\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
@@ -518,7 +516,6 @@ app.get('/grades', function(req, res) {
 - deletes grade:ID hash object and removes ID from 'grades' set
 */
 app.delete('/grades/:gradeid', function(req, res) {
-  console.log('DELETE /grades/:gradeid\n');
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
     res.status(401).send('You are not allowed to make this request!');
