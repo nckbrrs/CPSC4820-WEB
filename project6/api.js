@@ -91,7 +91,7 @@ app.post('/students', function(req, res) {
 app.get('/students/:id', function(req, res) {
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
+    res.status(401).json({"Status": "You are not allowed to make this request!"});
     return;
   }
 
@@ -121,7 +121,7 @@ app.get('/students/:id', function(req, res) {
 app.put('/students/:id', function(req, res) {
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
+    res.status(401).json({"Status": "You are not allowed to make this request!"});
     return;
   }
 
@@ -162,7 +162,7 @@ app.put('/students/:id', function(req, res) {
 app.get('/students', function(req, res) {
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
+    res.status(401).json({"Status": "You are not allowed to make this request!"});
     return;
   }
 
@@ -253,7 +253,7 @@ app.get('/students', function(req, res) {
 app.delete('/students/:id', function(req, res) {
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
+    res.status(401).json({"Status": "You are not allowed to make this request!"});
     return;
   }
 
@@ -289,7 +289,7 @@ app.delete('/students/:id', function(req, res) {
 app.post('/grades', function(req, res) {
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
+    res.status(401).json({"Status": "You are not allowed to make this request!"});
     return;
   }
 
@@ -335,7 +335,7 @@ app.post('/grades', function(req, res) {
 app.get('/grades/:gradeid', function(req, res) {
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
+    res.status(401).json({"Status": "You are not allowed to make this request!"});
     return;
   }
 
@@ -365,7 +365,7 @@ app.get('/grades/:gradeid', function(req, res) {
 app.put('/grades/:gradeid', function(req, res) {
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
+    res.status(401).json({"Status": "You are not allowed to make this request!"});
     return;
   }
 
@@ -412,7 +412,7 @@ app.put('/grades/:gradeid', function(req, res) {
 app.get('/grades', function(req, res) {
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
+    res.status(401).json({"Status": "You are not allowed to make this request!"});
     return;
   }
 
@@ -520,7 +520,7 @@ app.get('/grades', function(req, res) {
 app.delete('/grades/:gradeid', function(req, res) {
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
+    res.status(401).json({"Status": "You are not allowed to make this request!"});
     return;
   }
 
@@ -553,7 +553,7 @@ app.delete('/grades/:gradeid', function(req, res) {
 app.delete('/db', function(req, res) {
   // ensure that client is authorized to make request
   if (!authenticate(req)) {
-    res.status(401).send('You are not allowed to make this request!');
+    res.status(401).json({"Status": "You are not allowed to make this request!"});
     return;
   }
 
