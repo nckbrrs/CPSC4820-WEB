@@ -30,15 +30,8 @@ var authenticate = function(req)  {
 }
 
 /* Listen on port 3000 */
-app.listen(3005, function() {
+app.listen(3000, function() {
   console.log('Server listening on port 3000!');
-});
-
-app.get('/hi', function(req,res) {
-  console.log("GET /hi");
-  res.status(200);
-  res.end();
-  return;
 });
 
 /* POST /students
