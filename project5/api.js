@@ -39,7 +39,7 @@ app.get('/hi', function(req,res) {
   res.status(200);
   res.end();
   return;
-})
+});
 
 /* POST /students
  - accepts JSON request body with username and name fields
