@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
-const webpack = require('webpack');
+const webpack = require('webpack-stream');
 
 gulp.task('lint', () => {
     // ESLint ignores files with "node_modules" paths.
@@ -27,7 +27,7 @@ gulp.task('copy-resources', () => {
 gulp.task('build', ['lint'], () => {
     return gulp.src('./src/*.js')
       .pipe(webpack())
-      .pipe(gulp.dest('./dist/tictactoe.js'));
+      .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('default', ['lint', 'build', 'copy-resources'], function () {
