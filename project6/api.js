@@ -324,8 +324,8 @@ app.post('/grades', function(req, res) {
           res.status(200).json(gradeObj);
           return;
         });
-    });
-  }
+      });
+    }
 });
 
 /* GET /grades/:gradeid
