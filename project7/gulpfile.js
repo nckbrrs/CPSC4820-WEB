@@ -31,6 +31,6 @@ gulp.task('build', ['lint'], () => {
       .pipe(gulp.dest('./dist/tictactoe.js'));
 });
 
-gulp.task('default', ['lint, build, copy-resources'], function () {
+gulp.task('default', ['lint', 'build', 'copy-resources'], function () {
     // This will only run if the lint task is successful...
 });
