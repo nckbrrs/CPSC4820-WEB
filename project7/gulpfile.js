@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
-const webpack = require('webpack-stream');
+const webpack = require('webpack');
 
 gulp.task('lint', () => {
     // ESLint ignores files with "node_modules" paths.
