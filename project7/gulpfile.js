@@ -27,7 +27,6 @@ gulp.task('copy-resources', () => {
 gulp.task('build', ['lint'], () => {
     return gulp.src('./src/*.js')
       .pipe(webpack())
-      .pipe()
       .pipe(gulp.dest('./dist/tictactoe.js'));
 });
 
